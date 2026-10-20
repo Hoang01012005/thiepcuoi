@@ -59,7 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              objectPosition: 'center 20%',
+              objectPosition: 'center 15%',
               display: 'block',
               filter: 'saturate(1.05) contrast(1.02)',
             }}

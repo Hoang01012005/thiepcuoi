@@ -40,12 +40,12 @@ export const PHOTO_REGISTRY = {
     height: 960,
   },
   hero: {
-    src: '/assets/photos/story-02.webp',
-    srcJpg: '/assets/photos/story-02.jpg',
-    altVi: 'Nam & Hiệp — Ánh mắt trìu mến và nụ cười rạng rỡ',
-    altEn: 'Nam & Hiep — Loving gaze wedding portrait',
-    width: 640,
-    height: 960,
+    src: '/assets/photos/album-01.webp',
+    srcJpg: '/assets/photos/album-01.jpg',
+    altVi: 'Hoàng Nam & Ngọc Hiệp — Ảnh cưới chân dung chính thức',
+    altEn: 'Hoang Nam & Ngoc Hiep — Official classic wedding portrait',
+    width: 1400,
+    height: 2100,
   },
   bride: {
     src: '/assets/photos/bride_chihiep.webp',

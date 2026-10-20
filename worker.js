@@ -102,7 +102,7 @@ export default {
         ? `Trân trọng kính mời ${guestName} tới tham dự lễ cưới của Hoàng Nam & Ngọc Hiệp vào ngày 28 & 29 tháng 11 năm 2026.`
         : 'Trân trọng kính mời quý khách tham dự lễ thành hôn của Hoàng Nam & Ngọc Hiệp. Warmly invite you to celebrate the wedding of Hoang Nam & Ngoc Hiep.';
 
-      const ogImage = `${url.origin}/assets/photos/hero.jpg`;
+      const ogImage = `${url.origin}/assets/photos/hero.jpg?v=20261021`;
 
       // Replace HTML <title>
       html = html.replace(/<title>.*?<\/title>/is, `<title>${escapeHtml(pageTitle)}</title>`);
