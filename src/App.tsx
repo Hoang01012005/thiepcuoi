@@ -15,6 +15,7 @@ import { RsvpSection } from './components/rsvp/RsvpSection';
 import { WishesSection } from './components/wishes/WishesSection';
 import { GiftSection } from './components/gift/GiftSection';
 import { ClosingSection } from './components/closing/ClosingSection';
+import { MobileBottomBar } from './components/layout/MobileBottomBar';
 import { InviteGeneratorPage } from './components/admin/InviteGeneratorPage';
 
 export function App() {
@@ -89,6 +90,7 @@ export function App() {
         <WishesSection lang={lang} />
         <GiftSection lang={lang} />
         <ClosingSection lang={lang} />
+        <MobileBottomBar lang={lang} />
       </main>
     </div>
   );

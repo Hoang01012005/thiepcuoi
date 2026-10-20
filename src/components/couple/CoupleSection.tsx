@@ -26,6 +26,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
         />
 
         <div
+          className="couple-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -66,6 +67,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Museum Arched Portrait Frame */}
             <div
+              className="couple-portrait-frame"
               style={{
                 width: '190px',
                 height: '255px',
@@ -186,6 +188,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Museum Arched Portrait Frame */}
             <div
+              className="couple-portrait-frame"
               style={{
                 width: '190px',
                 height: '255px',

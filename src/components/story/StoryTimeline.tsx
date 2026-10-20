@@ -236,7 +236,8 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
             className="story-timeline-thread"
           />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', position: 'relative', zIndex: 2 }}>
+          {/* Desktop Timeline */}
+          <div className="story-chapters-desktop" style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', position: 'relative', zIndex: 2 }}>
             {story.map((item, index) => {
               const chapterLabel = lang === 'vi' ? CHAPTER_VI[index] : CHAPTER_ROMAN[index];
               return (
@@ -249,6 +250,124 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                 />
               );
             })}
+          </div>
+
+          {/* Mobile Horizontal Storybook Carousel */}
+          <div className="story-chapters-mobile">
+            {story.map((item, index) => {
+              const chapterLabel = lang === 'vi' ? CHAPTER_VI[index] : CHAPTER_ROMAN[index];
+              const photoAsset = PHOTO_REGISTRY[item.photoKey];
+              return (
+                <div
+                  key={item.id}
+                  className="story-mobile-card stationery-card"
+                  style={{
+                    padding: '1.25rem',
+                    borderRadius: '18px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <BotanicalCorner position="top-right" size={42} color="rgba(213, 181, 140, 0.45)" />
+
+                  {/* Photo Banner */}
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '190px',
+                      borderRadius: '14px',
+                      overflow: 'hidden',
+                      border: '1.5px solid rgba(213, 181, 140, 0.5)',
+                      marginBottom: '1rem',
+                      background: '#F7EFE9',
+                      position: 'relative',
+                    }}
+                  >
+                    <picture>
+                      <source srcSet={photoAsset.src} type="image/webp" />
+                      <img
+                        src={photoAsset.srcJpg}
+                        alt={lang === 'vi' ? photoAsset.altVi : photoAsset.altEn}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'center 20%',
+                        }}
+                        loading="lazy"
+                      />
+                    </picture>
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '0.65rem',
+                        left: '0.65rem',
+                        background: 'rgba(255, 249, 246, 0.94)',
+                        border: '1px solid rgba(213, 181, 140, 0.5)',
+                        padding: '0.2rem 0.65rem',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '0.7rem',
+                        fontWeight: 600,
+                        color: 'var(--color-plum)',
+                        fontFamily: 'var(--font-sans)',
+                      }}
+                    >
+                      {chapterLabel}
+                    </div>
+                  </div>
+
+                  {/* Date badge */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.45rem' }}>
+                    <Calendar size={13} style={{ color: 'var(--color-rose)' }} />
+                    <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-sans)', fontWeight: 600, color: 'var(--color-rose-dark)', letterSpacing: '0.08em' }}>
+                      {item.year}
+                    </span>
+                  </div>
+
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontSize: '1.25rem',
+                      fontWeight: 600,
+                      color: 'var(--color-plum)',
+                      marginBottom: '0.5rem',
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {lang === 'vi' ? item.titleVi : item.titleEn}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.84rem',
+                      color: 'var(--color-text-muted)',
+                      lineHeight: 1.55,
+                    }}
+                  >
+                    {lang === 'vi' ? item.descriptionVi : item.descriptionEn}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile Swipe Hint */}
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.4rem',
+              fontSize: '0.75rem',
+              color: 'var(--color-rose-dark)',
+              fontFamily: 'var(--font-sans)',
+            }}
+            className="show-on-mobile-only"
+          >
+            <span>&larr; Vuốt ngang xem 4 chương kỷ niệm &rarr;</span>
           </div>
         </div>
       </div>

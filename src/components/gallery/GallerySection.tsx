@@ -184,12 +184,18 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'garden' | 'editorial' | 'celebration'>('all');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
 
   const t = translations[lang];
 
   const filteredPhotos = selectedCategory === 'all'
     ? GALLERY_PHOTOS
     : GALLERY_PHOTOS.filter((p) => p.category === selectedCategory);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const displayedPhotos = (!mobileExpanded && isMobile && selectedCategory === 'all')
+    ? filteredPhotos.slice(0, 4)
+    : filteredPhotos;
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -299,7 +305,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
           }}
           className={`editorial-gallery-grid ${selectedCategory === 'all' ? 'is-all-view' : ''}`}
         >
-          {filteredPhotos.map((photo: PhotoAsset, index: number) => {
+          {displayedPhotos.map((photo: PhotoAsset, index: number) => {
             const isFeatured = selectedCategory === 'all' && photo.editorialSpanDesktop === 2;
 
             return (
@@ -315,6 +321,37 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
             );
           })}
         </div>
+
+        {/* Mobile Expand / Collapse Button */}
+        {selectedCategory === 'all' && filteredPhotos.length > 4 && (
+          <div className="gallery-mobile-expand" style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <button
+              type="button"
+              onClick={() => setMobileExpanded(!mobileExpanded)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.65rem 1.6rem',
+                borderRadius: 'var(--radius-full)',
+                background: 'linear-gradient(135deg, rgba(243, 213, 218, 0.6) 0%, rgba(255, 249, 246, 0.95) 100%)',
+                border: '1.5px solid rgba(201, 130, 145, 0.45)',
+                color: 'var(--color-rose-dark)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.88rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <span>
+                {mobileExpanded
+                  ? (lang === 'vi' ? 'Thu gọn ảnh cưới ▴' : 'Show fewer photos ▴')
+                  : (lang === 'vi' ? `Xem toàn bộ ${filteredPhotos.length} ảnh cưới ▾` : `View all ${filteredPhotos.length} photos ▾`)}
+              </span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Fullscreen Lightbox Modal with Keyboard & Mobile Touch Gestures */}

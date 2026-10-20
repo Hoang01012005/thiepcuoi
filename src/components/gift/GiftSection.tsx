@@ -15,6 +15,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
   const { gift } = weddingConfig;
   const [copiedGroom, setCopiedGroom] = useState(false);
   const [copiedBride, setCopiedBride] = useState(false);
+  const [activeSide, setActiveSide] = useState<'groom' | 'bride'>('groom');
   const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
 
   if (!gift.enabled) return null;
@@ -40,18 +41,72 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
           subtitle={t.gift.subtitle}
         />
 
+        {/* Mobile Tab Switcher */}
         <div
+          className="gift-mobile-tabs"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '0.65rem',
+            margin: '2rem auto 0',
+            maxWidth: '360px',
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setActiveSide('groom')}
+            style={{
+              flex: 1,
+              padding: '0.6rem 0.85rem',
+              borderRadius: 'var(--radius-full)',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.85rem',
+              fontWeight: activeSide === 'groom' ? 700 : 500,
+              background: activeSide === 'groom' ? 'linear-gradient(135deg, #FFF9F6 0%, #F5ECE6 100%)' : 'rgba(255, 255, 255, 0.6)',
+              color: activeSide === 'groom' ? 'var(--color-rose-dark)' : 'var(--color-plum)',
+              border: activeSide === 'groom' ? '1.5px solid var(--color-rose)' : '1px solid rgba(213, 181, 140, 0.4)',
+              boxShadow: activeSide === 'groom' ? '0 4px 12px rgba(201, 130, 145, 0.25)' : 'none',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            🤵 {lang === 'vi' ? 'Nhà Trai (Nam)' : "Groom's Side"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveSide('bride')}
+            style={{
+              flex: 1,
+              padding: '0.6rem 0.85rem',
+              borderRadius: 'var(--radius-full)',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.85rem',
+              fontWeight: activeSide === 'bride' ? 700 : 500,
+              background: activeSide === 'bride' ? 'linear-gradient(135deg, #FFF9F6 0%, #F5ECE6 100%)' : 'rgba(255, 255, 255, 0.6)',
+              color: activeSide === 'bride' ? 'var(--color-rose-dark)' : 'var(--color-plum)',
+              border: activeSide === 'bride' ? '1.5px solid var(--color-rose)' : '1px solid rgba(213, 181, 140, 0.4)',
+              boxShadow: activeSide === 'bride' ? '0 4px 12px rgba(201, 130, 145, 0.25)' : 'none',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            👰 {lang === 'vi' ? 'Nhà Gái (Hiệp)' : "Bride's Side"}
+          </button>
+        </div>
+
+        <div
+          className="gift-cards-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '2.5rem',
             maxWidth: '860px',
-            margin: '3.5rem auto 0',
+            margin: '2rem auto 0',
           }}
         >
           {/* Groom Bank Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-1' : ''}`}
+            className={`stationery-card gift-card-groom ${activeSide === 'bride' ? 'hide-on-mobile' : ''} reveal-init ${isIntersecting ? 'is-revealed stagger-1' : ''}`}
             style={{
               padding: 'clamp(2rem, 5vw, 2.75rem) clamp(1.5rem, 4vw, 2.25rem)',
               textAlign: 'center',
@@ -141,7 +196,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
 
           {/* Bride Bank Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
+            className={`stationery-card gift-card-bride ${activeSide === 'groom' ? 'hide-on-mobile' : ''} reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
             style={{
               padding: 'clamp(2rem, 5vw, 2.75rem) clamp(1.5rem, 4vw, 2.25rem)',
               textAlign: 'center',

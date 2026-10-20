@@ -48,7 +48,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
       />
 
       <div
-        className="container"
+        className="container hero-grid-container"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -242,6 +242,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Arched Photo Frame Container with Ken Burns Slow Zoom */}
           <div
+            className="hero-photo-frame"
             style={{
               position: 'relative',
               width: '100%',
