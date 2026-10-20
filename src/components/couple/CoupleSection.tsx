@@ -147,9 +147,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 <span>{lang === 'vi' ? groom.hometownVi : groom.hometownEn}</span>
               </div>
               <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {t.couple.parentsTitle}
+                {lang === 'vi' ? 'Thân sinh (Nhà Trai):' : t.couple.parentsTitle}
               </p>
-              <p style={{ fontSize: '0.92rem', fontWeight: 600, color: 'var(--color-plum)' }}>
+              <p style={{ fontSize: '0.94rem', fontWeight: 600, color: 'var(--color-plum)' }}>
                 {lang === 'vi' ? groom.parentsVi : groom.parentsEn}
               </p>
             </div>
@@ -283,9 +283,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 <span>{lang === 'vi' ? bride.hometownVi : bride.hometownEn}</span>
               </div>
               <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {t.couple.parentsTitle}
+                {lang === 'vi' ? 'Thân sinh (Nhà Gái):' : t.couple.parentsTitle}
               </p>
-              <p style={{ fontSize: '0.92rem', fontWeight: 600, color: 'var(--color-plum)' }}>
+              <p style={{ fontSize: '0.94rem', fontWeight: 600, color: 'var(--color-plum)' }}>
                 {lang === 'vi' ? bride.parentsVi : bride.parentsEn}
               </p>
             </div>

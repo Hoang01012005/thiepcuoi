@@ -87,6 +87,16 @@ export function useGuestName(): string | null {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (guestName) {
+        document.title = `Thiệp Mời: ${guestName} — Hoàng Nam & Ngọc Hiệp`;
+      } else {
+        document.title = 'Hoàng Nam & Ngọc Hiệp — Thiệp Cưới | Wedding Invitation';
+      }
+    }
+  }, [guestName]);
+
   return guestName;
 }
 
