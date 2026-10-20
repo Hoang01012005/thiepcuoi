@@ -1,0 +1,56 @@
+/* DESIGN TOKENS — LUXURY EDITORIAL ROMANTIC BLUSH & CHAMPAGNE */
+:root {
+  /* Palette Colors */
+  --color-ivory: #FFF9F6;
+  --color-cream: #F7EFE9;
+  --color-cream-tint: #FDF4F0;
+  --color-blush: #F3D5DA;
+  --color-blush-light: #FBECEE;
+  --color-rose: #C98291;
+  --color-rose-dark: #A86070;
+  --color-mauve: #9D737D;
+  --color-plum: #49343A;
+  --color-plum-light: #6E535C;
+  --color-text-muted: #84636C;
+  --color-gold: #D5B58C;
+  --color-gold-light: #EEDBC5;
+  --color-gold-dark: #B89363;
+  --color-white: #FFFFFF;
+
+  /* Wax Seal & Stationery Accents */
+  --color-wax-red: #9B3848;
+  --color-wax-shadow: rgba(155, 56, 72, 0.4);
+
+  /* Glass & Borders */
+  --glass-bg: rgba(255, 249, 246, 0.9);
+  --glass-border: rgba(201, 130, 145, 0.22);
+  --card-border: 1px solid rgba(201, 130, 145, 0.2);
+  --gold-border: 1px solid rgba(213, 181, 140, 0.4);
+  --hairline-gold: 1px solid rgba(213, 181, 140, 0.35);
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(73, 52, 58, 0.04);
+  --shadow-md: 0 8px 24px rgba(73, 52, 58, 0.07);
+  --shadow-lg: 0 16px 48px rgba(73, 52, 58, 0.1);
+  --shadow-paper: 0 10px 30px -5px rgba(73, 52, 58, 0.08), 0 0 0 1px rgba(213, 181, 140, 0.3);
+  --shadow-paper-lg: 0 25px 60px -10px rgba(73, 52, 58, 0.18), 0 0 0 1px rgba(213, 181, 140, 0.35);
+  --shadow-gold: 0 8px 30px rgba(213, 181, 140, 0.25);
+
+  /* Typography — Haute Couture Editorial */
+  --font-serif: 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif;
+  --font-display: 'Cinzel', 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-script: 'Pinyon Script', 'Playfair Display', cursive, serif;
+
+  /* Border Radii */
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --radius-arch: 180px 180px 14px 14px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
