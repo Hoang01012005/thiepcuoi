@@ -161,7 +161,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 textTransform: 'uppercase',
               }}
             >
-              {t.hero.saveTheDate} • 28 . 12 . 2026
+              {t.hero.saveTheDate} • 28 &amp; 29 . 11 . 2026
             </span>
           </div>
 
@@ -420,7 +420,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                   color: '#6E535C',
                 }}
               >
-                {t.hero.saveTheDate} • 28 . 12 . 2026
+                {t.hero.saveTheDate} • 28 &amp; 29 . 11 . 2026
               </span>
             </div>
           </div>

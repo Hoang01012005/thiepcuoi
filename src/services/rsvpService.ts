@@ -262,14 +262,22 @@ export const exportRsvpsToCsv = (): void => {
     return;
   }
 
+  const sanitizeCsvField = (val: string): string => {
+    let escaped = (val || '').replace(/"/g, '""');
+    if (/^[=+@-]/i.test(escaped.trim())) {
+      escaped = `'${escaped}`;
+    }
+    return `"${escaped}"`;
+  };
+
   const headers = ['Thời Gian Gửi', 'Họ Và Tên', 'Trạng Thái', 'Số Lượng', 'Số Điện Thoại', 'Lời Nhắn Gửi'];
   const rows = rsvps.map((r) => [
-    `"${r.submittedAt || ''}"`,
-    `"${(r.name || '').replace(/"/g, '""')}"`,
+    sanitizeCsvField(r.submittedAt || ''),
+    sanitizeCsvField(r.name || ''),
     `"${r.status === 'yes' ? 'Tham dự' : 'Không tham dự'}"`,
     r.status === 'yes' ? r.count : 0,
-    `"\t${r.phone || ''}"`,
-    `"${(r.message || '').replace(/"/g, '""')}"`,
+    `"\t${(r.phone || '').replace(/"/g, '""')}"`,
+    sanitizeCsvField(r.message || ''),
   ]);
 
   const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\r\n');

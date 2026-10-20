@@ -42,12 +42,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
     // Step 2: Overlay fades out and hands over to Hero after guests admire the inner card
     setTimeout(() => {
       setAnimStage('revealing');
-    }, 2800);
+    }, 3600);
 
     // Step 3: Complete handover & unmount
     setTimeout(() => {
       onOpen();
-    }, 3800);
+    }, 4800);
   };
 
   const handleSkip = (e: React.MouseEvent) => {
@@ -79,7 +79,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
         padding: '1.25rem',
         overflow: 'hidden',
         perspective: '1600px',
-        transition: 'opacity 1.0s cubic-bezier(0.22, 1, 0.36, 1), transform 1.0s ease',
+        transition: 'opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s ease',
         opacity: isRevealing ? 0 : 1,
         transform: isRevealing ? 'scale(1.04)' : 'scale(1)',
         pointerEvents: isRevealing ? 'none' : 'auto',
@@ -163,7 +163,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             overflow: 'hidden',
             zIndex: 10,
             transform: isOpening ? 'scale(1)' : 'scale(0.96)',
-            transition: 'transform 2.5s cubic-bezier(0.22, 1, 0.36, 1)',
+            transition: 'transform 3.2s cubic-bezier(0.19, 1, 0.22, 1)',
           }}
         >
           {/* Botanical Corners */}
@@ -286,7 +286,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             transformOrigin: 'left center',
             transform: isOpening ? 'translateX(-115%) rotateY(-30deg)' : 'translateX(0) rotateY(0)',
             opacity: isOpening ? 0 : 1,
-            transition: 'transform 2.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 2.1s cubic-bezier(0.22, 1, 0.36, 1)',
+            transition: 'transform 3.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 2.8s cubic-bezier(0.19, 1, 0.22, 1)',
             pointerEvents: isOpening ? 'none' : 'auto',
           }}
         >
@@ -369,7 +369,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             transformOrigin: 'right center',
             transform: isOpening ? 'translateX(115%) rotateY(30deg)' : 'translateX(0) rotateY(0)',
             opacity: isOpening ? 0 : 1,
-            transition: 'transform 2.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 2.1s cubic-bezier(0.22, 1, 0.36, 1)',
+            transition: 'transform 3.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 2.8s cubic-bezier(0.19, 1, 0.22, 1)',
             pointerEvents: isOpening ? 'none' : 'auto',
           }}
         >
@@ -441,7 +441,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             flexDirection: 'column',
             alignItems: 'center',
             cursor: 'pointer',
-            transition: 'opacity 1.2s ease, transform 1.5s cubic-bezier(0.22, 1, 0.36, 1)',
+            transition: 'opacity 1.5s ease, transform 1.8s cubic-bezier(0.19, 1, 0.22, 1)',
             opacity: isOpening ? 0 : 1,
             transform: isOpening ? 'translate(-50%, -50%) scale(1.3)' : 'translate(-50%, -50%) scale(1)',
             pointerEvents: isOpening ? 'none' : 'auto',

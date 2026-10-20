@@ -65,19 +65,22 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !message.trim()) {
+    const cleanName = name.replace(/[<>]/g, '').trim().slice(0, 80);
+    const cleanMessage = message.replace(/[<>]/g, '').trim().slice(0, 500);
+
+    if (!cleanName || !cleanMessage) {
       setError(lang === 'vi' ? 'Vui lòng nhập tên và lời chúc của bạn' : 'Please enter your name and blessing message');
       return;
     }
 
     const newWish: WishItem = {
       id: `w-${Date.now()}`,
-      name: name.trim(),
-      message: message.trim(),
+      name: cleanName,
+      message: cleanMessage,
       createdAt: t.wishes.justNow,
     };
 
-    setWishes([newWish, ...wishes]);
+    setWishes([newWish, ...wishes].slice(0, 100));
     setName('');
     setMessage('');
     setError('');

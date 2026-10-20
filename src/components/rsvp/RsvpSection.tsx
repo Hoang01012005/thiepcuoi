@@ -57,13 +57,18 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
 
     setIsSubmitting(true);
 
+    const cleanName = formData.name.replace(/[<>]/g, '').trim().slice(0, 80);
+    const cleanPhone = (formData.phone || '').replace(/[^\d+()-\s]/g, '').slice(0, 20);
+    const cleanMessage = (formData.message || '').replace(/[<>]/g, '').trim().slice(0, 500);
+    const cleanCount = Math.max(1, Math.min(10, Number(formData.count) || 1));
+
     try {
       await submitRsvp({
-        name: formData.name,
+        name: cleanName,
         status: formData.status as 'yes' | 'no',
-        count: formData.count,
-        phone: formData.phone,
-        message: formData.message,
+        count: cleanCount,
+        phone: cleanPhone,
+        message: cleanMessage,
       });
     } catch (err) {
       console.warn('Error submitting RSVP:', err);

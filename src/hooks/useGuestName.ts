@@ -1,5 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
+export function sanitizeGuestName(input: string): string {
+  return input
+    .replace(/[<>'"\\`]/g, '')
+    .replace(/[\x00-\x1F\x7F]/g, '')
+    .trim()
+    .slice(0, 60);
+}
+
 function getInitialGuestName(): string | null {
   if (typeof window === 'undefined') return null;
 
@@ -9,8 +17,9 @@ function getInitialGuestName(): string | null {
 
     if (!rawName) return null;
 
-    const decoded = decodeURIComponent(rawName).trim();
-    return decoded ? decoded.slice(0, 60) : null;
+    const decoded = decodeURIComponent(rawName);
+    const clean = sanitizeGuestName(decoded);
+    return clean || null;
   } catch {
     return null;
   }
@@ -25,7 +34,7 @@ let currentGuestName: string | null = getInitialGuestName();
  * and notifies all components using useGuestName().
  */
 export function setGlobalGuestName(name: string | null) {
-  const sanitized = name ? name.trim().slice(0, 60) : null;
+  const sanitized = name ? sanitizeGuestName(name) : null;
   currentGuestName = sanitized;
 
   if (typeof window !== 'undefined') {
