@@ -72,13 +72,17 @@ export interface WeddingConfig {
     enabled: boolean;
     groomBank: {
       bankName: string;
+      bankCode?: string;
       accountNumber: string;
       accountHolder: string;
+      qrUrl?: string;
     };
     brideBank: {
       bankName: string;
+      bankCode?: string;
       accountNumber: string;
       accountHolder: string;
+      qrUrl?: string;
     };
     qrCodeImage?: string;
   };
@@ -190,13 +194,17 @@ export const weddingConfig: WeddingConfig = {
     enabled: true,
     groomBank: {
       bankName: 'Techcombank (Ngân hàng TMCP Kỹ Thương)',
+      bankCode: 'TCB',
       accountNumber: '19036888999999',
       accountHolder: 'NAM',
+      qrUrl: 'https://img.vietqr.io/image/TCB-19036888999999-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=NAM',
     },
     brideBank: {
       bankName: 'Vietcombank (Ngân hàng TMCP Ngoại Thương)',
+      bankCode: 'VCB',
       accountNumber: '0011004567890',
       accountHolder: 'HIEP',
+      qrUrl: 'https://img.vietqr.io/image/VCB-0011004567890-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=HIEP',
     },
   },
   audio: {

@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { GALLERY_PHOTOS, GALLERY_CATEGORIES, type PhotoAsset } from '../../config/photos';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { LightboxModal } from './LightboxModal';
-import { Maximize2, Sparkles } from 'lucide-react';
+import { Maximize2, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface GallerySectionProps {
   lang: Language;
@@ -184,7 +184,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'garden' | 'editorial' | 'celebration'>('all');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [mobileExpanded, setMobileExpanded] = useState(false);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+  const mobileSliderRef = useRef<HTMLDivElement | null>(null);
 
   const t = translations[lang];
 
@@ -192,10 +193,32 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
     ? GALLERY_PHOTOS
     : GALLERY_PHOTOS.filter((p) => p.category === selectedCategory);
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-  const displayedPhotos = (!mobileExpanded && isMobile && selectedCategory === 'all')
-    ? filteredPhotos.slice(0, 4)
-    : filteredPhotos;
+  useEffect(() => {
+    setMobileActiveIndex(0);
+    if (mobileSliderRef.current) {
+      mobileSliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  }, [selectedCategory]);
+
+  const handleMobileScroll = () => {
+    const slider = mobileSliderRef.current;
+    if (!slider) return;
+    const scrollLeft = slider.scrollLeft;
+    const firstItem = slider.firstElementChild as HTMLElement | null;
+    const itemWidth = firstItem ? firstItem.offsetWidth + 16 : 300;
+    const idx = Math.round(scrollLeft / itemWidth);
+    setMobileActiveIndex(Math.max(0, Math.min(idx, filteredPhotos.length - 1)));
+  };
+
+  const scrollToSlide = (index: number) => {
+    const slider = mobileSliderRef.current;
+    if (!slider) return;
+    const targetIdx = Math.max(0, Math.min(index, filteredPhotos.length - 1));
+    const firstItem = slider.firstElementChild as HTMLElement | null;
+    const itemWidth = firstItem ? firstItem.offsetWidth + 16 : 300;
+    slider.scrollTo({ left: targetIdx * itemWidth, behavior: 'smooth' });
+    setMobileActiveIndex(targetIdx);
+  };
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -305,7 +328,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
           }}
           className={`editorial-gallery-grid ${selectedCategory === 'all' ? 'is-all-view' : ''}`}
         >
-          {displayedPhotos.map((photo: PhotoAsset, index: number) => {
+          {filteredPhotos.map((photo: PhotoAsset, index: number) => {
             const isFeatured = selectedCategory === 'all' && photo.editorialSpanDesktop === 2;
 
             return (
@@ -322,36 +345,265 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
           })}
         </div>
 
-        {/* Mobile Expand / Collapse Button */}
-        {selectedCategory === 'all' && filteredPhotos.length > 4 && (
-          <div className="gallery-mobile-expand" style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-            <button
-              type="button"
-              onClick={() => setMobileExpanded(!mobileExpanded)}
+        {/* MOBILE VIEW: Horizontal Swipeable Carousel (Vuốt sang ngang từng ảnh một trên điện thoại) */}
+        <div className="gallery-mobile-slider-container">
+          {/* Top Counter Bar */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '0 0.5rem 0.75rem',
+              fontSize: '0.82rem',
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--color-plum)',
+            }}
+          >
+            <span style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <Sparkles size={14} style={{ color: 'var(--color-gold-dark)' }} />
+              {lang === 'vi' ? 'Album Ảnh Cưới' : 'Wedding Album'}
+            </span>
+            <span
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.65rem 1.6rem',
+                background: 'rgba(213, 181, 140, 0.25)',
+                border: '1px solid rgba(213, 181, 140, 0.5)',
+                padding: '0.2rem 0.65rem',
                 borderRadius: 'var(--radius-full)',
-                background: 'linear-gradient(135deg, rgba(243, 213, 218, 0.6) 0%, rgba(255, 249, 246, 0.95) 100%)',
-                border: '1.5px solid rgba(201, 130, 145, 0.45)',
+                fontWeight: 700,
                 color: 'var(--color-rose-dark)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.88rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                boxShadow: 'var(--shadow-sm)',
+                fontSize: '0.78rem',
               }}
             >
-              <span>
-                {mobileExpanded
-                  ? (lang === 'vi' ? 'Thu gọn ảnh cưới ▴' : 'Show fewer photos ▴')
-                  : (lang === 'vi' ? `Xem toàn bộ ${filteredPhotos.length} ảnh cưới ▾` : `View all ${filteredPhotos.length} photos ▾`)}
-              </span>
+              {mobileActiveIndex + 1} / {filteredPhotos.length}
+            </span>
+          </div>
+
+          {/* Swipeable Track */}
+          <div
+            ref={mobileSliderRef}
+            onScroll={handleMobileScroll}
+            className="gallery-mobile-slider"
+          >
+            {filteredPhotos.map((photo: PhotoAsset, index: number) => {
+              const caption = lang === 'vi' ? photo.captionVi : photo.captionEn;
+              return (
+                <div
+                  key={photo.id}
+                  className="gallery-mobile-slide"
+                  onClick={() => openLightbox(index)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${caption} (${t.gallery.viewPhoto})`}
+                >
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      aspectRatio: '3/4',
+                      background: '#F7EFE9',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <picture>
+                      <source srcSet={photo.src} type="image/webp" />
+                      <img
+                        src={photo.srcJpg}
+                        alt={lang === 'vi' ? photo.altVi : photo.altEn}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: photo.objectPosition || 'center 25%',
+                        }}
+                        loading={index < 2 ? 'eager' : 'lazy'}
+                      />
+                    </picture>
+
+                    {/* Gradient Overlay for Text Readability */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(25, 15, 20, 0.92) 0%, rgba(25, 15, 20, 0.45) 45%, transparent 72%)',
+                        pointerEvents: 'none',
+                      }}
+                    />
+
+                    {/* Top Slide Number Pill */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '0.85rem',
+                        left: '0.85rem',
+                        background: 'rgba(255, 249, 246, 0.92)',
+                        border: '1px solid rgba(213, 181, 140, 0.5)',
+                        padding: '0.25rem 0.7rem',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '0.74rem',
+                        fontWeight: 600,
+                        color: 'var(--color-plum)',
+                        fontFamily: 'var(--font-sans)',
+                        backdropFilter: 'blur(6px)',
+                      }}
+                    >
+                      #{String(index + 1).padStart(2, '0')}
+                    </div>
+
+                    {/* Expand icon on top right */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '0.85rem',
+                        right: '0.85rem',
+                        width: '34px',
+                        height: '34px',
+                        borderRadius: '50%',
+                        background: 'rgba(255, 249, 246, 0.92)',
+                        border: '1px solid rgba(213, 181, 140, 0.45)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--color-plum)',
+                        backdropFilter: 'blur(6px)',
+                      }}
+                    >
+                      <Maximize2 size={16} />
+                    </div>
+
+                    {/* Bottom Caption & Tap to zoom Hint */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: '1.25rem 1rem 0.9rem',
+                        color: '#FFF9F6',
+                        textAlign: 'left',
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontFamily: 'var(--font-serif)',
+                          fontSize: '1.05rem',
+                          fontWeight: 600,
+                          marginBottom: '0.25rem',
+                          lineHeight: 1.3,
+                          textShadow: '0 2px 6px rgba(0,0,0,0.5)',
+                        }}
+                      >
+                        {caption}
+                      </p>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                          fontSize: '0.72rem',
+                          opacity: 0.92,
+                          fontFamily: 'var(--font-sans)',
+                          letterSpacing: '0.04em',
+                        }}
+                      >
+                        <span>{lang === 'vi' ? 'Chạm để phóng to xem chi tiết' : 'Tap to view fullscreen'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Swipe Controls & Nav Dots */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: '0.75rem',
+              padding: '0 0.5rem',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => scrollToSlide(mobileActiveIndex - 1)}
+              disabled={mobileActiveIndex === 0}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                border: '1px solid rgba(213, 181, 140, 0.5)',
+                background: mobileActiveIndex === 0 ? 'rgba(247, 239, 233, 0.4)' : '#FFF9F6',
+                color: mobileActiveIndex === 0 ? '#C5B5A8' : 'var(--color-plum)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: mobileActiveIndex === 0 ? 'default' : 'pointer',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+              aria-label="Previous photo"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            {/* Dots */}
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', overflowX: 'auto', maxWidth: '60vw', padding: '0.25rem 0' }}>
+              {filteredPhotos.map((_, i: number) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollToSlide(i)}
+                  style={{
+                    width: i === mobileActiveIndex ? '18px' : '6px',
+                    height: '6px',
+                    borderRadius: '9999px',
+                    background: i === mobileActiveIndex ? 'var(--color-rose-dark)' : 'rgba(213, 181, 140, 0.45)',
+                    border: 'none',
+                    padding: 0,
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                  aria-label={`Go to photo ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => scrollToSlide(mobileActiveIndex + 1)}
+              disabled={mobileActiveIndex === filteredPhotos.length - 1}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                border: '1px solid rgba(213, 181, 140, 0.5)',
+                background: mobileActiveIndex === filteredPhotos.length - 1 ? 'rgba(247, 239, 233, 0.4)' : '#FFF9F6',
+                color: mobileActiveIndex === filteredPhotos.length - 1 ? '#C5B5A8' : 'var(--color-plum)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: mobileActiveIndex === filteredPhotos.length - 1 ? 'default' : 'pointer',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+              aria-label="Next photo"
+            >
+              <ChevronRight size={18} />
             </button>
           </div>
-        )}
+
+          <p
+            style={{
+              textAlign: 'center',
+              fontSize: '0.74rem',
+              color: 'var(--color-rose-dark)',
+              marginTop: '0.5rem',
+              fontFamily: 'var(--font-sans)',
+            }}
+          >
+            {lang === 'vi' ? '← Vuốt sang ngang để xem từng ảnh cưới →' : '← Swipe horizontally to explore each photo →'}
+          </p>
+        </div>
       </div>
 
       {/* Fullscreen Lightbox Modal with Keyboard & Mobile Touch Gestures */}

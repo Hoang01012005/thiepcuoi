@@ -14,6 +14,13 @@ interface StoryTimelineProps {
 const CHAPTER_ROMAN = ['Chapter I', 'Chapter II', 'Chapter III', 'Chapter IV'];
 const CHAPTER_VI = ['Chương I', 'Chương II', 'Chương III', 'Chương IV'];
 
+const STORY_OBJECT_POSITIONS: Record<string, string> = {
+  story01: 'center 56%',
+  story02: 'center 32%',
+  story03: 'center 38%',
+  story04: 'center 56%',
+};
+
 interface ChapterItemProps {
   item: typeof weddingConfig.story[0];
   index: number;
@@ -79,7 +86,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                objectPosition: 'center 20%',
+                objectPosition: STORY_OBJECT_POSITIONS[item.photoKey] || 'center 50%',
                 transition: 'transform 0.6s ease',
               }}
               loading="lazy"
@@ -274,7 +281,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                   <div
                     style={{
                       width: '100%',
-                      height: '190px',
+                      height: '235px',
                       borderRadius: '14px',
                       overflow: 'hidden',
                       border: '1.5px solid rgba(213, 181, 140, 0.5)',
@@ -292,7 +299,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          objectPosition: 'center 20%',
+                          objectPosition: STORY_OBJECT_POSITIONS[item.photoKey] || 'center 50%',
                         }}
                         loading="lazy"
                       />

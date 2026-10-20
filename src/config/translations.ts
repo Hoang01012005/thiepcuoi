@@ -139,6 +139,8 @@ export const translations = {
       accountHolder: 'Chủ tài khoản:',
       copyBtn: 'Sao chép STK',
       copiedBtn: 'Đã sao chép!',
+      scanQrHint: 'Quét mã VietQR chuyển khoản nhanh',
+      enlargeQr: 'Phóng to mã QR',
     },
     closing: {
       thankYouBadge: 'Lời Cảm Ơn Chân Thành',
@@ -283,6 +285,8 @@ export const translations = {
       accountHolder: 'Account Name:',
       copyBtn: 'Copy Account No',
       copiedBtn: 'Copied!',
+      scanQrHint: 'Scan VietQR for quick transfer',
+      enlargeQr: 'Enlarge QR Code',
     },
     closing: {
       thankYouBadge: 'With Sincere Gratitude',
