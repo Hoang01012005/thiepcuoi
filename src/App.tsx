@@ -49,10 +49,7 @@ export function App() {
 
   const handleOpenEnvelope = () => {
     setIsEnvelopeOpened(true);
-    // Auto-initiate audio once user explicitly interacts with the invitation open ceremony
-    if (!isPlaying) {
-      togglePlay();
-    }
+    // Background music will NOT autoplay, only plays when user manually taps music button
   };
 
   // If in dedicated host generator portal, show the separate administration workspace

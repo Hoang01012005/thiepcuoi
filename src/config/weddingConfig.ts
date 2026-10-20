@@ -91,6 +91,11 @@ export interface WeddingConfig {
     src: string;
     title: string;
   };
+  rsvp: {
+    googleSheetUrl: string;
+    googleSheetId: string;
+    scriptUrl?: string;
+  };
 }
 
 export const weddingConfig: WeddingConfig = {
@@ -211,5 +216,10 @@ export const weddingConfig: WeddingConfig = {
     enabled: true,
     src: '/assets/audio/nhacnencuoidi.mp3',
     title: 'Cưới Đi — Nhạc Lễ Cưới Nam & Hiệp',
+  },
+  rsvp: {
+    googleSheetUrl: 'https://docs.google.com/spreadsheets/d/18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo/edit?gid=0#gid=0',
+    googleSheetId: '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
+    scriptUrl: '',
   },
 };

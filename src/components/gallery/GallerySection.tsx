@@ -419,16 +419,6 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                       />
                     </picture>
 
-                    {/* Gradient Overlay for Text Readability */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to top, rgba(25, 15, 20, 0.92) 0%, rgba(25, 15, 20, 0.45) 45%, transparent 72%)',
-                        pointerEvents: 'none',
-                      }}
-                    />
-
                     {/* Top Slide Number Pill */}
                     <div
                       style={{
@@ -444,6 +434,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                         color: 'var(--color-plum)',
                         fontFamily: 'var(--font-sans)',
                         backdropFilter: 'blur(6px)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                       }}
                     >
                       #{String(index + 1).padStart(2, '0')}
@@ -465,48 +456,10 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                         justifyContent: 'center',
                         color: 'var(--color-plum)',
                         backdropFilter: 'blur(6px)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                       }}
                     >
                       <Maximize2 size={16} />
-                    </div>
-
-                    {/* Bottom Caption & Tap to zoom Hint */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        padding: '1.25rem 1rem 0.9rem',
-                        color: '#FFF9F6',
-                        textAlign: 'left',
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontFamily: 'var(--font-serif)',
-                          fontSize: '1.05rem',
-                          fontWeight: 600,
-                          marginBottom: '0.25rem',
-                          lineHeight: 1.3,
-                          textShadow: '0 2px 6px rgba(0,0,0,0.5)',
-                        }}
-                      >
-                        {caption}
-                      </p>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.35rem',
-                          fontSize: '0.72rem',
-                          opacity: 0.92,
-                          fontFamily: 'var(--font-sans)',
-                          letterSpacing: '0.04em',
-                        }}
-                      >
-                        <span>{lang === 'vi' ? 'Chạm để phóng to xem chi tiết' : 'Tap to view fullscreen'}</span>
-                      </div>
                     </div>
                   </div>
                 </div>

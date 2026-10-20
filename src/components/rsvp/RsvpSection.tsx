@@ -5,8 +5,9 @@ import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useMagnetic } from '../../hooks/useMagnetic';
+import { submitRsvp } from '../../services/rsvpService';
 import confetti from 'canvas-confetti';
-import { Heart, CheckCircle2, AlertCircle, Info, Send } from 'lucide-react';
+import { Heart, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 
 interface RsvpSectionProps {
   lang: Language;
@@ -50,22 +51,23 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    // Simulate network submission in Demo Mode
-    setTimeout(() => {
-      // Save to localStorage for demo persistence
-      const savedRSVPs = JSON.parse(localStorage.getItem('wedding_rsvps') || '[]');
-      savedRSVPs.push({
-        ...formData,
-        submittedAt: new Date().toISOString(),
+    try {
+      await submitRsvp({
+        name: formData.name,
+        status: formData.status as 'yes' | 'no',
+        count: formData.count,
+        phone: formData.phone,
+        message: formData.message,
       });
-      localStorage.setItem('wedding_rsvps', JSON.stringify(savedRSVPs));
-
+    } catch (err) {
+      console.warn('Error submitting RSVP:', err);
+    } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
 
@@ -78,7 +80,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
           colors: ['#F3D5DA', '#C98291', '#D5B58C', '#EEDBC5'],
         });
       }
-    }, 600);
+    }
   };
 
   const handleReset = () => {
@@ -113,24 +115,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
         >
           <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
           <BotanicalCorner position="top-right" size={54} color="rgba(213, 181, 140, 0.45)" />
-          {/* Demo Mode Notice Banner */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              padding: '0.75rem 1.15rem',
-              background: 'linear-gradient(135deg, rgba(213, 181, 140, 0.15) 0%, rgba(243, 213, 218, 0.2) 100%)',
-              border: '1px solid rgba(213, 181, 140, 0.4)',
-              borderRadius: 'var(--radius-md)',
-              fontSize: '0.84rem',
-              color: 'var(--color-plum)',
-              marginBottom: '2rem',
-            }}
-          >
-            <Info size={16} style={{ color: 'var(--color-gold-dark)', flexShrink: 0 }} />
-            <span style={{ lineHeight: 1.5 }}>{t.rsvp.demoBadge}</span>
-          </div>
+
 
           {isSubmitted ? (
             <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
