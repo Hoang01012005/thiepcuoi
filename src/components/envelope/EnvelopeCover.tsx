@@ -60,11 +60,11 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#26171E',
+        backgroundColor: '#FAF2EC',
         backgroundImage: `
-          radial-gradient(circle at 50% 40%, rgba(201, 130, 145, 0.4) 0%, transparent 65%),
-          radial-gradient(circle at 20% 80%, rgba(213, 181, 140, 0.2) 0%, transparent 55%),
-          linear-gradient(180deg, #1C0F16 0%, #2E1A24 100%)
+          radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.95) 0%, transparent 65%),
+          radial-gradient(circle at 20% 80%, rgba(213, 181, 140, 0.25) 0%, transparent 55%),
+          linear-gradient(180deg, #FFFDFB 0%, #FAF0EB 50%, #F3E5DC 100%)
         `,
         padding: '1.25rem',
         overflow: 'hidden',
@@ -85,23 +85,48 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
           top: 'clamp(1rem, 3vw, 2rem)',
           right: 'clamp(1rem, 3vw, 2rem)',
           zIndex: 40,
-          background: 'rgba(255, 249, 246, 0.16)',
-          border: '1px solid rgba(255, 249, 246, 0.35)',
-          color: '#FFF9F6',
+          background: 'rgba(255, 255, 255, 0.92)',
+          border: '1.5px solid rgba(213, 181, 140, 0.7)',
+          color: '#49343A',
           padding: '0.45rem 1.15rem',
           borderRadius: 'var(--radius-full)',
           fontSize: '0.82rem',
           fontFamily: 'var(--font-sans)',
+          fontWeight: 600,
           letterSpacing: '0.04em',
           backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 14px rgba(73, 52, 58, 0.08)',
           cursor: 'pointer',
           transition: 'all 0.25s ease',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 249, 246, 0.3)')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 249, 246, 0.16)')}
+        onMouseEnter={(e) => (e.currentTarget.style.background = '#FFFFFF')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.92)')}
       >
         {t.envelope.skipBtn} &rarr;
       </button>
+
+      {/* Romantic Soft Garden Aura Behind Envelope */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url(${PHOTO_REGISTRY.hero.srcJpg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 20%',
+          filter: 'blur(22px) saturate(1.15)',
+          opacity: 0.22,
+          transform: 'scale(1.08)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0.65) 0%, rgba(250, 240, 235, 0.88) 100%)',
+          pointerEvents: 'none',
+        }}
+      />
 
       {/* Floating Golden Dust Highlights in Envelope Ambient */}
       <div

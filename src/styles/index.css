@@ -271,21 +271,81 @@ img {
   100% { height: 16px; }
 }
 
-/* HERO SECTION RESPONSIVE OPTIMIZATION */
+/* LIGHT LUXURY EDITORIAL HERO */
+.hero-light-section {
+  position: relative;
+  min-height: calc(100vh - 65px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 1.25rem clamp(4rem, 6vw, 5.5rem);
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 20%, #FFFDFB 0%, #FAF2ED 50%, #F5EAE3 100%);
+  color: var(--color-plum);
+}
+
+.hero-mobile-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.hero-desktop-view {
+  display: none;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+  .hero-mobile-view {
+    display: none !important;
+  }
+  .hero-desktop-view {
+    display: grid !important;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4rem;
+    align-items: center;
+  }
+}
+
+/* Centerpiece Arched Portrait Frame */
+.hero-portrait-frame {
+  position: relative;
+  width: min(86vw, 340px);
+  aspect-ratio: 2 / 3;
+  border-radius: clamp(140px, 40vw, 175px) clamp(140px, 40vw, 175px) 24px 24px;
+  overflow: hidden;
+  background: #FAF0EB;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 20px 48px rgba(73, 52, 58, 0.13), 0 0 0 1px rgba(213, 181, 140, 0.5);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+@media (min-width: 992px) {
+  .hero-portrait-frame {
+    width: clamp(320px, 28vw, 380px);
+    border-radius: 195px 195px 28px 28px;
+    box-shadow: 0 25px 60px rgba(73, 52, 58, 0.15), 0 0 0 1.5px rgba(213, 181, 140, 0.6);
+  }
+}
+
+.hero-portrait-frame:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 30px 65px rgba(73, 52, 58, 0.18), 0 0 0 2px rgba(213, 181, 140, 0.8);
+}
+
 @media (max-width: 767px) {
   #hero {
-    min-height: auto !important;
-    padding: 2rem 1rem 3rem !important;
-  }
-  .hero-grid-container {
-    gap: 2rem !important;
+    min-height: calc(100vh - 65px) !important;
+    padding: 2.75rem 0.75rem 4.5rem !important;
     display: flex !important;
-    flex-direction: column !important;
-  }
-  .hero-photo-frame {
-    max-width: 280px !important;
-    aspect-ratio: 4/5 !important;
-    box-shadow: 0 10px 28px rgba(73, 52, 58, 0.16) !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .couple-grid {
     grid-template-columns: 1fr !important;
