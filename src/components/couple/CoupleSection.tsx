@@ -88,7 +88,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    objectPosition: '20% 15%',
+                    objectPosition: 'center 15%',
                   }}
                   loading="lazy"
                 />
@@ -209,7 +209,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    objectPosition: '60% 15%',
+                    objectPosition: 'center 20%',
                   }}
                   loading="lazy"
                 />

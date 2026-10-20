@@ -21,3 +21,7 @@ dist-ssr
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Raw asset sources (optimized assets live in public/assets/)
+ANH/
+music/

@@ -209,7 +209,7 @@ export const weddingConfig: WeddingConfig = {
   },
   audio: {
     enabled: true,
-    src: '/assets/audio/wedding-melody.mp3',
-    title: 'Acoustic Wedding Serenade',
+    src: '/assets/audio/nhacnencuoidi.mp3',
+    title: 'Cưới Đi — Nhạc Lễ Cưới Nam & Hiệp',
   },
 };
