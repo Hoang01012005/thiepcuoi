@@ -29,7 +29,8 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
   if (!gift.enabled) return null;
 
   const copyToClipboard = (text: string, type: 'groom' | 'bride') => {
-    navigator.clipboard.writeText(text).then(() => {
+    const cleanText = text.replace(/\s+/g, '');
+    navigator.clipboard.writeText(cleanText).then(() => {
       if (type === 'groom') {
         setCopiedGroom(true);
         setTimeout(() => setCopiedGroom(false), 2500);
@@ -40,8 +41,8 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
     });
   };
 
-  const groomQr = gift.groomBank.qrUrl || `https://img.vietqr.io/image/TCB-${gift.groomBank.accountNumber}-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=${encodeURIComponent(gift.groomBank.accountHolder)}`;
-  const brideQr = gift.brideBank.qrUrl || `https://img.vietqr.io/image/VCB-${gift.brideBank.accountNumber}-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=${encodeURIComponent(gift.brideBank.accountHolder)}`;
+  const groomQr = gift.groomBank.qrUrl || `https://img.vietqr.io/image/TPB-${gift.groomBank.accountNumber.replace(/\s+/g, '')}-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=${encodeURIComponent(gift.groomBank.accountHolder)}`;
+  const brideQr = gift.brideBank.qrUrl || `https://img.vietqr.io/image/TCB-${gift.brideBank.accountNumber.replace(/\s+/g, '')}-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=${encodeURIComponent(gift.brideBank.accountHolder)}`;
 
   return (
     <section ref={sectionRef} id="gift" className="section-wrapper">
@@ -516,7 +517,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
             <button
               type="button"
               onClick={() => {
-                navigator.clipboard.writeText(previewQr.stk);
+                navigator.clipboard.writeText(previewQr.stk.replace(/\s+/g, ''));
               }}
               className="btn-primary"
               style={{ width: '100%', padding: '0.75rem', fontSize: '0.9rem' }}

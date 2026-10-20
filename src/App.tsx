@@ -84,7 +84,11 @@ export function App() {
 
       {/* Interactive Envelope Invitation Cover */}
       {!isEnvelopeOpened && (
-        <EnvelopeCover lang={lang} onOpen={handleOpenEnvelope} />
+        <EnvelopeCover
+          lang={lang}
+          onStartOpen={playAudio}
+          onOpen={handleOpenEnvelope}
+        />
       )}
 
       {/* Main Wedding Invitation Website */}

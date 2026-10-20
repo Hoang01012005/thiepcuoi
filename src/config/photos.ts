@@ -63,6 +63,22 @@ export const PHOTO_REGISTRY = {
     width: 640,
     height: 960,
   },
+  qrGroom: {
+    src: '/assets/photos/qr-groom.webp',
+    srcJpg: '/assets/photos/qr-groom.png',
+    altVi: 'Mã QR mừng cưới chú rể Hoàng Nam (TPBank)',
+    altEn: "QR code for Groom Nam's wedding gift (TPBank)",
+    width: 613,
+    height: 685,
+  },
+  qrBride: {
+    src: '/assets/photos/qr-bride.webp',
+    srcJpg: '/assets/photos/qr-bride.png',
+    altVi: 'Mã QR mừng cưới cô dâu Ngọc Hiệp (Techcombank)',
+    altEn: "QR code for Bride Hiep's wedding gift (Techcombank)",
+    width: 735,
+    height: 829,
+  },
   coupleFormal: {
     src: '/assets/photos/album-01.webp',
     srcJpg: '/assets/photos/album-01.jpg',

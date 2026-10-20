@@ -208,18 +208,18 @@ export const weddingConfig: WeddingConfig = {
   gift: {
     enabled: true,
     groomBank: {
-      bankName: 'Techcombank (Ngân hàng TMCP Kỹ Thương)',
-      bankCode: 'TCB',
-      accountNumber: '19036888999999',
-      accountHolder: 'HOANG NAM',
-      qrUrl: 'https://img.vietqr.io/image/TCB-19036888999999-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=HOANG%20NAM',
+      bankName: 'TPBank (Ngân hàng TMCP Tiên Phong)',
+      bankCode: 'TPB',
+      accountNumber: '0019 0019 202',
+      accountHolder: 'NGUYEN VAN NAM',
+      qrUrl: '/assets/photos/qr-groom.png',
     },
     brideBank: {
-      bankName: 'Vietcombank (Ngân hàng TMCP Ngoại Thương)',
-      bankCode: 'VCB',
-      accountNumber: '0011004567890',
-      accountHolder: 'NGOC HIEP',
-      qrUrl: 'https://img.vietqr.io/image/VCB-0011004567890-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=NGOC%20HIEP',
+      bankName: 'Techcombank (Ngân hàng TMCP Kỹ Thương)',
+      bankCode: 'TCB',
+      accountNumber: '7620 0022 22',
+      accountHolder: 'DOAN THI HIEP',
+      qrUrl: '/assets/photos/qr-bride.png',
     },
   },
   audio: {
