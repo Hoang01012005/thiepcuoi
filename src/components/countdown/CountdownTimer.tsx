@@ -5,6 +5,7 @@ import { useCountdown } from '../../hooks/useCountdown';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
 import { Heart } from 'lucide-react';
+import { WeddingCalendar } from './WeddingCalendar';
 
 interface CountdownTimerProps {
   lang: Language;
@@ -82,6 +83,9 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
           title={t.countdown.title}
           subtitle={t.countdown.subtitle}
         />
+
+        {/* Wedding Calendar Widget with Heart Markings */}
+        <WeddingCalendar lang={lang} />
 
         {isPassed ? (
           <div

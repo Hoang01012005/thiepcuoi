@@ -168,7 +168,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
             marginBottom: '1rem',
           }}
         >
-          {lang === 'vi' ? item.titleVi : item.titleEn}
+          {lang === 'vi' ? item.titleVi.replace(/^CHƯƠNG\s+\d+:\s*/i, '') : item.titleEn}
         </h3>
 
         <p
@@ -326,8 +326,8 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                   {/* Date badge */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.45rem' }}>
                     <Calendar size={13} style={{ color: 'var(--color-rose)' }} />
-                    <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-sans)', fontWeight: 600, color: 'var(--color-rose-dark)', letterSpacing: '0.08em' }}>
-                      {item.year}
+                    <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-sans)', fontWeight: 600, color: 'var(--color-rose-dark)', letterSpacing: '0.04em' }}>
+                      {item.dateKey}
                     </span>
                   </div>
 
@@ -341,7 +341,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                       lineHeight: 1.3,
                     }}
                   >
-                    {lang === 'vi' ? item.titleVi : item.titleEn}
+                    {lang === 'vi' ? item.titleVi.replace(/^CHƯƠNG\s+\d+:\s*/i, '') : item.titleEn}
                   </h3>
 
                   <p

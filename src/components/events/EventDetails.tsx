@@ -11,11 +11,11 @@ interface EventDetailsProps {
 }
 
 const SWATCH_NAMES: Record<string, { vi: string; en: string }> = {
-  '#F3D5DA': { vi: 'Hồng phấn', en: 'Blush Pink' },
-  '#C98291': { vi: 'Hồng tro', en: 'Dusty Rose' },
-  '#F7EFE9': { vi: 'Trắng ngà', en: 'Warm Ivory' },
-  '#D5B58C': { vi: 'Vàng Champagne', en: 'Champagne' },
-  '#49343A': { vi: 'Mận trầm', en: 'Espresso Plum' },
+  '#EEDBC5': { vi: 'Be', en: 'Beige' },
+  '#FFF9ED': { vi: 'Kem', en: 'Cream' },
+  '#C2A68C': { vi: 'Nâu nhạt', en: 'Soft Brown' },
+  '#B8C9C4': { vi: 'Xanh pastel', en: 'Pastel Sage' },
+  '#A7A6A6': { vi: 'Ghi xám', en: 'Warm Grey' },
 };
 
 export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
@@ -101,8 +101,8 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                       {t.event.timeLabel}
                     </p>
-                    <p style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
-                      {event.ceremony.time} &mdash; {t.hero.weddingDate}
+                    <p style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
+                      {event.ceremony.time}
                     </p>
                   </div>
                 </div>
@@ -191,8 +191,8 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                       {t.event.timeLabel}
                     </p>
-                    <p style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
-                      {event.reception.time} &mdash; {t.hero.weddingDate}
+                    <p style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
+                      {event.reception.time}
                     </p>
                   </div>
                 </div>

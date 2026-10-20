@@ -4,6 +4,7 @@ import { PHOTO_REGISTRY } from '../../config/photos';
 import { translations, type Language } from '../../config/translations';
 import { useGuestName } from '../../hooks/useGuestName';
 import { BotanicalCorner } from '../common/BotanicalCorners';
+import confetti from 'canvas-confetti';
 import { Sparkles, Heart } from 'lucide-react';
 
 interface EnvelopeCoverProps {
@@ -12,31 +13,37 @@ interface EnvelopeCoverProps {
 }
 
 export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) => {
-  // Animation sequence states: 'sealed' -> 'unsealing' -> 'card-rising' -> 'revealing-hero'
-  const [animStage, setAnimStage] = useState<'sealed' | 'unsealing' | 'card-rising' | 'revealing-hero'>('sealed');
+  // Animation states: 'closed' -> 'opening' -> 'revealing'
+  const [animStage, setAnimStage] = useState<'closed' | 'opening' | 'revealing'>('closed');
   const guestName = useGuestName();
   const t = translations[lang];
 
-  const handleOpenClick = () => {
-    if (animStage !== 'sealed') return;
+  const handleOpenClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (animStage !== 'closed') return;
 
-    // Step 1: Wax seal breaks & Flap unfolds in 3D
-    setAnimStage('unsealing');
+    // Trigger celebration confetti
+    try {
+      confetti({
+        particleCount: 65,
+        spread: 80,
+        origin: { y: 0.5 },
+        colors: ['#F3D5DA', '#C98291', '#D5B58C', '#FFF9F6'],
+      });
+    } catch {}
 
-    // Step 2: Card glides up from the pocket
+    // Step 1: Double gatefold doors slide to left and right
+    setAnimStage('opening');
+
+    // Step 2: Overlay fades out and hands over to Hero
     setTimeout(() => {
-      setAnimStage('card-rising');
-    }, 700);
+      setAnimStage('revealing');
+    }, 1300);
 
-    // Step 3: Cinematic reveal handover to Hero section
-    setTimeout(() => {
-      setAnimStage('revealing-hero');
-    }, 1800);
-
-    // Step 4: Final unmount & handover
+    // Step 3: Complete handover & unmount
     setTimeout(() => {
       onOpen();
-    }, 2400);
+    }, 1850);
   };
 
   const handleSkip = (e: React.MouseEvent) => {
@@ -44,9 +51,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
     onOpen();
   };
 
-  const isFlapOpen = animStage !== 'sealed';
-  const isCardUp = animStage === 'card-rising' || animStage === 'revealing-hero';
-  const isRevealing = animStage === 'revealing-hero';
+  const isOpening = animStage === 'opening' || animStage === 'revealing';
+  const isRevealing = animStage === 'revealing';
 
   return (
     <div
@@ -68,10 +74,10 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
         `,
         padding: '1.25rem',
         overflow: 'hidden',
-        perspective: '1400px',
+        perspective: '1600px',
         transition: 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s ease',
         opacity: isRevealing ? 0 : 1,
-        transform: isRevealing ? 'scale(1.06)' : 'scale(1)',
+        transform: isRevealing ? 'scale(1.05)' : 'scale(1)',
         pointerEvents: isRevealing ? 'none' : 'auto',
       }}
     >
@@ -84,8 +90,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
           position: 'absolute',
           top: 'clamp(1rem, 3vw, 2rem)',
           right: 'clamp(1rem, 3vw, 2rem)',
-          zIndex: 40,
-          background: 'rgba(255, 255, 255, 0.92)',
+          zIndex: 60,
+          background: 'rgba(255, 255, 255, 0.94)',
           border: '1.5px solid rgba(213, 181, 140, 0.7)',
           color: '#49343A',
           padding: '0.45rem 1.15rem',
@@ -100,12 +106,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
           transition: 'all 0.25s ease',
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = '#FFFFFF')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.92)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.94)')}
       >
         {t.envelope.skipBtn} &rarr;
       </button>
 
-      {/* Romantic Soft Garden Aura Behind Envelope */}
+      {/* Romantic Soft Garden Aura in Background */}
       <div
         style={{
           position: 'absolute',
@@ -119,468 +125,452 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onOpen }) =>
           pointerEvents: 'none',
         }}
       />
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0.65) 0%, rgba(250, 240, 235, 0.88) 100%)',
-          pointerEvents: 'none',
-        }}
-      />
 
-      {/* Floating Golden Dust Highlights in Envelope Ambient */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          background: 'radial-gradient(circle at 50% 30%, rgba(247, 229, 200, 0.12) 0%, transparent 60%)',
-        }}
-      />
-
-      {/* Main 3D Envelope Scene Container */}
+      {/* 3D GATEFOLD INVITATION ENVELOPE CONTAINER */}
       <div
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '520px',
-          height: 'clamp(480px, 78vh, 620px)',
+          maxWidth: '560px',
+          height: 'clamp(490px, 80vh, 640px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           transformStyle: 'preserve-3d',
         }}
       >
-        {/* PHYSICAL 3D ENVELOPE BASE */}
+        {/* ======================================================== */}
+        {/* 1. INTERIOR WEDDING CARD (Revealed when doors open) */}
+        {/* ======================================================== */}
         <div
           style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
+            position: 'absolute',
+            inset: 0,
             borderRadius: '24px',
-            boxShadow: '0 35px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(213, 181, 140, 0.35)',
-            transformStyle: 'preserve-3d',
+            background: 'linear-gradient(160deg, #FFFFFF 0%, #FFF9F6 50%, #FAF0EB 100%)',
+            border: '2px solid rgba(213, 181, 140, 0.6)',
+            boxShadow: '0 25px 60px rgba(73, 52, 58, 0.16)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: 'clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem)',
+            overflow: 'hidden',
+            zIndex: 10,
           }}
         >
-          {/* 1. Interior Pocket Backing (Champagne Silk Pattern) */}
+          {/* Botanical Corners */}
+          <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.55)" />
+          <BotanicalCorner position="top-right" size={54} color="rgba(213, 181, 140, 0.55)" />
+          <BotanicalCorner position="bottom-left" size={54} color="rgba(213, 181, 140, 0.55)" />
+          <BotanicalCorner position="bottom-right" size={54} color="rgba(213, 181, 140, 0.55)" />
+
+          {/* Inner Hairline Frame */}
           <div
             style={{
               position: 'absolute',
-              inset: 0,
-              borderRadius: '24px',
-              background: 'linear-gradient(150deg, #F3EAE4 0%, #E6D7CE 100%)',
-              border: '1.5px solid #D5B58C',
-              overflow: 'hidden',
-              zIndex: 1,
-            }}
-          >
-            {/* Subtle Diamond Damask Pattern */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: '12px',
-                border: '1px solid rgba(213, 181, 140, 0.4)',
-                borderRadius: '16px',
-                pointerEvents: 'none',
-              }}
-            />
-          </div>
-
-          {/* 2. THE WEDDING INVITATION CARD (Slides out of pocket) */}
-          <div
-            style={{
-              position: 'absolute',
-              left: '4%',
-              right: '4%',
-              bottom: '5%',
-              height: '92%',
-              background: 'linear-gradient(160deg, #FFFFFF 0%, #FFF9F6 50%, #FAF0EB 100%)',
-              borderRadius: '20px',
-              border: '1.5px solid #E5CDB4',
-              boxShadow: isCardUp
-                ? '0 25px 60px rgba(47, 30, 36, 0.35), 0 0 0 1px rgba(213, 181, 140, 0.5)'
-                : '0 8px 24px rgba(47, 30, 36, 0.15)',
-              padding: 'clamp(1.5rem, 4vw, 2.4rem) clamp(1.2rem, 3.5vw, 2.2rem)',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              zIndex: 2,
-              transform: isCardUp
-                ? 'translate3d(0, -90px, 30px) scale(1.02)'
-                : 'translate3d(0, 0px, 0px) scale(1)',
-              transition: 'transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.95s ease',
-              overflow: 'hidden',
-            }}
-          >
-            {/* Botanical Corner Flourishes on Card */}
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.6)" />
-            <BotanicalCorner position="top-right" size={54} color="rgba(213, 181, 140, 0.6)" />
-
-            {/* Inner Gold Foil Hairline Border */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: '8px',
-                border: '1px solid rgba(213, 181, 140, 0.35)',
-                borderRadius: '14px',
-                pointerEvents: 'none',
-              }}
-            />
-
-            {/* Arch Wedding Photo of Nam & Hiệp */}
-            <div
-              style={{
-                position: 'relative',
-                width: '105px',
-                height: '135px',
-                borderRadius: '55px 55px 10px 10px',
-                overflow: 'hidden',
-                border: '2px solid #D5B58C',
-                boxShadow: '0 6px 18px rgba(73, 52, 58, 0.16)',
-                background: '#F7EFE9',
-                marginTop: '0.25rem',
-                flexShrink: 0,
-              }}
-            >
-              <picture>
-                <source srcSet={PHOTO_REGISTRY.cover.src} type="image/webp" />
-                <img
-                  src={PHOTO_REGISTRY.cover.srcJpg}
-                  alt={lang === 'vi' ? PHOTO_REGISTRY.cover.altVi : PHOTO_REGISTRY.cover.altEn}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center 20%',
-                  }}
-                />
-              </picture>
-            </div>
-
-            {/* Guest Recipient Tag — Crisp, Bold, Solid Contrast */}
-            <div
-              style={{
-                display: 'inline-flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '0.55rem 1.8rem',
-                margin: '0.6rem 0',
-                borderRadius: 'var(--radius-full)',
-                background: '#FFFFFF',
-                border: '1.5px solid #C9A063',
-                boxShadow: '0 4px 16px rgba(73, 52, 58, 0.08)',
-                maxWidth: '92%',
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.24em',
-                  textTransform: 'uppercase',
-                  color: '#9E6426',
-                  fontWeight: 600,
-                  marginBottom: '0.15rem',
-                }}
-              >
-                {t.envelope.invitationFor}
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(1.2rem, 3.6vw, 1.55rem)',
-                  fontWeight: 700,
-                  color: '#2E1810',
-                  letterSpacing: '0.02em',
-                  lineHeight: 1.25,
-                  wordBreak: 'break-word',
-                }}
-              >
-                {guestName || t.envelope.guestDefault}
-              </span>
-            </div>
-
-            {/* Formal Wedding Announcement */}
-            <div>
-              <p
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-text-muted)',
-                  marginBottom: '0.35rem',
-                  fontWeight: 500,
-                }}
-              >
-                {t.envelope.formalInvite}
-              </p>
-
-              <h1
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(1.85rem, 4.8vw, 2.5rem)',
-                  fontWeight: 600,
-                  color: 'var(--color-plum)',
-                  letterSpacing: '0.03em',
-                  lineHeight: 1.15,
-                  margin: '0.25rem 0',
-                }}
-              >
-                <span>{weddingConfig.couple.groom.shortName}</span>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    margin: '0 0.5rem',
-                    color: 'var(--color-rose)',
-                    fontFamily: 'var(--font-serif)',
-                    fontStyle: 'italic',
-                    fontSize: '0.9em',
-                    fontWeight: 400,
-                  }}
-                >
-                  &amp;
-                </span>
-                <span>{weddingConfig.couple.bride.shortName}</span>
-              </h1>
-
-              <p
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '1.1rem',
-                  fontStyle: 'italic',
-                  color: 'var(--color-rose-dark)',
-                  letterSpacing: '0.1em',
-                  marginTop: '0.2rem',
-                }}
-              >
-                {t.hero.weddingDate}
-              </p>
-            </div>
-
-            {/* Interactive Open Action Button */}
-            <div style={{ marginTop: '0.5rem' }}>
-              <button
-                type="button"
-                onClick={handleOpenClick}
-                disabled={animStage !== 'sealed'}
-                aria-label={t.envelope.openBtn}
-                className="magnetic-btn sheen-effect"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.65rem',
-                  padding: '0.85rem 2.2rem',
-                  background: 'linear-gradient(135deg, #A84B5B 0%, #8C3947 50%, #6E2734 100%)',
-                  color: '#FFFFFF',
-                  border: '1.5px solid rgba(255, 235, 220, 0.5)',
-                  borderRadius: 'var(--radius-full)',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.98rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.06em',
-                  boxShadow: '0 8px 24px rgba(140, 57, 71, 0.45)',
-                  cursor: animStage === 'sealed' ? 'pointer' : 'default',
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  transform: isFlapOpen ? 'scale(1.05)' : 'scale(1)',
-                }}
-              >
-                <Sparkles size={17} style={{ color: '#EEDBC5' }} />
-                <span>{t.envelope.openBtn}</span>
-                <Heart size={15} fill="#FFFFFF" style={{ marginLeft: '2px' }} />
-              </button>
-
-              <p
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.76rem',
-                  color: 'var(--color-text-muted)',
-                  marginTop: '0.75rem',
-                  fontStyle: 'italic',
-                }}
-              >
-                {t.envelope.tapToOpen}
-              </p>
-            </div>
-          </div>
-
-          {/* 3. ENVELOPE POCKET FRONT (Layer that holds the card inside) */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '42%',
-              background: 'linear-gradient(180deg, rgba(255, 251, 249, 0.3) 0%, #F5ECE6 85%)',
-              borderBottomLeftRadius: '24px',
-              borderBottomRightRadius: '24px',
-              borderBottom: '2px solid #EEDBC5',
-              borderLeft: '1.5px solid #EEDBC5',
-              borderRight: '1.5px solid #EEDBC5',
+              inset: '10px',
+              border: '1px solid rgba(213, 181, 140, 0.35)',
+              borderRadius: '16px',
               pointerEvents: 'none',
-              zIndex: 3,
-              boxShadow: 'inset 0 10px 20px rgba(73, 52, 58, 0.05)',
             }}
           />
 
-          {/* 4. TOP 3D FOLDING FLAP WITH EMBOSSED WAX SEAL */}
+          {/* Monogram */}
+          <div
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.8rem, 4vw, 2.4rem)',
+              fontWeight: 700,
+              letterSpacing: '0.18em',
+              color: 'var(--color-rose-dark)',
+              marginBottom: '0.5rem',
+            }}
+          >
+            {weddingConfig.couple.monogram}
+          </div>
+
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.22em',
+              color: 'var(--color-text-muted)',
+              marginBottom: '1rem',
+            }}
+          >
+            {t.envelope.formalInvite}
+          </p>
+
+          <h2
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.9rem, 4.5vw, 2.6rem)',
+              color: 'var(--color-plum)',
+              fontWeight: 600,
+              lineHeight: 1.25,
+              margin: '0 0 0.85rem',
+            }}
+          >
+            {weddingConfig.couple.groom.shortName}
+            <span style={{ display: 'block', fontSize: '0.9em', color: 'var(--color-rose)', margin: '0.2rem 0' }}>
+              &amp;
+            </span>
+            {weddingConfig.couple.bride.shortName}
+          </h2>
+
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.35rem 1.1rem',
+              borderRadius: 'var(--radius-full)',
+              background: 'rgba(213, 181, 140, 0.15)',
+              border: '1px solid rgba(213, 181, 140, 0.45)',
+              fontSize: '0.86rem',
+              fontFamily: 'var(--font-serif)',
+              fontStyle: 'italic',
+              color: 'var(--color-plum)',
+              marginTop: '0.5rem',
+            }}
+          >
+            <Sparkles size={14} style={{ color: 'var(--color-gold-dark)' }} />
+            <span>28 &bull; 29 . 11 . 2026</span>
+          </div>
+
+          <p
+            style={{
+              marginTop: '1.25rem',
+              fontSize: '0.85rem',
+              color: 'var(--color-text-muted)',
+              maxWidth: '360px',
+              lineHeight: 1.6,
+            }}
+          >
+            Sự hiện diện của bạn là niềm vinh hạnh và hạnh phúc lớn nhất của chúng tôi.
+          </p>
+        </div>
+
+        {/* ======================================================== */}
+        {/* 2. LEFT GATE PANEL (French Door - Slides to Left) */}
+        {/* ======================================================== */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: '50%',
+            background: 'linear-gradient(135deg, #FFFDFB 0%, #FAF0EB 60%, #F5E6DC 100%)',
+            borderTopLeftRadius: '24px',
+            borderBottomLeftRadius: '24px',
+            borderTop: '2px solid rgba(213, 181, 140, 0.65)',
+            borderBottom: '2px solid rgba(213, 181, 140, 0.65)',
+            borderLeft: '2px solid rgba(213, 181, 140, 0.65)',
+            borderRight: '1.5px solid rgba(213, 181, 140, 0.5)',
+            boxShadow: isOpening
+              ? 'none'
+              : '5px 0 20px rgba(73, 52, 58, 0.12), -5px 15px 35px rgba(73, 52, 58, 0.15)',
+            zIndex: 30,
+            overflow: 'hidden',
+            transformOrigin: 'left center',
+            transform: isOpening ? 'translateX(-104%) rotateY(-25deg)' : 'translateX(0) rotateY(0)',
+            opacity: isOpening ? 0 : 1,
+            transition: 'transform 1.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
+            pointerEvents: isOpening ? 'none' : 'auto',
+          }}
+        >
+          {/* Botanical Corners on Left Door */}
+          <BotanicalCorner position="top-left" size={48} color="rgba(213, 181, 140, 0.5)" />
+          <BotanicalCorner position="bottom-left" size={48} color="rgba(213, 181, 140, 0.5)" />
+
+          {/* Gold Foil Border Inset */}
           <div
             style={{
               position: 'absolute',
-              top: 0,
+              top: '12px',
+              bottom: '12px',
+              left: '12px',
+              right: '6px',
+              borderTop: '1px solid rgba(213, 181, 140, 0.4)',
+              borderBottom: '1px solid rgba(213, 181, 140, 0.4)',
+              borderLeft: '1px solid rgba(213, 181, 140, 0.4)',
+              borderRight: 'none',
+              borderTopLeftRadius: '14px',
+              borderBottomLeftRadius: '14px',
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Left Ribbon Half */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
               left: 0,
               right: 0,
-              height: '30%',
-              transformOrigin: 'top center',
-              transformStyle: 'preserve-3d',
-              transform: isFlapOpen ? 'rotateX(-180deg)' : 'rotateX(0deg)',
-              transition: 'transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
-              zIndex: animStage === 'card-rising' || animStage === 'revealing-hero' ? 1 : 5,
-              pointerEvents: animStage === 'sealed' ? 'auto' : 'none',
-              cursor: 'pointer',
+              height: '42px',
+              transform: 'translateY(-50%)',
+              background: 'linear-gradient(180deg, rgba(201, 130, 145, 0.28) 0%, rgba(155, 56, 72, 0.38) 100%)',
+              borderTop: '1px solid rgba(213, 181, 140, 0.6)',
+              borderBottom: '1px solid rgba(213, 181, 140, 0.6)',
             }}
-            onClick={handleOpenClick}
+          />
+
+          {/* Left Door Monogram Letter */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '22%',
+              right: '18px',
+              fontFamily: 'var(--font-display)',
+              fontSize: '2rem',
+              color: 'rgba(201, 130, 145, 0.35)',
+              fontWeight: 700,
+              userSelect: 'none',
+            }}
           >
-            {/* Front of Flap (Triangle pointing down) */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                background: 'linear-gradient(170deg, #FBF4EE 0%, #EDE1D7 100%)',
-                clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-                borderTopLeftRadius: '24px',
-                borderTopRightRadius: '24px',
-                boxShadow: '0 12px 28px rgba(47, 30, 36, 0.25)',
-              }}
-            >
-              {/* Flap Gold Hairline Outline */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  clipPath: 'polygon(4% 0, 96% 0, 50% 95%)',
-                  border: '1px solid rgba(213, 181, 140, 0.5)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
+            N
+          </div>
+        </div>
 
-            {/* ROYAL WAX SEAL WITH MONOGRAM N & H (Positioned at tip, outside clipPath so it's a complete circle) */}
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                zIndex: 6,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                pointerEvents: animStage === 'sealed' ? 'auto' : 'none',
-              }}
-            >
-              <div
-                className="seal-pulse"
-                style={{
-                  width: '56px',
-                  height: '56px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle at 35% 35%, #B84758 0%, #8A2B3A 55%, #631C28 100%)',
-                  border: '2px solid rgba(255, 235, 220, 0.45)',
-                  boxShadow: '0 8px 22px rgba(138, 43, 58, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.35)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: animStage === 'sealed' ? 'translateY(50%) scale(1)' : 'translateY(50%) scale(1.25)',
-                  opacity: animStage === 'sealed' ? 1 : 0,
-                  cursor: 'pointer',
-                  transition: 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease',
-                }}
-              >
-                {/* Monogram Seal Engraving */}
-                <div
-                  style={{
-                    width: '52px',
-                    height: '52px',
-                    borderRadius: '50%',
-                    border: '1.5px dashed rgba(238, 219, 197, 0.7)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '0.85rem',
-                      fontWeight: 700,
-                      color: '#FFF2E2',
-                      letterSpacing: '0.12em',
-                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.4)',
-                    }}
-                  >
-                    N &amp; H
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '0.55rem',
-                      color: '#EEDBC5',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    2026
-                  </span>
-                </div>
-              </div>
-            </div>
+        {/* ======================================================== */}
+        {/* 3. RIGHT GATE PANEL (French Door - Slides to Right) */}
+        {/* ======================================================== */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            width: '50%',
+            background: 'linear-gradient(225deg, #FFFDFB 0%, #FAF0EB 60%, #F5E6DC 100%)',
+            borderTopRightRadius: '24px',
+            borderBottomRightRadius: '24px',
+            borderTop: '2px solid rgba(213, 181, 140, 0.65)',
+            borderBottom: '2px solid rgba(213, 181, 140, 0.65)',
+            borderRight: '2px solid rgba(213, 181, 140, 0.65)',
+            borderLeft: '1.5px solid rgba(213, 181, 140, 0.5)',
+            boxShadow: isOpening
+              ? 'none'
+              : '-5px 0 20px rgba(73, 52, 58, 0.12), 5px 15px 35px rgba(73, 52, 58, 0.15)',
+            zIndex: 30,
+            overflow: 'hidden',
+            transformOrigin: 'right center',
+            transform: isOpening ? 'translateX(104%) rotateY(25deg)' : 'translateX(0) rotateY(0)',
+            opacity: isOpening ? 0 : 1,
+            transition: 'transform 1.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
+            pointerEvents: isOpening ? 'none' : 'auto',
+          }}
+        >
+          {/* Botanical Corners on Right Door */}
+          <BotanicalCorner position="top-right" size={48} color="rgba(213, 181, 140, 0.5)" />
+          <BotanicalCorner position="bottom-right" size={48} color="rgba(213, 181, 140, 0.5)" />
 
-            {/* Backside of Flap (Revealed when opened 180 degrees) */}
+          {/* Gold Foil Border Inset */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '12px',
+              bottom: '12px',
+              left: '6px',
+              right: '12px',
+              borderTop: '1px solid rgba(213, 181, 140, 0.4)',
+              borderBottom: '1px solid rgba(213, 181, 140, 0.4)',
+              borderRight: '1px solid rgba(213, 181, 140, 0.4)',
+              borderLeft: 'none',
+              borderTopRightRadius: '14px',
+              borderBottomRightRadius: '14px',
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Right Ribbon Half */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: 0,
+              right: 0,
+              height: '42px',
+              transform: 'translateY(-50%)',
+              background: 'linear-gradient(180deg, rgba(201, 130, 145, 0.28) 0%, rgba(155, 56, 72, 0.38) 100%)',
+              borderTop: '1px solid rgba(213, 181, 140, 0.6)',
+              borderBottom: '1px solid rgba(213, 181, 140, 0.6)',
+            }}
+          />
+
+          {/* Right Door Monogram Letter */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '22%',
+              left: '18px',
+              fontFamily: 'var(--font-display)',
+              fontSize: '2rem',
+              color: 'rgba(201, 130, 145, 0.35)',
+              fontWeight: 700,
+              userSelect: 'none',
+            }}
+          >
+            H
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* 4. CENTER SEAM WAX SEAL & GUEST INVITATION TAG */}
+        {/* ======================================================== */}
+        <div
+          onClick={handleOpenClick}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            zIndex: 40,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            cursor: 'pointer',
+            transition: 'opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)',
+            opacity: isOpening ? 0 : 1,
+            transform: isOpening ? 'translate(-50%, -50%) scale(1.3)' : 'translate(-50%, -50%) scale(1)',
+            pointerEvents: isOpening ? 'none' : 'auto',
+          }}
+        >
+          {/* Guest Name Invitation Badge above seal */}
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.96)',
+              padding: '0.45rem 1.25rem',
+              borderRadius: 'var(--radius-full)',
+              border: '1.5px solid rgba(213, 181, 140, 0.7)',
+              boxShadow: '0 8px 24px rgba(73, 52, 58, 0.12)',
+              marginBottom: '1rem',
+              textAlign: 'center',
+              whiteSpace: 'nowrap',
+              maxWidth: '320px',
+            }}
+          >
+            <span
+              style={{
+                display: 'block',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.68rem',
+                fontWeight: 600,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: 'var(--color-text-muted)',
+              }}
+            >
+              {t.envelope.invitationFor}
+            </span>
+            <span
+              style={{
+                display: 'block',
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1.15rem',
+                fontWeight: 700,
+                color: 'var(--color-plum)',
+                letterSpacing: '0.02em',
+                marginTop: '1px',
+              }}
+            >
+              {guestName || t.envelope.guestDefault}
+            </span>
+          </div>
+
+          {/* Royal Wax Seal Button */}
+          <div
+            className="seal-pulse"
+            style={{
+              position: 'relative',
+              width: 'clamp(84px, 18vw, 104px)',
+              height: 'clamp(84px, 18vw, 104px)',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 35% 35%, #D95D74 0%, #A63B4F 60%, #6E2031 100%)',
+              border: '3px solid rgba(255, 235, 220, 0.55)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              userSelect: 'none',
+              transition: 'transform 0.25s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            {/* Wax Edge Texture */}
             <div
               style={{
                 position: 'absolute',
-                inset: 0,
-                transform: 'rotateX(180deg)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                background: 'linear-gradient(135deg, #EADBCF 0%, #D8C3B3 100%)',
-                clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-                borderTopLeftRadius: '24px',
-                borderTopRightRadius: '24px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                inset: '-3px',
+                borderRadius: '50%',
+                border: '1.5px dashed rgba(213, 181, 140, 0.45)',
+                pointerEvents: 'none',
               }}
-            >
+            />
+
+            {/* Monogram Seal Inscription */}
+            <div style={{ textAlign: 'center' }}>
               <div
                 style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  border: '1px solid rgba(213, 181, 140, 0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'rgba(73, 52, 58, 0.4)',
                   fontFamily: 'var(--font-display)',
-                  fontSize: '0.75rem',
+                  fontSize: 'clamp(1.4rem, 3.5vw, 1.8rem)',
+                  fontWeight: 700,
+                  letterSpacing: '0.12em',
+                  color: '#FFEEDD',
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)',
                 }}
               >
-                N&amp;H
+                {weddingConfig.couple.monogram}
               </div>
             </div>
           </div>
+
+          {/* Glow Action Button */}
+          <button
+            type="button"
+            onClick={handleOpenClick}
+            style={{
+              marginTop: '1.25rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.55rem',
+              padding: '0.65rem 1.6rem',
+              borderRadius: 'var(--radius-full)',
+              background: 'linear-gradient(135deg, var(--color-rose) 0%, var(--color-rose-dark) 100%)',
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.88rem',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              boxShadow: '0 6px 20px rgba(201, 130, 145, 0.5)',
+              cursor: 'pointer',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+          >
+            <Heart size={15} style={{ fill: 'currentColor' }} />
+            <span>{t.envelope.openBtn}</span>
+          </button>
+
+          <span
+            style={{
+              marginTop: '0.65rem',
+              fontSize: '0.74rem',
+              color: 'var(--color-text-muted)',
+              fontFamily: 'var(--font-sans)',
+              letterSpacing: '0.04em',
+            }}
+          >
+            {t.envelope.tapToOpen}
+          </span>
         </div>
       </div>
     </div>

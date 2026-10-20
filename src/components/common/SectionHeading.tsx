@@ -1,5 +1,6 @@
 import React from 'react';
 import { FloralDivider } from './FloralDivider';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 interface SectionHeadingProps {
   badge?: string;
@@ -18,9 +19,12 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   variant = 'gold',
   className = '',
 }) => {
+  const { ref, isIntersecting } = useScrollReveal<HTMLDivElement>({ threshold: 0.12 });
+
   return (
     <div
-      className={`section-heading ${className}`}
+      ref={ref}
+      className={`section-heading reveal-init ${isIntersecting ? 'is-revealed' : ''} ${className}`}
       style={{
         textAlign: align,
         marginBottom: '2.5rem',
@@ -28,6 +32,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
     >
       {badge && (
         <span
+          className="reveal-soft stagger-1"
           style={{
             display: 'inline-block',
             fontFamily: 'var(--font-sans)',
@@ -48,6 +53,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       )}
 
       <h2
+        className="reveal-soft stagger-2"
         style={{
           fontFamily: 'var(--font-serif)',
           fontSize: 'clamp(2rem, 4vw, 2.85rem)',
@@ -61,10 +67,13 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         {title}
       </h2>
 
-      <FloralDivider variant={variant} />
+      <div className="reveal-soft stagger-3">
+        <FloralDivider variant={variant} />
+      </div>
 
       {subtitle && (
         <p
+          className="reveal-soft stagger-4"
           style={{
             fontFamily: 'var(--font-sans)',
             fontSize: '1rem',
