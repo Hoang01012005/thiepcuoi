@@ -22,6 +22,7 @@ import {
   Send,
   Users,
   Code2,
+  RefreshCw,
 } from 'lucide-react';
 import {
   getSavedRsvps,
@@ -29,6 +30,9 @@ import {
   setSavedRsvpScriptUrl,
   submitRsvp,
   exportRsvpsToCsv,
+  getAllUnifiedRsvps,
+  subscribeToRsvpUpdates,
+  deleteSavedRsvp,
   type RsvpSubmission,
 } from '../../services/rsvpService';
 
@@ -92,11 +96,46 @@ export const InviteGeneratorPage: React.FC = () => {
   const [testSending, setTestSending] = useState(false);
   const [testSuccess, setTestSuccess] = useState(false);
   const [showCodeGuide, setShowCodeGuide] = useState(false);
+  const [isSyncingSheet, setIsSyncingSheet] = useState(false);
+  const [syncFeedback, setSyncFeedback] = useState<string | null>(null);
 
-  // Load RSVP data & Script URL
+  // Sync live from Google Sheet and merge with local cache
+  const handleSyncWithGoogleSheet = async (showToast = true) => {
+    setIsSyncingSheet(true);
+    try {
+      const unified = await getAllUnifiedRsvps();
+      setRsvps(unified);
+      if (showToast) {
+        setSyncFeedback(`Đã đồng bộ thành công (${unified.length} phản hồi)`);
+        setTimeout(() => setSyncFeedback(null), 3000);
+      }
+    } catch (err) {
+      console.warn('Sync error:', err);
+      if (showToast) {
+        setSyncFeedback('Không thể kết nối đến Google Sheet lúc này');
+        setTimeout(() => setSyncFeedback(null), 3000);
+      }
+    } finally {
+      setIsSyncingSheet(false);
+    }
+  };
+
+  // Load RSVP data, Script URL, and subscribe to real-time sync
   useEffect(() => {
     setRsvps(getSavedRsvps());
     setScriptUrlInput(getSavedRsvpScriptUrl());
+
+    // Automatically sync in background from Google Sheet on mount
+    handleSyncWithGoogleSheet(false);
+
+    // Listen to real-time events across all tabs/windows
+    const unsubscribe = subscribeToRsvpUpdates((updated) => {
+      setRsvps(updated);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   // Local storage guest list
@@ -208,9 +247,9 @@ export const InviteGeneratorPage: React.FC = () => {
         status: 'yes',
         count: 2,
         phone: '0901234567',
-        message: 'Chúc mừng trăm năm hạnh phúc Nam & Hiệp!',
+        message: 'Chúc mừng trăm năm hạnh phúc Hoàng Nam & Ngọc Hiệp!',
       });
-      setRsvps(getSavedRsvps());
+      await handleSyncWithGoogleSheet(false);
       setTestSuccess(true);
       setTimeout(() => setTestSuccess(false), 3500);
     } catch {
@@ -222,9 +261,8 @@ export const InviteGeneratorPage: React.FC = () => {
 
   const handleDeleteRsvp = (id?: string) => {
     if (!id) return;
-    const updated = rsvps.filter((r) => r.id !== id);
+    const updated = deleteSavedRsvp(id);
     setRsvps(updated);
-    localStorage.setItem('wedding_rsvps', JSON.stringify(updated));
   };
 
   // RSVP statistics
@@ -365,7 +403,7 @@ export const InviteGeneratorPage: React.FC = () => {
             type="button"
             onClick={() => {
               setActiveTab('rsvp');
-              setRsvps(getSavedRsvps());
+              handleSyncWithGoogleSheet(false);
             }}
             style={{
               display: 'inline-flex',
@@ -982,33 +1020,113 @@ export const InviteGeneratorPage: React.FC = () => {
                 padding: 'clamp(1.75rem, 4vw, 2.5rem)',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', margin: 0, color: 'var(--color-plum)' }}>
-                  Danh Sách Phản Hồi Chi Tiết
-                </h2>
-                <button
-                  type="button"
-                  onClick={exportRsvpsToCsv}
-                  disabled={rsvps.length === 0}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', margin: 0, color: 'var(--color-plum)' }}>
+                    Danh Sách Phản Hồi Chi Tiết
+                  </h2>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginTop: '0.35rem', fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>
+                    <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#107C41' }}></span>
+                    <span>Tự động đồng bộ với Google Sheet — Mọi thiệp &amp; thiết bị đều xem cùng một danh sách</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    onClick={() => handleSyncWithGoogleSheet(true)}
+                    disabled={isSyncingSheet}
+                    title="Đồng bộ lại danh sách từ Google Sheet"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.45rem 0.95rem',
+                      borderRadius: 'var(--radius-full)',
+                      background: 'rgba(213, 181, 140, 0.22)',
+                      border: '1px solid rgba(213, 181, 140, 0.55)',
+                      color: 'var(--color-plum)',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      cursor: isSyncingSheet ? 'wait' : 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <RefreshCw
+                      size={14}
+                      style={{
+                        animation: isSyncingSheet ? 'spin 1s linear infinite' : 'none',
+                      }}
+                    />
+                    <span>{isSyncingSheet ? 'Đang tải...' : 'Làm mới / Đồng bộ Sheet'}</span>
+                  </button>
+
+                  <a
+                    href={weddingConfig.rsvp.googleSheetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.45rem 0.95rem',
+                      borderRadius: 'var(--radius-full)',
+                      background: 'rgba(16, 124, 65, 0.1)',
+                      border: '1px solid rgba(16, 124, 65, 0.3)',
+                      color: '#107C41',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <ExternalLink size={14} />
+                    <span>Mở Google Sheet</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={exportRsvpsToCsv}
+                    disabled={rsvps.length === 0}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.45rem 1rem',
+                      borderRadius: 'var(--radius-full)',
+                      background: 'var(--color-rose-dark)',
+                      border: 'none',
+                      color: '#FFFFFF',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      cursor: rsvps.length === 0 ? 'not-allowed' : 'pointer',
+                      opacity: rsvps.length === 0 ? 0.6 : 1,
+                    }}
+                  >
+                    <Download size={14} />
+                    <span>Tải Excel (.csv)</span>
+                  </button>
+                </div>
+              </div>
+
+              {syncFeedback && (
+                <div
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    padding: '0.45rem 1rem',
-                    borderRadius: 'var(--radius-full)',
-                    background: 'var(--color-rose-dark)',
-                    border: 'none',
-                    color: '#FFFFFF',
-                    fontSize: '0.82rem',
+                    marginBottom: '1.25rem',
+                    padding: '0.6rem 1rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: syncFeedback.includes('thành công') ? 'rgba(16, 124, 65, 0.12)' : 'rgba(217, 83, 79, 0.12)',
+                    color: syncFeedback.includes('thành công') ? '#107C41' : '#D9534F',
+                    fontSize: '0.85rem',
                     fontWeight: 600,
-                    cursor: rsvps.length === 0 ? 'not-allowed' : 'pointer',
-                    opacity: rsvps.length === 0 ? 0.6 : 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
                   }}
                 >
-                  <Download size={14} />
-                  <span>Tải Excel (.csv)</span>
-                </button>
-              </div>
+                  <CheckCircle2 size={16} />
+                  <span>{syncFeedback}</span>
+                </div>
+              )}
 
               {rsvps.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '3.5rem 1rem', color: 'var(--color-text-muted)' }}>
