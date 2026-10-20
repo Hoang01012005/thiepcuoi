@@ -19,6 +19,8 @@ export interface WeddingConfig {
       shortName: string;
       titleVi: string;
       titleEn: string;
+      hometownVi: string;
+      hometownEn: string;
       bioVi: string;
       bioEn: string;
       parentsVi: string;
@@ -29,6 +31,8 @@ export interface WeddingConfig {
       shortName: string;
       titleVi: string;
       titleEn: string;
+      hometownVi: string;
+      hometownEn: string;
       bioVi: string;
       bioEn: string;
       parentsVi: string;
@@ -101,24 +105,28 @@ export interface WeddingConfig {
 export const weddingConfig: WeddingConfig = {
   couple: {
     groom: {
-      fullName: 'Nam',
-      shortName: 'Nam',
+      fullName: 'Hoàng Nam',
+      shortName: 'Hoàng Nam',
       titleVi: 'Chú Rể',
       titleEn: 'The Groom',
-      bioVi: 'Một chàng trai luôn vững vàng, ấm áp và dành trọn niềm tin yêu vào tổ ấm tương lai.',
-      bioEn: 'A steady and warm-hearted soul devoted to creating a loving lifetime together.',
-      parentsVi: 'Đại diện Nhà Trai',
-      parentsEn: 'Groom\'s Parents',
+      hometownVi: 'Bảo Lộc 5, Phúc Lộc, Hà Nội',
+      hometownEn: 'Bao Loc 5, Phuc Loc, Hanoi',
+      bioVi: 'Quê quán: Thôn Bảo Lộc 5, xã Phúc Lộc, Hà Nội. Một chàng trai luôn vững vàng, ấm áp và dành trọn niềm tin yêu vào tổ ấm tương lai.',
+      bioEn: 'Hometown: Bao Loc 5, Phuc Loc, Hanoi. A steady and warm-hearted soul devoted to creating a loving lifetime together.',
+      parentsVi: 'Đại diện Nhà Trai (Bảo Lộc 5, Phúc Lộc, Hà Nội)',
+      parentsEn: 'Groom\'s Parents (Bao Loc 5, Phuc Loc, Hanoi)',
     },
     bride: {
-      fullName: 'Hiệp',
-      shortName: 'Hiệp',
+      fullName: 'Ngọc Hiệp',
+      shortName: 'Ngọc Hiệp',
       titleVi: 'Cô Dâu',
       titleEn: 'The Bride',
-      bioVi: 'Một cô gái dịu dàng, nụ cười rạng rỡ, người mang đến sự an yên và niềm vui cho từng khoảnh khắc.',
-      bioEn: 'A gentle spirit with a radiant smile who brings peace and joy to every single day.',
-      parentsVi: 'Đại diện Nhà Gái',
-      parentsEn: 'Bride\'s Parents',
+      hometownVi: 'Bảo Lộc 4, Phúc Lộc, Hà Nội',
+      hometownEn: 'Bao Loc 4, Phuc Loc, Hanoi',
+      bioVi: 'Quê quán: Thôn Bảo Lộc 4, xã Phúc Lộc, Hà Nội. Một cô gái dịu dàng, nụ cười rạng rỡ, người mang đến sự an yên và niềm vui cho từng khoảnh khắc.',
+      bioEn: 'Hometown: Bao Loc 4, Phuc Loc, Hanoi. A gentle spirit with a radiant smile who brings peace and joy to every single day.',
+      parentsVi: 'Đại diện Nhà Gái (Bảo Lộc 4, Phúc Lộc, Hà Nội)',
+      parentsEn: 'Bride\'s Parents (Bao Loc 4, Phuc Loc, Hanoi)',
     },
     monogram: 'N & H',
   },
@@ -133,8 +141,8 @@ export const weddingConfig: WeddingConfig = {
       nameEn: 'Traditional Marriage Ceremony',
       venueVi: 'Tư Gia Nhà Gái & Nhà Trai',
       venueEn: 'Private Family Residences',
-      addressVi: 'Hà Nội, Việt Nam',
-      addressEn: 'Hanoi, Vietnam',
+      addressVi: 'Nhà Trai: Thôn Bảo Lộc 5, Phúc Lộc, Hà Nội • Nhà Gái: Thôn Bảo Lộc 4, Phúc Lộc, Hà Nội',
+      addressEn: 'Groom: Bao Loc 5, Phuc Loc, Hanoi • Bride: Bao Loc 4, Phuc Loc, Hanoi',
     },
     reception: {
       time: '18:00 PM',
@@ -201,21 +209,21 @@ export const weddingConfig: WeddingConfig = {
       bankName: 'Techcombank (Ngân hàng TMCP Kỹ Thương)',
       bankCode: 'TCB',
       accountNumber: '19036888999999',
-      accountHolder: 'NAM',
-      qrUrl: 'https://img.vietqr.io/image/TCB-19036888999999-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=NAM',
+      accountHolder: 'HOANG NAM',
+      qrUrl: 'https://img.vietqr.io/image/TCB-19036888999999-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=HOANG%20NAM',
     },
     brideBank: {
       bankName: 'Vietcombank (Ngân hàng TMCP Ngoại Thương)',
       bankCode: 'VCB',
       accountNumber: '0011004567890',
-      accountHolder: 'HIEP',
-      qrUrl: 'https://img.vietqr.io/image/VCB-0011004567890-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Nam%20Hiep&accountName=HIEP',
+      accountHolder: 'NGOC HIEP',
+      qrUrl: 'https://img.vietqr.io/image/VCB-0011004567890-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=NGOC%20HIEP',
     },
   },
   audio: {
     enabled: true,
     src: '/assets/audio/nhacnencuoidi.mp3',
-    title: 'Cưới Đi — Nhạc Lễ Cưới Nam & Hiệp',
+    title: 'Cưới Đi — Nhạc Lễ Cưới Hoàng Nam & Ngọc Hiệp',
   },
   rsvp: {
     googleSheetUrl: 'https://docs.google.com/spreadsheets/d/18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo/edit?gid=0#gid=0',

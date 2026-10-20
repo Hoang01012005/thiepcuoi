@@ -6,7 +6,7 @@ export type Language = 'vi' | 'en';
 export const translations = {
   vi: {
     meta: {
-      siteTitle: 'Nam & Hiệp — Thiệp Cưới',
+      siteTitle: 'Hoàng Nam & Ngọc Hiệp — Thiệp Cưới',
       siteSubtitle: 'Trân Trọng Kính Mời',
     },
     nav: {
@@ -118,7 +118,7 @@ export const translations = {
     wishes: {
       badge: 'Sổ Lưu Bút Chúc Phúc',
       title: 'Gửi Lời Chúc Mừng',
-      subtitle: 'Để lại những dòng tâm tình ấm áp cho khởi đầu mới của Nam & Hiệp',
+      subtitle: 'Để lại những dòng tâm tình ấm áp cho khởi đầu mới của Hoàng Nam & Ngọc Hiệp',
       nameLabel: 'Tên của bạn',
       namePlaceholder: 'Tên của bạn...',
       messageLabel: 'Lời chúc phúc',
@@ -146,13 +146,13 @@ export const translations = {
       thankYouBadge: 'Lời Cảm Ơn Chân Thành',
       title: 'Cảm Ơn Bạn Đã Là Một Phần Kỷ Niệm',
       message: 'Sự hiện diện, những lời chúc phúc và tình cảm yêu thương của quý vị chính là món quà quý giá nhất trong ngày trọng đại của chúng tôi.',
-      signature: 'Nam & Hiệp',
-      copyright: '© 2026 Nam & Hiệp. Trân trọng kính mời.',
+      signature: 'Hoàng Nam & Ngọc Hiệp',
+      copyright: '© 2026 Hoàng Nam & Ngọc Hiệp. Trân trọng kính mời.',
     },
   },
   en: {
     meta: {
-      siteTitle: 'Nam & Hiep — Wedding Invitation',
+      siteTitle: 'Hoang Nam & Ngoc Hiep — Wedding Invitation',
       siteSubtitle: 'Warmly Welcome',
     },
     nav: {
@@ -264,7 +264,7 @@ export const translations = {
     wishes: {
       badge: 'Guest Book',
       title: 'Wishes & Blessings',
-      subtitle: 'Leave your warm thoughts and heartfelt blessings for Trong & Linh',
+      subtitle: 'Leave your warm thoughts and heartfelt blessings for Hoang Nam & Ngoc Hiep',
       nameLabel: 'Your Name',
       namePlaceholder: 'Your name...',
       messageLabel: 'Your Blessing',
@@ -292,8 +292,8 @@ export const translations = {
       thankYouBadge: 'With Sincere Gratitude',
       title: 'Thank You For Being Part Of Our Journey',
       message: 'Your loving presence, warm wishes, and generous support are the greatest gifts we could ever ask for on our special day.',
-      signature: 'Nam & Hiep',
-      copyright: '© 2026 Nam & Hiep. Cordially invited.',
+      signature: 'Hoang Nam & Ngoc Hiep',
+      copyright: '© 2026 Hoang Nam & Ngoc Hiep. Cordially invited.',
     },
   },
 } as const;

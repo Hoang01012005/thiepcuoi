@@ -28,6 +28,13 @@ export function useAudio(src: string) {
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('play', handlePlay);
 
+    // Attempt autoplay if permitted by browser
+    audio.play().then(() => {
+      setIsPlaying(true);
+    }).catch(() => {
+      // Browser blocked autoplay until first user gesture
+    });
+
     return () => {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('pause', handlePause);
@@ -37,24 +44,37 @@ export function useAudio(src: string) {
     };
   }, [src]);
 
+  const playAudio = () => {
+    setHasInteracted(true);
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.play().then(() => {
+      setIsPlaying(true);
+    }).catch(() => {
+      // Autoplay blocked until gesture
+    });
+  };
+
+  const pauseAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.pause();
+    setIsPlaying(false);
+  };
+
   const togglePlay = () => {
     setHasInteracted(true);
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
+      pauseAudio();
     } else {
-      audio.play().then(() => {
-        setIsPlaying(true);
-      }).catch((err) => {
-        console.warn('Audio playback error (user interaction required):', err);
-        setIsPlaying(false);
-      });
+      playAudio();
     }
   };
 
-  return { isPlaying, hasInteracted, togglePlay };
+  return { isPlaying, hasInteracted, togglePlay, playAudio, pauseAudio };
 }
+
 

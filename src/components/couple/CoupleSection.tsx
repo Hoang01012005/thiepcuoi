@@ -5,7 +5,7 @@ import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
-import { Heart } from 'lucide-react';
+import { Heart, MapPin } from 'lucide-react';
 
 interface CoupleSectionProps {
   lang: Language;
@@ -121,7 +121,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
               {groom.fullName}
             </h3>
 
-            {/* Parents Info Card */}
+            {/* Hometown & Parents Info Card */}
             <div
               style={{
                 background: 'rgba(255, 249, 246, 0.85)',
@@ -131,6 +131,21 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 border: '1px solid rgba(213, 181, 140, 0.3)',
               }}
             >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.35rem',
+                  color: 'var(--color-rose-dark)',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  marginBottom: '0.45rem',
+                }}
+              >
+                <MapPin size={15} style={{ flexShrink: 0 }} />
+                <span>{lang === 'vi' ? groom.hometownVi : groom.hometownEn}</span>
+              </div>
               <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {t.couple.parentsTitle}
               </p>
@@ -242,7 +257,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
               {bride.fullName}
             </h3>
 
-            {/* Parents Info Card */}
+            {/* Hometown & Parents Info Card */}
             <div
               style={{
                 background: 'rgba(255, 249, 246, 0.85)',
@@ -252,6 +267,21 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 130, 145, 0.3)',
               }}
             >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.35rem',
+                  color: 'var(--color-rose-dark)',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  marginBottom: '0.45rem',
+                }}
+              >
+                <MapPin size={15} style={{ flexShrink: 0 }} />
+                <span>{lang === 'vi' ? bride.hometownVi : bride.hometownEn}</span>
+              </div>
               <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {t.couple.parentsTitle}
               </p>

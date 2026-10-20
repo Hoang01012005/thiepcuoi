@@ -20,7 +20,7 @@ import { InviteGeneratorPage } from './components/admin/InviteGeneratorPage';
 
 export function App() {
   const { lang, toggleLang } = useLanguage();
-  const { isPlaying, togglePlay } = useAudio(weddingConfig.audio.src);
+  const { isPlaying, togglePlay, playAudio } = useAudio(weddingConfig.audio.src);
 
   // Check if user is navigating to the dedicated Host / Admin invitation generator portal
   const [isAdminView, setIsAdminView] = useState(() => {
@@ -47,9 +47,28 @@ export function App() {
     return hasSectionHash;
   });
 
+  // Automatically initiate music on first touch/interaction on the site
+  useEffect(() => {
+    const startAudioOnFirstInteraction = () => {
+      if (!isPlaying) {
+        playAudio();
+      }
+    };
+
+    window.addEventListener('click', startAudioOnFirstInteraction, { once: true });
+    window.addEventListener('touchstart', startAudioOnFirstInteraction, { once: true });
+    window.addEventListener('pointerdown', startAudioOnFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('click', startAudioOnFirstInteraction);
+      window.removeEventListener('touchstart', startAudioOnFirstInteraction);
+      window.removeEventListener('pointerdown', startAudioOnFirstInteraction);
+    };
+  }, [isPlaying, playAudio]);
+
   const handleOpenEnvelope = () => {
     setIsEnvelopeOpened(true);
-    // Background music will NOT autoplay, only plays when user manually taps music button
+    playAudio();
   };
 
   // If in dedicated host generator portal, show the separate administration workspace
