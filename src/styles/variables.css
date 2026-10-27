@@ -17,24 +17,43 @@
   --color-gold-dark: #B89363;
   --color-white: #FFFFFF;
 
+  /* Burgundy Luxury & Wine Palette */
+  --color-burgundy-deep: #3A0510;
+  --color-burgundy-dark: #4B0916;
+  --color-burgundy-main: #681122;
+  --color-burgundy-rich: #7E162B;
+  --color-burgundy-light: #9B233A;
+  --color-burgundy-shadow: rgba(58, 5, 16, 0.45);
+
+  /* Champagne Gold & Metallic Accents */
+  --color-gold-champagne: #D4AF37;
+  --color-gold-foil: #E6C875;
+  --color-gold-foil-light: #FFF0C2;
+  --color-gold-wax: #C59B27;
+  --color-gold-wax-deep: #8E6D16;
+  --color-gold-wax-shadow: rgba(197, 155, 39, 0.45);
+
   /* Wax Seal & Stationery Accents */
-  --color-wax-red: #9B3848;
-  --color-wax-shadow: rgba(155, 56, 72, 0.4);
+  --color-wax-red: #8B1E34;
+  --color-wax-shadow: rgba(139, 30, 52, 0.4);
+  --color-wax-gold: #C59B27;
 
   /* Glass & Borders */
   --glass-bg: rgba(255, 249, 246, 0.9);
   --glass-border: rgba(201, 130, 145, 0.22);
   --card-border: 1px solid rgba(201, 130, 145, 0.2);
-  --gold-border: 1px solid rgba(213, 181, 140, 0.4);
-  --hairline-gold: 1px solid rgba(213, 181, 140, 0.35);
+  --gold-border: 1px solid rgba(212, 175, 55, 0.45);
+  --hairline-gold: 1px solid rgba(212, 175, 55, 0.35);
+  --burgundy-border: 1px solid rgba(104, 17, 34, 0.3);
 
   /* Shadows */
   --shadow-sm: 0 4px 12px rgba(73, 52, 58, 0.04);
   --shadow-md: 0 8px 24px rgba(73, 52, 58, 0.07);
   --shadow-lg: 0 16px 48px rgba(73, 52, 58, 0.1);
-  --shadow-paper: 0 10px 30px -5px rgba(73, 52, 58, 0.08), 0 0 0 1px rgba(213, 181, 140, 0.3);
-  --shadow-paper-lg: 0 25px 60px -10px rgba(73, 52, 58, 0.18), 0 0 0 1px rgba(213, 181, 140, 0.35);
-  --shadow-gold: 0 8px 30px rgba(213, 181, 140, 0.25);
+  --shadow-paper: 0 10px 30px -5px rgba(73, 52, 58, 0.08), 0 0 0 1px rgba(212, 175, 55, 0.3);
+  --shadow-paper-lg: 0 25px 60px -10px rgba(58, 5, 16, 0.2), 0 0 0 1px rgba(212, 175, 55, 0.4);
+  --shadow-gold: 0 8px 30px rgba(212, 175, 55, 0.3);
+  --shadow-burgundy: 0 15px 45px rgba(58, 5, 16, 0.28);
 
   /* Typography — Haute Couture Editorial */
   --font-serif: 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif;

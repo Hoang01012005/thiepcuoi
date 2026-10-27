@@ -39,22 +39,25 @@ export const AmbientPetals: React.FC = () => {
 
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Deluxe color palette: romantic blush, soft rose, champagne gold
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Cinematic Burgundy Luxury color palette: White Orchid, Ivory Rose, Champagne Gold, subtle Burgundy accent
     const petalPalettes = [
-      'rgba(243, 213, 218, 0.65)', // blush
-      'rgba(232, 180, 190, 0.55)', // soft rose
-      'rgba(201, 130, 145, 0.45)', // dusty rose
-      'rgba(255, 246, 242, 0.70)', // ivory petal
+      'rgba(255, 255, 255, 0.88)', // pristine white orchid
+      'rgba(253, 249, 245, 0.82)', // ivory white rose
+      'rgba(248, 238, 225, 0.76)', // champagne silk petal
+      'rgba(126, 22, 43, 0.38)',   // translucent velvety burgundy accent petal
     ];
 
     const goldPalettes = [
-      'rgba(213, 181, 140, 0.55)',
-      'rgba(238, 219, 197, 0.65)',
-      'rgba(247, 229, 200, 0.75)',
+      'rgba(212, 175, 55, 0.85)',  // champagne gold
+      'rgba(247, 220, 140, 0.90)', // brilliant gold foil shimmer
+      'rgba(255, 240, 190, 0.80)', // delicate stardust
     ];
 
-    // Adaptive particle count: fewer on mobile for optimal battery & 60fps
-    const particleCount = isMobile ? 12 : 24;
+    // Adaptive particle count: fewer on mobile & reduced-motion for optimal battery & 60fps
+    const particleCount = prefersReducedMotion ? 6 : (isMobile ? 12 : 24);
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
@@ -161,13 +164,26 @@ export const AmbientPetals: React.FC = () => {
         ctx.restore();
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      if (!document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(render);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     render();
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
