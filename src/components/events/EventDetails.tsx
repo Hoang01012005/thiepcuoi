@@ -241,60 +241,157 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Editorial Dress Code Swatch Bar */}
+        {/* ========================================= */}
+        {/* DRESS CODE VISUAL GUIDE — Premium Edition */}
+        {/* ========================================= */}
         <div
-          className="stationery-card"
+          className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-3' : ''}`}
           style={{
-            maxWidth: '740px',
+            maxWidth: '760px',
             margin: '3.5rem auto 0',
+            padding: 'clamp(1.8rem, 4vw, 2.8rem) clamp(1.4rem, 4vw, 2.5rem)',
             textAlign: 'center',
-            padding: '2rem 1.5rem',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
+          <BotanicalCorner position="top-right" size={52} variant="champagne" />
+          <BotanicalCorner position="bottom-left" size={52} variant="champagne" />
+
+          {/* Section Badge */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
-            <Shirt size={19} style={{ color: 'var(--color-rose)' }} />
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: 'var(--color-plum)' }}>
-              {t.event.dressCodeTitle}
-            </h4>
+            <Shirt size={18} style={{ color: 'var(--color-rose)' }} />
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.73rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.22em',
+                color: 'var(--color-rose-dark)',
+                background: 'rgba(243, 213, 218, 0.45)',
+                border: '1px solid rgba(201, 130, 145, 0.3)',
+                padding: '0.25rem 0.9rem',
+                borderRadius: 'var(--radius-full)',
+              }}
+            >
+              {lang === 'vi' ? 'Dress Code' : 'Dress Code'}
+            </span>
           </div>
-          <p style={{ fontSize: '0.92rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
-            {lang === 'vi' ? event.dressCode.vi : event.dressCode.en}
+
+          <h4
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.35rem, 3.5vw, 1.75rem)',
+              color: 'var(--color-plum)',
+              marginBottom: '0.5rem',
+            }}
+          >
+            {t.event.dressCodeTitle}
+          </h4>
+
+          <p
+            style={{
+              fontSize: '0.92rem',
+              color: 'var(--color-text-muted)',
+              marginBottom: '2rem',
+              lineHeight: 1.65,
+              maxWidth: '520px',
+              margin: '0 auto 2rem',
+            }}
+          >
+            {lang === 'vi'
+              ? 'Kính mời quý khách ưu tiên trang phục tông màu ấm áp, thanh lịch để ngày vui thêm hài hoà.'
+              : 'We kindly suggest warm, elegant tones to create a harmonious and beautiful celebration together.'}
           </p>
 
-          {/* Color Palette Swatches with Names */}
+          {/* Color Palette Swatches — Rich Visual */}
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               justifyContent: 'center',
-              gap: 'clamp(0.75rem, 3vw, 1.5rem)',
+              gap: 'clamp(1rem, 3.5vw, 2rem)',
               flexWrap: 'wrap',
+              marginBottom: '1.75rem',
             }}
           >
             {event.dressCode.colors.map((color, i) => {
-              const swatchName = SWATCH_NAMES[color] ? (lang === 'vi' ? SWATCH_NAMES[color].vi : SWATCH_NAMES[color].en) : color;
+              const swatchName = SWATCH_NAMES[color]
+                ? (lang === 'vi' ? SWATCH_NAMES[color].vi : SWATCH_NAMES[color].en)
+                : color;
               return (
-                <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem' }}>
-                  <span
+                <div
+                  key={i}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}
+                >
+                  {/* Large swatch circle */}
+                  <div
                     style={{
-                      width: '32px',
-                      height: '32px',
+                      width: 'clamp(52px, 10vw, 68px)',
+                      height: 'clamp(52px, 10vw, 68px)',
                       borderRadius: '50%',
                       backgroundColor: color,
-                      border: '2px solid #FFF9F6',
-                      boxShadow: '0 3px 8px rgba(73, 52, 58, 0.15)',
-                      display: 'inline-block',
-                      transition: 'transform 0.2s ease',
+                      border: '3px solid rgba(255, 255, 255, 0.95)',
+                      boxShadow: '0 6px 18px rgba(73, 52, 58, 0.18), inset 0 1px 3px rgba(255,255,255,0.5)',
+                      transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease',
+                      cursor: 'default',
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.12) translateY(-4px)';
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = `0 12px 28px rgba(73, 52, 58, 0.22), 0 0 0 4px ${color}55`;
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1) translateY(0)';
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 18px rgba(73, 52, 58, 0.18), inset 0 1px 3px rgba(255,255,255,0.5)';
                     }}
                     title={swatchName}
+                    aria-label={swatchName}
                   />
-                  <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)', fontWeight: 500 }}>
+                  {/* Color name label */}
+                  <span
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--color-plum)',
+                      fontFamily: 'var(--font-sans)',
+                      fontWeight: 600,
+                      letterSpacing: '0.02em',
+                    }}
+                  >
                     {swatchName}
+                  </span>
+                  {/* Hex sub-label */}
+                  <span
+                    style={{
+                      fontSize: '0.65rem',
+                      color: 'var(--color-text-muted)',
+                      fontFamily: 'var(--font-sans)',
+                      letterSpacing: '0.06em',
+                    }}
+                  >
+                    {color}
                   </span>
                 </div>
               );
             })}
           </div>
+
+          {/* Gentle disclaimer note */}
+          <p
+            style={{
+              fontSize: '0.8rem',
+              color: 'var(--color-text-muted)',
+              fontStyle: 'italic',
+              lineHeight: 1.6,
+              borderTop: '1px solid rgba(213, 181, 140, 0.3)',
+              paddingTop: '1.25rem',
+              marginTop: '0.5rem',
+            }}
+          >
+            {lang === 'vi'
+              ? '✦ Trang phục trắng thuần túy xin nhường cho cô dâu. Cảm ơn sự cảm thông của quý khách!'
+              : '✦ Please reserve pure white for the bride. Thank you so much for your thoughtfulness!'}
+          </p>
         </div>
       </div>
     </section>

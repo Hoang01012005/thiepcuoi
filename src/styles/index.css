@@ -672,3 +672,15 @@ img {
   }
 }
 
+/* Add to Calendar dropdown entrance */
+@keyframes calMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+

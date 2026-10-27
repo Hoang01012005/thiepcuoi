@@ -7,6 +7,7 @@ import { useMagnetic } from '../../hooks/useMagnetic';
 import { FloralDivider } from '../common/FloralDivider';
 import { BotanicalCorner } from '../common/BotanicalCorners';
 import { Calendar, Heart, ChevronDown, Sparkles, MapPin, Clock } from 'lucide-react';
+import { AddToCalendarButton } from '../common/AddToCalendarButton';
 
 interface HeroSectionProps {
   lang: Language;
@@ -356,6 +357,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             <Calendar size={16} style={{ color: '#B89363' }} />
             <span>{translations[lang].event.title}</span>
           </a>
+          <AddToCalendarButton lang={lang} />
         </div>
       </div>
 
@@ -603,6 +605,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               <Calendar size={16} style={{ color: '#B89363' }} />
               <span>{translations[lang].event.title}</span>
             </a>
+            <AddToCalendarButton lang={lang} />
           </div>
         </div>
 

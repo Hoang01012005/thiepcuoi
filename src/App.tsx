@@ -3,6 +3,8 @@ import { weddingConfig } from './config/weddingConfig';
 import { useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
 import { AmbientPetals } from './components/effects/AmbientPetals';
+import { LuxuryCursor } from './components/effects/LuxuryCursor';
+import { ScrollProgressBar } from './components/effects/ScrollProgressBar';
 import { EnvelopeCover } from './components/envelope/EnvelopeCover';
 import { Navbar } from './components/layout/Navbar';
 import { HeroSection } from './components/hero/HeroSection';
@@ -79,6 +81,10 @@ export function App() {
   // Pure, pristine guest invitation experience (NO floating edit buttons visible to guests!)
   return (
     <div className="wedding-app-root" style={{ position: 'relative', minHeight: '100vh' }}>
+      {/* Luxury Custom Cursor — Heart + Gold Dust */}
+      <LuxuryCursor />
+      {/* Scroll Progress Bar — Burgundy to Champagne Gold */}
+      <ScrollProgressBar />
       {/* Cinematic Ambient Floating Petals & Sparkles */}
       <AmbientPetals />
 
