@@ -32,7 +32,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
         particleCount: 80,
         spread: 90,
         origin: { y: 0.52 },
-        colors: ['#D4AF37', '#FFF0C2', '#FFFFFF', '#681122', '#F7E298'],
+        colors: ['#C6A46A', '#E8DFD2', '#FAF7F0', '#C99A9A', '#FFFFFF'],
         disableForReducedMotion: true,
       });
     } catch {}
@@ -72,12 +72,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAF5EE',
+        backgroundColor: '#FAF7F0',
         backgroundImage: `
           radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.98) 0%, transparent 70%),
-          radial-gradient(circle at 15% 85%, rgba(212, 175, 55, 0.22) 0%, transparent 50%),
-          radial-gradient(circle at 85% 15%, rgba(104, 17, 34, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #FFFDFB 0%, #FAF2EA 50%, #F5EAE0 100%)
+          radial-gradient(circle at 15% 85%, rgba(198, 164, 106, 0.22) 0%, transparent 50%),
+          radial-gradient(circle at 85% 15%, rgba(201, 154, 154, 0.16) 0%, transparent 45%),
+          linear-gradient(180deg, #FFFDF9 0%, #FAF7F0 50%, #E8DFD2 100%)
         `,
         padding: '1.25rem',
         overflow: 'hidden',
@@ -97,9 +97,9 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
           top: 'clamp(1rem, 3vw, 2rem)',
           right: 'clamp(1rem, 3vw, 2rem)',
           zIndex: 70,
-          background: 'rgba(255, 255, 255, 0.92)',
-          border: '1.5px solid rgba(212, 175, 55, 0.65)',
-          color: '#3A0510',
+          background: 'rgba(250, 247, 240, 0.92)',
+          border: '1.5px solid rgba(198, 164, 106, 0.65)',
+          color: '#40352F',
           padding: '0.45rem 1.25rem',
           borderRadius: 'var(--radius-full)',
           fontSize: '0.82rem',
@@ -107,19 +107,19 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
           fontWeight: 600,
           letterSpacing: '0.04em',
           backdropFilter: 'blur(10px)',
-          boxShadow: '0 4px 16px rgba(58, 5, 16, 0.12)',
+          boxShadow: '0 4px 16px rgba(64, 53, 47, 0.1)',
           cursor: 'pointer',
           transition: 'all 0.25s ease',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.background = '#FFFFFF';
-          e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.9)';
-          e.currentTarget.style.boxShadow = '0 6px 20px rgba(212, 175, 55, 0.3)';
+          e.currentTarget.style.borderColor = 'rgba(198, 164, 106, 0.9)';
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(198, 164, 106, 0.25)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.92)';
-          e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.65)';
-          e.currentTarget.style.boxShadow = '0 4px 16px rgba(58, 5, 16, 0.12)';
+          e.currentTarget.style.background = 'rgba(250, 247, 240, 0.92)';
+          e.currentTarget.style.borderColor = 'rgba(198, 164, 106, 0.65)';
+          e.currentTarget.style.boxShadow = '0 4px 16px rgba(64, 53, 47, 0.1)';
         }}
       >
         {t.envelope.skipBtn} &rarr;
@@ -133,15 +133,15 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
           backgroundImage: `url(${PHOTO_REGISTRY.cover.src})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center 25%',
-          filter: 'blur(30px) saturate(1.2)',
-          opacity: 0.18,
+          filter: 'blur(30px) saturate(1.15)',
+          opacity: 0.16,
           transform: 'scale(1.1)',
           pointerEvents: 'none',
         }}
       />
 
       {/* ======================================================== */}
-      {/* 3D BURGUNDY LUXURY WEDDING ENVELOPE STAGE */}
+      {/* 3D ROYAL LUXURY WEDDING ENVELOPE STAGE */}
       {/* ======================================================== */}
       <div
         style={{
@@ -168,17 +168,17 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             WebkitTransformStyle: 'preserve-3d',
           }}
         >
-          {/* 1. ENVELOPE BACK PLATE (Deep Burgundy Lining) */}
+          {/* 1. ENVELOPE BACK PLATE (Royal Deep Brown & Mahogany Lining) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               borderRadius: '16px',
-              background: 'linear-gradient(150deg, #3A0510 0%, #4B0916 45%, #681122 100%)',
-              border: '1.5px solid rgba(212, 175, 55, 0.5)',
+              background: 'linear-gradient(150deg, #40352F 0%, #502B32 45%, #6E323D 100%)',
+              border: '1.5px solid rgba(198, 164, 106, 0.5)',
               boxShadow: isOpening
-                ? '0 30px 70px rgba(58, 5, 16, 0.35)'
-                : '0 25px 60px rgba(58, 5, 16, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.3)',
+                ? '0 30px 70px rgba(64, 53, 47, 0.35)'
+                : '0 25px 60px rgba(64, 53, 47, 0.28), 0 0 0 1px rgba(198, 164, 106, 0.3)',
               overflow: 'hidden',
               zIndex: 5,
             }}
@@ -189,7 +189,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 position: 'absolute',
                 inset: 0,
                 opacity: 0.08,
-                backgroundImage: `radial-gradient(circle, #D4AF37 1.5px, transparent 1.5px)`,
+                backgroundImage: `radial-gradient(circle, #C6A46A 1.5px, transparent 1.5px)`,
                 backgroundSize: '24px 24px',
                 pointerEvents: 'none',
               }}
@@ -205,11 +205,11 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               width: '92%',
               height: '92%',
               borderRadius: '14px',
-              background: 'linear-gradient(165deg, #FFFFFF 0%, #FCF9F5 55%, #F7F0E6 100%)',
-              border: '1.5px solid rgba(212, 175, 55, 0.65)',
+              background: 'linear-gradient(165deg, #FFFFFF 0%, #FAF7F0 55%, #E8DFD2 100%)',
+              border: '1.5px solid rgba(198, 164, 106, 0.65)',
               boxShadow: isOpening
-                ? '0 25px 55px rgba(58, 5, 16, 0.22), 0 0 0 1px rgba(212, 175, 55, 0.45)'
-                : '0 8px 20px rgba(0, 0, 0, 0.12)',
+                ? '0 25px 55px rgba(64, 53, 47, 0.2), 0 0 0 1px rgba(198, 164, 106, 0.45)'
+                : '0 8px 20px rgba(0, 0, 0, 0.1)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -236,7 +236,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               style={{
                 position: 'absolute',
                 inset: '8px',
-                border: '1px solid rgba(212, 175, 55, 0.4)',
+                border: '1px solid rgba(198, 164, 106, 0.38)',
                 borderRadius: '10px',
                 pointerEvents: 'none',
               }}
@@ -264,7 +264,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 fontWeight: 700,
                 textTransform: 'uppercase',
                 letterSpacing: '0.22em',
-                color: '#7E162B',
+                color: '#A67575',
                 marginBottom: '0.65rem',
               }}
             >
@@ -278,8 +278,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 height: 'clamp(76px, 16vw, 92px)',
                 borderRadius: '50%',
                 padding: '3px',
-                background: 'linear-gradient(135deg, #FFF4D0 0%, #D4AF37 50%, #9E7818 100%)',
-                boxShadow: '0 6px 18px rgba(58, 5, 16, 0.18)',
+                background: 'linear-gradient(135deg, #FAF7F0 0%, #C6A46A 50%, #9F7E46 100%)',
+                boxShadow: '0 6px 18px rgba(64, 53, 47, 0.16)',
                 marginBottom: '0.65rem',
                 overflow: 'hidden',
               }}
@@ -303,7 +303,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.4rem, 3.8vw, 2rem)',
-                color: '#3A0510',
+                color: '#40352F',
                 fontWeight: 700,
                 lineHeight: 1.2,
                 margin: '0 0 0.5rem',
@@ -314,7 +314,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 style={{
                   fontFamily: 'var(--font-script)',
                   fontSize: '1.25em',
-                  color: '#7E162B',
+                  color: '#C99A9A',
                   margin: '0 0.4rem',
                   fontWeight: 400,
                 }}
@@ -332,16 +332,16 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 gap: '0.45rem',
                 padding: '0.3rem 1rem',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(212, 175, 55, 0.12)',
-                border: '1px solid rgba(212, 175, 55, 0.45)',
+                background: 'rgba(198, 164, 106, 0.12)',
+                border: '1px solid rgba(198, 164, 106, 0.45)',
                 fontSize: '0.82rem',
                 fontFamily: 'var(--font-serif)',
-                color: '#3A0510',
+                color: '#40352F',
                 fontWeight: 600,
                 letterSpacing: '0.04em',
               }}
             >
-              <Sparkles size={13} style={{ color: '#D4AF37' }} />
+              <Sparkles size={13} style={{ color: '#C6A46A' }} />
               <span>28 &bull; 29 . 11 . 2026</span>
             </div>
 
@@ -349,7 +349,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               style={{
                 marginTop: '0.65rem',
                 fontSize: '0.78rem',
-                color: '#6E535C',
+                color: '#7A6960',
                 maxWidth: '340px',
                 lineHeight: 1.5,
               }}
@@ -360,41 +360,41 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             </p>
           </div>
 
-          {/* 3. ENVELOPE LEFT FOLD TRIANGLE (Burgundy) */}
+          {/* 3. ENVELOPE LEFT FOLD TRIANGLE */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(0 0, 0 100%, 50% 50%)',
-              background: 'linear-gradient(135deg, #540B1A 0%, #420814 100%)',
+              background: 'linear-gradient(135deg, #4A3E37 0%, #3B302A 100%)',
               zIndex: 20,
-              filter: 'drop-shadow(2px 0 6px rgba(0, 0, 0, 0.25))',
+              filter: 'drop-shadow(2px 0 6px rgba(0, 0, 0, 0.22))',
               pointerEvents: 'none',
             }}
           />
 
-          {/* 4. ENVELOPE RIGHT FOLD TRIANGLE (Burgundy) */}
+          {/* 4. ENVELOPE RIGHT FOLD TRIANGLE */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(100% 0, 100% 100%, 50% 50%)',
-              background: 'linear-gradient(225deg, #540B1A 0%, #420814 100%)',
+              background: 'linear-gradient(225deg, #4A3E37 0%, #3B302A 100%)',
               zIndex: 20,
-              filter: 'drop-shadow(-2px 0 6px rgba(0, 0, 0, 0.25))',
+              filter: 'drop-shadow(-2px 0 6px rgba(0, 0, 0, 0.22))',
               pointerEvents: 'none',
             }}
           />
 
-          {/* 5. ENVELOPE BOTTOM FOLD TRIANGLE (Burgundy with gold edge line) */}
+          {/* 5. ENVELOPE BOTTOM FOLD TRIANGLE (With gold edge line) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(0 100%, 100% 100%, 50% 46%)',
-              background: 'linear-gradient(180deg, #681122 0%, #4B0916 100%)',
+              background: 'linear-gradient(180deg, #5C4D44 0%, #40352F 100%)',
               zIndex: 22,
-              filter: 'drop-shadow(0 -3px 8px rgba(0, 0, 0, 0.28))',
+              filter: 'drop-shadow(0 -3px 8px rgba(0, 0, 0, 0.25))',
               pointerEvents: 'none',
             }}
           >
@@ -407,8 +407,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <line x1="0" y1="100" x2="50" y2="46" stroke="rgba(212, 175, 55, 0.45)" strokeWidth="0.8" />
-              <line x1="100" y1="100" x2="50" y2="46" stroke="rgba(212, 175, 55, 0.45)" strokeWidth="0.8" />
+              <line x1="0" y1="100" x2="50" y2="46" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
+              <line x1="100" y1="100" x2="50" y2="46" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
             </svg>
           </div>
 
@@ -425,13 +425,13 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               WebkitTransformStyle: 'preserve-3d',
               clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
               background: isOpening
-                ? 'linear-gradient(180deg, #420814 0%, #32050D 100%)'
-                : 'linear-gradient(180deg, #7E162B 0%, #681122 100%)',
-              borderTop: '1.5px solid rgba(212, 175, 55, 0.55)',
+                ? 'linear-gradient(180deg, #3B302A 0%, #2A221E 100%)'
+                : 'linear-gradient(180deg, #6E5346 0%, #504037 100%)',
+              borderTop: '1.5px solid rgba(198, 164, 106, 0.55)',
               zIndex: isOpening ? 8 : 28,
               transform: isOpening ? 'rotateX(-180deg)' : 'rotateX(0deg)',
               transition: 'transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.35s',
-              filter: 'drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35))',
+              filter: 'drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3))',
               pointerEvents: isOpening ? 'none' : 'auto',
             }}
           >
@@ -444,8 +444,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <line x1="0" y1="0" x2="50" y2="100" stroke="rgba(212, 175, 55, 0.5)" strokeWidth="0.9" />
-              <line x1="100" y1="0" x2="50" y2="100" stroke="rgba(212, 175, 55, 0.5)" strokeWidth="0.9" />
+              <line x1="0" y1="0" x2="50" y2="100" stroke="rgba(198, 164, 106, 0.5)" strokeWidth="0.9" />
+              <line x1="100" y1="0" x2="50" y2="100" stroke="rgba(198, 164, 106, 0.5)" strokeWidth="0.9" />
             </svg>
           </div>
 
@@ -491,7 +491,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                   fontWeight: 700,
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
-                  color: '#681122',
+                  color: '#A67575',
                 }}
               >
                 {t.envelope.invitationFor}
@@ -502,7 +502,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                   fontFamily: 'var(--font-serif)',
                   fontSize: '1.12rem',
                   fontWeight: 700,
-                  color: '#3A0510',
+                  color: '#40352F',
                   letterSpacing: '0.02em',
                   marginTop: '1px',
                 }}
@@ -519,8 +519,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 width: 'clamp(84px, 17vw, 102px)',
                 height: 'clamp(84px, 17vw, 102px)',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle at 35% 32%, #FFF4D0 0%, #D4AF37 42%, #A87F1C 75%, #6B4E08 100%)',
-                border: '3px solid rgba(255, 245, 215, 0.85)',
+                background: 'radial-gradient(circle at 35% 32%, #FAF7F0 0%, #C6A46A 42%, #9F7E46 75%, #5C4518 100%)',
+                border: '3px solid rgba(250, 247, 240, 0.85)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -537,7 +537,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                   position: 'absolute',
                   inset: '-4px',
                   borderRadius: '50%',
-                  border: '1.5px dashed rgba(255, 248, 220, 0.65)',
+                  border: '1.5px dashed rgba(250, 247, 240, 0.7)',
                   pointerEvents: 'none',
                 }}
               />
@@ -550,8 +550,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                     fontSize: 'clamp(1.4rem, 3.4vw, 1.8rem)',
                     fontWeight: 700,
                     letterSpacing: '0.14em',
-                    color: '#3A0510',
-                    textShadow: '0 1px 1px rgba(255, 248, 220, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.3)',
+                    color: '#40352F',
+                    textShadow: '0 1px 1px rgba(250, 247, 240, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.25)',
                   }}
                 >
                   {weddingConfig.couple.monogram}
@@ -570,27 +570,27 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 gap: '0.5rem',
                 padding: '0.65rem 1.6rem',
                 borderRadius: 'var(--radius-full)',
-                background: 'linear-gradient(135deg, #7E162B 0%, #540B1A 100%)',
-                color: '#FFFDF9',
+                background: 'linear-gradient(135deg, #C6A46A 0%, #9F7E46 100%)',
+                color: '#FFFFFF',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.88rem',
                 fontWeight: 600,
                 letterSpacing: '0.08em',
-                border: '1px solid rgba(212, 175, 55, 0.65)',
-                boxShadow: '0 6px 22px rgba(58, 5, 16, 0.35)',
+                border: '1px solid rgba(250, 247, 240, 0.65)',
+                boxShadow: '0 6px 22px rgba(64, 53, 47, 0.3)',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 26px rgba(104, 17, 34, 0.45)';
+                e.currentTarget.style.boxShadow = '0 8px 26px rgba(198, 164, 106, 0.45)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 6px 22px rgba(58, 5, 16, 0.35)';
+                e.currentTarget.style.boxShadow = '0 6px 22px rgba(64, 53, 47, 0.3)';
               }}
             >
-              <Heart size={15} style={{ fill: '#D4AF37', color: '#D4AF37' }} />
+              <Heart size={15} style={{ fill: '#FFFFFF', color: '#FFFFFF' }} />
               <span>{t.envelope.openBtn}</span>
             </button>
 
@@ -598,7 +598,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               style={{
                 marginTop: '0.55rem',
                 fontSize: '0.74rem',
-                color: '#6E535C',
+                color: '#7A6960',
                 fontFamily: 'var(--font-sans)',
                 letterSpacing: '0.04em',
               }}

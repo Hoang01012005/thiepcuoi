@@ -71,8 +71,8 @@ const TiltGalleryCard: React.FC<TiltGalleryCardProps> = ({
         overflow: 'hidden',
         cursor: 'pointer',
         boxShadow: 'var(--shadow-md)',
-        border: '1.5px solid rgba(213, 181, 140, 0.45)',
-        background: '#F7EFE9',
+        border: '1.5px solid rgba(198, 164, 106, 0.45)',
+        background: 'var(--color-beige)',
         transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease',
         gridColumn: isFeatured ? 'span 2' : 'span 1',
         transformStyle: 'preserve-3d',
@@ -103,8 +103,8 @@ const TiltGalleryCard: React.FC<TiltGalleryCardProps> = ({
           position: 'absolute',
           top: '1rem',
           left: '1rem',
-          background: 'rgba(255, 249, 246, 0.92)',
-          border: '1px solid rgba(213, 181, 140, 0.5)',
+          background: 'rgba(250, 247, 240, 0.94)',
+          border: '1px solid rgba(198, 164, 106, 0.5)',
           padding: '0.25rem 0.75rem',
           borderRadius: 'var(--radius-full)',
           fontFamily: 'var(--font-sans)',
@@ -132,8 +132,8 @@ const TiltGalleryCard: React.FC<TiltGalleryCardProps> = ({
           width: '36px',
           height: '36px',
           borderRadius: '50%',
-          background: 'rgba(255, 249, 246, 0.9)',
-          border: '1px solid rgba(213, 181, 140, 0.45)',
+          background: 'rgba(250, 247, 240, 0.92)',
+          border: '1px solid rgba(198, 164, 106, 0.45)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -154,8 +154,8 @@ const TiltGalleryCard: React.FC<TiltGalleryCardProps> = ({
           left: 0,
           right: 0,
           padding: 'clamp(1.2rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.5rem)',
-          background: 'linear-gradient(to top, rgba(38, 23, 30, 0.88) 0%, rgba(38, 23, 30, 0.35) 65%, transparent 100%)',
-          color: '#FFF9F6',
+          background: 'linear-gradient(to top, rgba(40, 31, 26, 0.88) 0%, rgba(40, 31, 26, 0.35) 65%, transparent 100%)',
+          color: '#FAF7F0',
           transform: 'translateY(10px)',
           opacity: 0.9,
           transition: 'all 0.35s ease',
@@ -242,7 +242,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
   const isFilteredMedium = selectedCategory !== 'all' && filteredPhotos.length === 3;
 
   return (
-    <section id="gallery" className="section-wrapper" style={{ backgroundColor: '#FDF7F4' }}>
+    <section id="gallery" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div style={{ width: '100%', maxWidth: '1220px', margin: '0 auto', padding: '0 clamp(1rem, 3vw, 2rem)' }}>
         <SectionHeading
           badge={t.gallery.badge}
@@ -285,14 +285,14 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                   fontWeight: isActive ? 600 : 500,
                   letterSpacing: '0.03em',
                   background: isActive
-                    ? 'linear-gradient(135deg, #FFF9F6 0%, #FAF0EB 100%)'
-                    : 'rgba(255, 249, 246, 0.75)',
-                  color: isActive ? 'var(--color-rose-dark)' : 'var(--color-plum)',
+                    ? 'linear-gradient(135deg, #FFFFFF 0%, #FAF7F0 100%)'
+                    : 'rgba(250, 247, 240, 0.75)',
+                  color: isActive ? 'var(--color-gold-dark)' : 'var(--color-plum)',
                   border: isActive
-                    ? '1.5px solid var(--color-rose)'
-                    : '1px solid rgba(201, 130, 145, 0.25)',
+                    ? '1.5px solid var(--color-gold-champagne)'
+                    : '1px solid rgba(198, 164, 106, 0.25)',
                   boxShadow: isActive
-                    ? '0 6px 18px rgba(201, 130, 145, 0.25)'
+                    ? '0 6px 18px rgba(198, 164, 106, 0.25)'
                     : 'var(--shadow-sm)',
                   transition: 'all 0.25s ease',
                   cursor: 'pointer',
@@ -304,8 +304,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                     fontSize: '0.75rem',
                     padding: '0.15rem 0.45rem',
                     borderRadius: 'var(--radius-full)',
-                    background: isActive ? 'rgba(201, 130, 145, 0.18)' : 'rgba(73, 52, 58, 0.07)',
-                    color: isActive ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+                    background: isActive ? 'rgba(198, 164, 106, 0.18)' : 'rgba(64, 53, 47, 0.07)',
+                    color: isActive ? 'var(--color-gold-dark)' : 'var(--color-text-muted)',
                     fontWeight: 600,
                   }}
                 >
@@ -345,7 +345,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
           })}
         </div>
 
-        {/* MOBILE VIEW: Horizontal Swipeable Carousel (Vuốt sang ngang từng ảnh một trên điện thoại) */}
+        {/* MOBILE VIEW: Horizontal Swipeable Carousel */}
         <div className="gallery-mobile-slider-container">
           {/* Top Counter Bar */}
           <div
@@ -365,12 +365,12 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
             </span>
             <span
               style={{
-                background: 'rgba(213, 181, 140, 0.25)',
-                border: '1px solid rgba(213, 181, 140, 0.5)',
+                background: 'rgba(198, 164, 106, 0.22)',
+                border: '1px solid rgba(198, 164, 106, 0.45)',
                 padding: '0.2rem 0.65rem',
                 borderRadius: 'var(--radius-full)',
                 fontWeight: 700,
-                color: 'var(--color-rose-dark)',
+                color: 'var(--color-gold-dark)',
                 fontSize: '0.78rem',
               }}
             >
@@ -400,7 +400,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                       position: 'relative',
                       width: '100%',
                       aspectRatio: '3/4',
-                      background: '#F7EFE9',
+                      background: 'var(--color-beige)',
                       overflow: 'hidden',
                     }}
                   >
@@ -425,8 +425,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                         position: 'absolute',
                         top: '0.85rem',
                         left: '0.85rem',
-                        background: 'rgba(255, 249, 246, 0.92)',
-                        border: '1px solid rgba(213, 181, 140, 0.5)',
+                        background: 'rgba(250, 247, 240, 0.94)',
+                        border: '1px solid rgba(198, 164, 106, 0.5)',
                         padding: '0.25rem 0.7rem',
                         borderRadius: 'var(--radius-full)',
                         fontSize: '0.74rem',
@@ -449,8 +449,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                         width: '34px',
                         height: '34px',
                         borderRadius: '50%',
-                        background: 'rgba(255, 249, 246, 0.92)',
-                        border: '1px solid rgba(213, 181, 140, 0.45)',
+                        background: 'rgba(250, 247, 240, 0.94)',
+                        border: '1px solid rgba(198, 164, 106, 0.45)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -485,8 +485,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                 width: '36px',
                 height: '36px',
                 borderRadius: '50%',
-                border: '1px solid rgba(213, 181, 140, 0.5)',
-                background: mobileActiveIndex === 0 ? 'rgba(247, 239, 233, 0.4)' : '#FFF9F6',
+                border: '1px solid rgba(198, 164, 106, 0.5)',
+                background: mobileActiveIndex === 0 ? 'rgba(232, 223, 210, 0.4)' : '#FFFFFF',
                 color: mobileActiveIndex === 0 ? '#C5B5A8' : 'var(--color-plum)',
                 display: 'flex',
                 alignItems: 'center',
@@ -510,7 +510,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                     width: i === mobileActiveIndex ? '18px' : '6px',
                     height: '6px',
                     borderRadius: '9999px',
-                    background: i === mobileActiveIndex ? 'var(--color-rose-dark)' : 'rgba(213, 181, 140, 0.45)',
+                    background: i === mobileActiveIndex ? 'var(--color-gold-champagne)' : 'rgba(198, 164, 106, 0.45)',
                     border: 'none',
                     padding: 0,
                     transition: 'all 0.3s ease',
@@ -530,8 +530,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
                 width: '36px',
                 height: '36px',
                 borderRadius: '50%',
-                border: '1px solid rgba(213, 181, 140, 0.5)',
-                background: mobileActiveIndex === filteredPhotos.length - 1 ? 'rgba(247, 239, 233, 0.4)' : '#FFF9F6',
+                border: '1px solid rgba(198, 164, 106, 0.5)',
+                background: mobileActiveIndex === filteredPhotos.length - 1 ? 'rgba(232, 223, 210, 0.4)' : '#FFFFFF',
                 color: mobileActiveIndex === filteredPhotos.length - 1 ? '#C5B5A8' : 'var(--color-plum)',
                 display: 'flex',
                 alignItems: 'center',
@@ -549,7 +549,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
             style={{
               textAlign: 'center',
               fontSize: '0.74rem',
-              color: 'var(--color-rose-dark)',
+              color: 'var(--color-gold-dark)',
               marginTop: '0.5rem',
               fontFamily: 'var(--font-sans)',
             }}

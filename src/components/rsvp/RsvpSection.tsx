@@ -82,7 +82,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#F3D5DA', '#C98291', '#D5B58C', '#EEDBC5'],
+          colors: ['#C6A46A', '#C99A9A', '#E8DFD2', '#FAF7F0'],
         });
       }
     }
@@ -118,9 +118,8 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
             overflow: 'hidden',
           }}
         >
-          <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
-          <BotanicalCorner position="top-right" size={54} color="rgba(213, 181, 140, 0.45)" />
-
+          <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
+          <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.45)" />
 
           {isSubmitted ? (
             <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
@@ -178,7 +177,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     width: '100%',
                     padding: '0.85rem 1.1rem',
                     background: 'rgba(255, 255, 255, 0.85)',
-                    border: errors.name ? '1px solid #D9534F' : '1px solid rgba(201, 130, 145, 0.3)',
+                    border: errors.name ? '1px solid #D9534F' : '1px solid rgba(198, 164, 106, 0.35)',
                     borderRadius: 'var(--radius-md)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.95rem',
@@ -186,8 +185,8 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     outline: 'none',
                     transition: 'border-color 0.2s ease',
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--color-rose)')}
-                  onBlur={(e) => (e.target.style.borderColor = errors.name ? '#D9534F' : 'rgba(201, 130, 145, 0.3)')}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--color-gold-champagne)')}
+                  onBlur={(e) => (e.target.style.borderColor = errors.name ? '#D9534F' : 'rgba(198, 164, 106, 0.35)')}
                 />
                 {errors.name && (
                   <p style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#D9534F', fontSize: '0.82rem', marginTop: '0.35rem' }}>
@@ -218,9 +217,9 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     style={{
                       padding: '0.85rem',
                       borderRadius: 'var(--radius-md)',
-                      border: formData.status === 'yes' ? '2px solid var(--color-rose)' : '1px solid rgba(201, 130, 145, 0.25)',
-                      background: formData.status === 'yes' ? 'rgba(243, 213, 218, 0.5)' : 'rgba(255, 255, 255, 0.7)',
-                      color: formData.status === 'yes' ? 'var(--color-rose-dark)' : 'var(--color-plum)',
+                      border: formData.status === 'yes' ? '2px solid var(--color-gold-champagne)' : '1px solid rgba(198, 164, 106, 0.3)',
+                      background: formData.status === 'yes' ? 'rgba(198, 164, 106, 0.16)' : 'rgba(255, 255, 255, 0.7)',
+                      color: formData.status === 'yes' ? 'var(--color-gold-dark)' : 'var(--color-plum)',
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.9rem',
                       fontWeight: formData.status === 'yes' ? 600 : 400,
@@ -242,8 +241,8 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     style={{
                       padding: '0.85rem',
                       borderRadius: 'var(--radius-md)',
-                      border: formData.status === 'no' ? '2px solid var(--color-plum)' : '1px solid rgba(201, 130, 145, 0.25)',
-                      background: formData.status === 'no' ? 'rgba(73, 52, 58, 0.08)' : 'rgba(255, 255, 255, 0.7)',
+                      border: formData.status === 'no' ? '2px solid var(--color-plum)' : '1px solid rgba(198, 164, 106, 0.3)',
+                      background: formData.status === 'no' ? 'rgba(64, 53, 47, 0.08)' : 'rgba(255, 255, 255, 0.7)',
                       color: 'var(--color-plum)',
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.9rem',
@@ -291,7 +290,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                       width: '100%',
                       padding: '0.85rem 1.1rem',
                       background: 'rgba(255, 255, 255, 0.85)',
-                      border: '1px solid rgba(201, 130, 145, 0.3)',
+                      border: '1px solid rgba(198, 164, 106, 0.35)',
                       borderRadius: 'var(--radius-md)',
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.95rem',
@@ -332,7 +331,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     width: '100%',
                     padding: '0.85rem 1.1rem',
                     background: 'rgba(255, 255, 255, 0.85)',
-                    border: '1px solid rgba(201, 130, 145, 0.3)',
+                    border: '1px solid rgba(198, 164, 106, 0.35)',
                     borderRadius: 'var(--radius-md)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.95rem',
@@ -367,7 +366,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
                     width: '100%',
                     padding: '0.85rem 1.1rem',
                     background: 'rgba(255, 255, 255, 0.85)',
-                    border: '1px solid rgba(201, 130, 145, 0.3)',
+                    border: '1px solid rgba(198, 164, 106, 0.35)',
                     borderRadius: 'var(--radius-md)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.95rem',

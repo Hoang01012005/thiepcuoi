@@ -108,8 +108,8 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
             style={{
               maxWidth: '840px',
               margin: '3rem auto 0',
-              background: 'linear-gradient(150deg, rgba(255, 251, 249, 0.96) 0%, rgba(247, 239, 233, 0.9) 100%)',
-              border: '1.5px solid rgba(213, 181, 140, 0.45)',
+              background: 'linear-gradient(150deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 247, 240, 0.95) 50%, rgba(232, 223, 210, 0.9) 100%)',
+              border: '1.5px solid rgba(198, 164, 106, 0.45)',
               borderRadius: '24px',
               padding: 'clamp(2rem, 4vw, 3.2rem) 1.5rem',
               boxShadow: 'var(--shadow-paper-lg)',
@@ -118,15 +118,15 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
             }}
           >
             {/* Delicate Botanical Corner Flourishes */}
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.5)" />
-            <BotanicalCorner position="top-right" size={54} color="rgba(213, 181, 140, 0.5)" />
+            <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.5)" />
+            <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.5)" />
 
             {/* Inner Hairline Frame */}
             <div
               style={{
                 position: 'absolute',
                 inset: '8px',
-                border: '1px solid rgba(213, 181, 140, 0.3)',
+                border: '1px solid rgba(198, 164, 106, 0.3)',
                 borderRadius: '16px',
                 pointerEvents: 'none',
               }}

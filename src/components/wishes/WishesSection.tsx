@@ -87,7 +87,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section ref={sectionRef} id="wishes" className="section-wrapper" style={{ backgroundColor: '#FDF7F4' }}>
+    <section ref={sectionRef} id="wishes" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.wishes.badge}
@@ -112,27 +112,30 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
               height: 'fit-content',
               position: 'relative',
               overflow: 'hidden',
+              background: 'var(--color-ivory-light)',
+              border: '1px solid var(--color-warm-beige)',
+              boxShadow: 'var(--shadow-card)',
             }}
           >
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
+            <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <div
                 style={{
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  background: 'rgba(243, 213, 218, 0.5)',
+                  background: 'rgba(201, 154, 154, 0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--color-rose-dark)',
+                  color: 'var(--color-dusty-rose)',
                   flexShrink: 0,
                 }}
               >
                 <Heart size={18} fill="currentColor" />
               </div>
               <div>
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--color-plum)', margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--color-deep-brown)', margin: 0 }}>
                   {t.wishes.title}
                 </h3>
               </div>
@@ -142,7 +145,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
               <div>
                 <label
                   htmlFor="wish-name"
-                  style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--color-plum)', marginBottom: '0.4rem' }}
+                  style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--color-deep-brown)', marginBottom: '0.4rem' }}
                 >
                   {t.wishes.nameLabel}
                 </label>
@@ -155,21 +158,24 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                   style={{
                     width: '100%',
                     padding: '0.8rem 1rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    border: '1px solid rgba(201, 130, 145, 0.3)',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--color-warm-beige)',
                     borderRadius: 'var(--radius-md)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.95rem',
-                    color: 'var(--color-plum)',
+                    color: 'var(--color-deep-brown)',
                     outline: 'none',
+                    transition: 'border-color 0.2s ease',
                   }}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--color-champagne-gold)')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--color-warm-beige)')}
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="wish-msg"
-                  style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--color-plum)', marginBottom: '0.4rem' }}
+                  style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--color-deep-brown)', marginBottom: '0.4rem' }}
                 >
                   {t.wishes.messageLabel}
                 </label>
@@ -182,15 +188,18 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                   style={{
                     width: '100%',
                     padding: '0.8rem 1rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    border: '1px solid rgba(201, 130, 145, 0.3)',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--color-warm-beige)',
                     borderRadius: 'var(--radius-md)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.95rem',
-                    color: 'var(--color-plum)',
+                    color: 'var(--color-deep-brown)',
                     outline: 'none',
                     resize: 'vertical',
+                    transition: 'border-color 0.2s ease',
                   }}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--color-champagne-gold)')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--color-warm-beige)')}
                 />
               </div>
 
@@ -223,10 +232,10 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                   padding: '3rem 1.5rem',
                   background: 'var(--glass-bg)',
                   borderRadius: 'var(--radius-lg)',
-                  border: '1px dashed rgba(201, 130, 145, 0.3)',
+                  border: '1px dashed var(--color-warm-beige)',
                 }}
               >
-                <MessageSquare size={36} style={{ color: 'var(--color-rose)', margin: '0 auto 1rem' }} />
+                <MessageSquare size={36} style={{ color: 'var(--color-champagne-gold)', margin: '0 auto 1rem' }} />
                 <p style={{ fontSize: '0.92rem', color: 'var(--color-text-muted)' }}>
                   {t.wishes.emptyState}
                 </p>
@@ -236,11 +245,11 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                 <div
                   key={item.id}
                   style={{
-                    background: '#FFFDFC',
+                    background: 'var(--color-ivory-light)',
                     borderRadius: 'var(--radius-md)',
                     padding: '1.35rem 1.6rem',
-                    border: '1px solid rgba(213, 181, 140, 0.4)',
-                    boxShadow: '0 4px 16px rgba(73, 52, 58, 0.05)',
+                    border: '1px solid var(--color-warm-beige)',
+                    boxShadow: 'var(--shadow-card)',
                     position: 'relative',
                     transition: 'all 0.2s ease',
                   }}
@@ -252,15 +261,15 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                           width: '28px',
                           height: '28px',
                           borderRadius: '50%',
-                          background: 'rgba(243, 213, 218, 0.6)',
+                          background: 'rgba(201, 154, 154, 0.2)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
                       >
-                        <User size={14} style={{ color: 'var(--color-rose-dark)' }} />
+                        <User size={14} style={{ color: 'var(--color-dusty-rose)' }} />
                       </div>
-                      <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--color-plum)' }}>
+                      <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--color-deep-brown)' }}>
                         {item.name}
                       </span>
                     </div>
@@ -274,7 +283,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
                     style={{
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.92rem',
-                      color: 'var(--color-plum)',
+                      color: 'var(--color-deep-brown)',
                       lineHeight: 1.6,
                       fontStyle: 'italic',
                       paddingLeft: '2.25rem',

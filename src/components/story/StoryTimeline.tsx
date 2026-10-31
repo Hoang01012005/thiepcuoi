@@ -51,7 +51,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
       <BotanicalCorner
         position={isEven ? 'top-right' : 'top-left'}
         size={52}
-        color="rgba(213, 181, 140, 0.45)"
+        color="rgba(198, 164, 106, 0.45)"
       />
 
       {/* Photo Column */}
@@ -72,9 +72,9 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
             aspectRatio: '2/3',
             borderRadius: 'var(--radius-arch)',
             overflow: 'hidden',
-            border: '2.5px solid rgba(213, 181, 140, 0.5)',
+            border: '2.5px solid rgba(198, 164, 106, 0.5)',
             boxShadow: 'var(--shadow-md)',
-            background: '#F7EFE9',
+            background: 'var(--color-beige)',
           }}
         >
           <picture>
@@ -99,8 +99,8 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
               position: 'absolute',
               top: '0.85rem',
               left: '0.85rem',
-              background: 'rgba(255, 249, 246, 0.92)',
-              border: '1px solid rgba(213, 181, 140, 0.5)',
+              background: 'rgba(250, 247, 240, 0.94)',
+              border: '1px solid rgba(198, 164, 106, 0.5)',
               padding: '0.28rem 0.85rem',
               borderRadius: 'var(--radius-full)',
               fontSize: '0.74rem',
@@ -109,7 +109,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
               letterSpacing: '0.12em',
               color: 'var(--color-plum)',
               backdropFilter: 'blur(8px)',
-              boxShadow: '0 4px 12px rgba(73, 52, 58, 0.08)',
+              boxShadow: '0 4px 12px rgba(64, 53, 47, 0.08)',
             }}
           >
             {chapterLabel}
@@ -190,7 +190,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ item, index, lang, chapterLab
             alignItems: 'center',
             gap: '0.45rem',
             padding: '0.35rem 0.95rem',
-            background: 'rgba(243, 213, 218, 0.25)',
+            background: 'rgba(201, 154, 154, 0.2)',
             borderLeft: '2.5px solid var(--color-rose)',
             borderRadius: '0 8px 8px 0',
             fontSize: '0.82rem',
@@ -236,7 +236,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
               bottom: '40px',
               left: '50%',
               width: '2px',
-              background: 'linear-gradient(180deg, rgba(213, 181, 140, 0.1) 0%, rgba(213, 181, 140, 0.75) 20%, rgba(201, 130, 145, 0.75) 80%, rgba(213, 181, 140, 0.1) 100%)',
+              background: 'linear-gradient(180deg, rgba(198, 164, 106, 0.1) 0%, rgba(198, 164, 106, 0.75) 20%, rgba(201, 154, 154, 0.75) 80%, rgba(198, 164, 106, 0.1) 100%)',
               transform: 'translateX(-50%)',
               zIndex: 1,
             }}
@@ -275,7 +275,7 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                     overflow: 'hidden',
                   }}
                 >
-                  <BotanicalCorner position="top-right" size={42} color="rgba(213, 181, 140, 0.45)" />
+                  <BotanicalCorner position="top-right" size={42} color="rgba(198, 164, 106, 0.45)" />
 
                   {/* Photo Banner */}
                   <div
@@ -284,9 +284,9 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                       height: '235px',
                       borderRadius: '14px',
                       overflow: 'hidden',
-                      border: '1.5px solid rgba(213, 181, 140, 0.5)',
+                      border: '1.5px solid rgba(198, 164, 106, 0.5)',
                       marginBottom: '1rem',
-                      background: '#F7EFE9',
+                      background: 'var(--color-beige)',
                       position: 'relative',
                     }}
                   >
@@ -309,8 +309,8 @@ export const StoryTimeline: React.FC<StoryTimelineProps> = ({ lang }) => {
                         position: 'absolute',
                         top: '0.65rem',
                         left: '0.65rem',
-                        background: 'rgba(255, 249, 246, 0.94)',
-                        border: '1px solid rgba(213, 181, 140, 0.5)',
+                        background: 'rgba(250, 247, 240, 0.94)',
+                        border: '1px solid rgba(198, 164, 106, 0.5)',
                         padding: '0.2rem 0.65rem',
                         borderRadius: 'var(--radius-full)',
                         fontSize: '0.7rem',

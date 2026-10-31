@@ -6,8 +6,8 @@ interface FloralDividerProps {
 }
 
 export const FloralDivider: React.FC<FloralDividerProps> = ({ className = '', variant = 'gold' }) => {
-  const strokeColor = variant === 'gold' ? '#D5B58C' : '#C98291';
-  const fillColor = variant === 'gold' ? '#EEDBC5' : '#F3D5DA';
+  const strokeColor = variant === 'gold' ? '#C6A46A' : '#C99A9A';
+  const fillColor = variant === 'gold' ? '#E8DFD2' : '#F4E3E3';
 
   return (
     <div className={`floral-divider-container ${className}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '1.25rem 0' }}>
@@ -19,7 +19,7 @@ export const FloralDivider: React.FC<FloralDividerProps> = ({ className = '', va
         <circle cx="68" cy="9" r="1.5" fill={strokeColor} />
 
         {/* Center Diamond & Ring */}
-        <circle cx="90" cy="12" r="5" stroke={strokeColor} strokeWidth="1.2" fill="#FFF9F6"/>
+        <circle cx="90" cy="12" r="5" stroke={strokeColor} strokeWidth="1.2" fill="#FAF7F0"/>
         <polygon points="90,8 93,12 90,16 87,12" fill={strokeColor} />
 
         {/* Right branch */}

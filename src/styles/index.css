@@ -22,9 +22,9 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(243, 213, 218, 0.25) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(243, 213, 218, 0.2) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255, 249, 246, 0.7) 0%, transparent 100%);
+    radial-gradient(circle at 10% 20%, rgba(201, 154, 154, 0.16) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(198, 164, 106, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(250, 247, 240, 0.75) 0%, transparent 100%);
   background-attachment: fixed;
 }
 
@@ -132,12 +132,11 @@ img {
   }
 }
 
-
 /* ELEGANT CARDS & SURFACES */
 .luxury-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: var(--card-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -149,10 +148,10 @@ img {
 }
 
 .stationery-card {
-  background: #FFF9F6;
+  background: var(--color-ivory);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-paper);
-  border: 1px solid rgba(213, 181, 140, 0.4);
+  border: 1px solid rgba(198, 164, 106, 0.38);
   position: relative;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
@@ -161,7 +160,7 @@ img {
   content: '';
   position: absolute;
   inset: 6px;
-  border: 1px solid rgba(213, 181, 140, 0.25);
+  border: 1px solid rgba(198, 164, 106, 0.2);
   border-radius: calc(var(--radius-lg) - 6px);
   pointer-events: none;
 }
@@ -173,19 +172,19 @@ img {
   justify-content: center;
   gap: 0.6rem;
   padding: 0.85rem 1.85rem;
-  background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-rose-dark) 100%);
+  background: linear-gradient(135deg, var(--color-gold-champagne) 0%, #A38148 100%);
   color: var(--color-white);
   border-radius: var(--radius-full);
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  box-shadow: 0 4px 16px rgba(201, 130, 145, 0.4);
+  box-shadow: 0 4px 18px rgba(198, 164, 106, 0.38);
   transition: all var(--transition-fast);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201, 130, 145, 0.55);
+  box-shadow: 0 8px 24px rgba(198, 164, 106, 0.52);
 }
 
 .btn-primary:active {
@@ -198,9 +197,9 @@ img {
   justify-content: center;
   gap: 0.6rem;
   padding: 0.8rem 1.8rem;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--color-rose);
-  color: var(--color-rose-dark);
+  background: rgba(250, 247, 240, 0.8);
+  border: 1.5px solid var(--color-gold-champagne);
+  color: var(--color-brown);
   border-radius: var(--radius-full);
   font-size: 0.95rem;
   font-weight: 500;
@@ -208,7 +207,7 @@ img {
 }
 
 .btn-outline:hover {
-  background: var(--color-rose);
+  background: var(--color-gold-champagne);
   color: var(--color-white);
   transform: translateY(-2px);
 }
@@ -236,7 +235,7 @@ img {
 
 /* LUXURY LETTERPRESS RECIPIENT TEXT */
 .gold-shimmer-text {
-  color: #2E1810;
+  color: var(--color-brown);
   font-weight: 700;
   display: inline-block;
 }
@@ -251,7 +250,7 @@ img {
 
 .audio-visualizer-bar {
   width: 2.5px;
-  background: var(--color-rose);
+  background: var(--color-gold-champagne);
   border-radius: 2px;
   height: 4px;
   transition: height 0.2s ease;
@@ -280,7 +279,7 @@ img {
   justify-content: center;
   padding: clamp(2.5rem, 5vw, 4.5rem) 1.25rem clamp(4rem, 6vw, 5.5rem);
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 20%, #FFFDFB 0%, #FAF2ED 50%, #F5EAE3 100%);
+  background: radial-gradient(ellipse at 50% 20%, #FFFDF9 0%, #FAF7F0 50%, #E8DFD2 100%);
   color: var(--color-plum);
 }
 
@@ -320,9 +319,9 @@ img {
   aspect-ratio: 2 / 3;
   border-radius: clamp(140px, 40vw, 175px) clamp(140px, 40vw, 175px) 24px 24px;
   overflow: hidden;
-  background: #FAF0EB;
+  background: #FAF7F0;
   border: 4px solid #FFFFFF;
-  box-shadow: 0 20px 48px rgba(73, 52, 58, 0.13), 0 0 0 1px rgba(213, 181, 140, 0.5);
+  box-shadow: 0 20px 48px rgba(64, 53, 47, 0.12), 0 0 0 1px rgba(198, 164, 106, 0.45);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
@@ -330,13 +329,13 @@ img {
   .hero-portrait-frame {
     width: clamp(320px, 28vw, 380px);
     border-radius: 195px 195px 28px 28px;
-    box-shadow: 0 25px 60px rgba(73, 52, 58, 0.15), 0 0 0 1.5px rgba(213, 181, 140, 0.6);
+    box-shadow: 0 25px 60px rgba(64, 53, 47, 0.14), 0 0 0 1.5px rgba(198, 164, 106, 0.55);
   }
 }
 
 .hero-portrait-frame:hover {
   transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 30px 65px rgba(73, 52, 58, 0.18), 0 0 0 2px rgba(213, 181, 140, 0.8);
+  box-shadow: 0 30px 65px rgba(64, 53, 47, 0.18), 0 0 0 2px rgba(198, 164, 106, 0.75);
 }
 
 @media (max-width: 767px) {
@@ -378,7 +377,7 @@ img {
 
 /* EDITORIAL WEDDING GALLERY GRID */
 .gallery-card:focus-visible {
-  outline: 2px solid var(--color-rose);
+  outline: 2px solid var(--color-gold-champagne);
   outline-offset: 4px;
 }
 
@@ -423,9 +422,9 @@ img {
     scroll-snap-align: center !important;
     border-radius: 20px !important;
     overflow: hidden !important;
-    background: #FFF9F6 !important;
-    border: 1.5px solid rgba(213, 181, 140, 0.45) !important;
-    box-shadow: 0 10px 28px rgba(73, 52, 58, 0.12) !important;
+    background: var(--color-ivory) !important;
+    border: 1.5px solid rgba(198, 164, 106, 0.4) !important;
+    box-shadow: 0 10px 28px rgba(64, 53, 47, 0.1) !important;
     cursor: pointer !important;
   }
 }
@@ -445,11 +444,11 @@ img {
   transform: translateX(-50%);
   width: calc(100% - 24px);
   max-width: 420px;
-  background: rgba(255, 249, 246, 0.92);
+  background: rgba(250, 247, 240, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(213, 181, 140, 0.45);
-  box-shadow: 0 10px 30px rgba(73, 52, 58, 0.18);
+  border: 1px solid rgba(198, 164, 106, 0.4);
+  box-shadow: 0 10px 30px rgba(64, 53, 47, 0.15);
   border-radius: 9999px;
   padding: 0.35rem 0.6rem;
   justify-content: space-around;
@@ -480,10 +479,10 @@ img {
 /* 2. Wax Seal Breathing Glow */
 @keyframes sealPulse {
   0%, 100% {
-    box-shadow: 0 10px 28px rgba(155, 56, 72, 0.45), 0 0 0 1px rgba(255, 235, 220, 0.35);
+    box-shadow: 0 10px 28px rgba(198, 164, 106, 0.4), 0 0 0 1px rgba(250, 247, 240, 0.35);
   }
   50% {
-    box-shadow: 0 14px 40px rgba(155, 56, 72, 0.7), 0 0 0 5px rgba(213, 181, 140, 0.35);
+    box-shadow: 0 14px 40px rgba(198, 164, 106, 0.65), 0 0 0 5px rgba(198, 164, 106, 0.3);
   }
 }
 
@@ -512,7 +511,7 @@ img {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.45) 50%,
     transparent 100%
   );
   transform: rotate(25deg);
@@ -596,28 +595,28 @@ img {
   will-change: transform;
 }
 
-/* 7. CINEMATIC 3D BURGUNDY ENVELOPE UTILITIES */
+/* 7. CINEMATIC 3D ROYAL ENVELOPE UTILITIES */
 .gold-foil-text {
-  background: linear-gradient(135deg, #FFF4D0 0%, #E5C368 45%, #B88928 80%, #E5C368 100%);
+  background: linear-gradient(135deg, #F7EED9 0%, #D8B97C 45%, #9F7E46 80%, #D8B97C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 2px rgba(58, 5, 16, 0.25);
+  text-shadow: 0 1px 2px rgba(64, 53, 47, 0.2);
 }
 
 .gold-foil-badge {
-  background: linear-gradient(135deg, rgba(255, 244, 208, 0.95) 0%, rgba(229, 195, 104, 0.9) 100%);
-  color: #3A0510;
-  border: 1px solid rgba(212, 175, 55, 0.6);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  background: linear-gradient(135deg, rgba(250, 247, 240, 0.95) 0%, rgba(232, 223, 210, 0.92) 100%);
+  color: var(--color-brown);
+  border: 1px solid rgba(198, 164, 106, 0.55);
+  box-shadow: 0 4px 15px rgba(198, 164, 106, 0.25);
 }
 
 @keyframes sealGlowPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5), 0 8px 24px rgba(58, 5, 16, 0.4);
+    box-shadow: 0 0 0 0 rgba(198, 164, 106, 0.45), 0 8px 24px rgba(64, 53, 47, 0.3);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 25px 6px rgba(212, 175, 55, 0.75), 0 12px 30px rgba(58, 5, 16, 0.5);
+    box-shadow: 0 0 24px 6px rgba(198, 164, 106, 0.7), 0 12px 30px rgba(64, 53, 47, 0.4);
     transform: scale(1.04);
   }
 }
@@ -659,7 +658,7 @@ img {
   }
 }
 
-/* REDUCED MOTION ACCESSIBILITY (Soften heavy continuous motion while preserving layout & reveals) */
+/* REDUCED MOTION ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   .ken-burns {
     animation-duration: 30s !important;
@@ -683,4 +682,3 @@ img {
     transform: translateX(-50%) translateY(0) scale(1);
   }
 }
-

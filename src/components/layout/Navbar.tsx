@@ -24,12 +24,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        background: 'rgba(255, 249, 246, 0.88)',
+        background: 'rgba(250, 247, 240, 0.92)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(201, 130, 145, 0.15)',
+        borderBottom: '1px solid rgba(198, 164, 106, 0.25)',
         padding: '0.75rem 1.25rem',
-        boxShadow: '0 4px 20px rgba(73, 52, 58, 0.04)',
+        boxShadow: '0 4px 20px rgba(64, 53, 47, 0.05)',
       }}
     >
       <div
@@ -57,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               fontSize: '1.25rem',
               fontWeight: 700,
               letterSpacing: '0.14em',
-              color: 'var(--color-rose-dark)',
+              color: 'var(--color-champagne-gold)',
               lineHeight: 1,
             }}
           >
@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               fontSize: '0.88rem',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              color: 'var(--color-plum)',
+              color: 'var(--color-deep-brown)',
               display: 'none',
             }}
             className="navbar-brand-text"
@@ -92,9 +92,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               gap: '0.45rem',
               padding: '0.45rem 0.95rem',
               borderRadius: 'var(--radius-full)',
-              background: isPlaying ? 'rgba(201, 130, 145, 0.15)' : 'rgba(255, 255, 255, 0.7)',
-              border: isPlaying ? '1px solid var(--color-rose)' : '1px solid rgba(201, 130, 145, 0.25)',
-              color: isPlaying ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+              background: isPlaying ? 'rgba(198, 164, 106, 0.18)' : 'rgba(255, 255, 255, 0.7)',
+              border: isPlaying ? '1px solid var(--color-champagne-gold)' : '1px solid rgba(198, 164, 106, 0.3)',
+              color: isPlaying ? 'var(--color-champagne-gold)' : 'var(--color-text-muted)',
               fontSize: '0.82rem',
               fontWeight: 500,
               fontFamily: 'var(--font-sans)',
@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             {isPlaying ? (
               <>
-                <Volume2 size={16} style={{ color: 'var(--color-rose)' }} />
+                <Volume2 size={16} style={{ color: 'var(--color-champagne-gold)' }} />
                 <span style={{ display: 'inline-block' }}>{t.nav.musicPause}</span>
                 {/* 4-bar dynamic audio visualizer */}
                 <div className="audio-visualizer is-playing" aria-hidden="true" style={{ marginLeft: '4px' }}>
@@ -132,9 +132,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               gap: '0.4rem',
               padding: '0.45rem 0.95rem',
               borderRadius: 'var(--radius-full)',
-              background: 'linear-gradient(135deg, #FFF9F6 0%, #F5ECE6 100%)',
-              border: '1px solid var(--color-gold)',
-              color: 'var(--color-plum)',
+              background: 'linear-gradient(135deg, var(--color-ivory) 0%, var(--color-warm-beige-light) 100%)',
+              border: '1px solid var(--color-champagne-gold)',
+              color: 'var(--color-deep-brown)',
               fontSize: '0.82rem',
               fontWeight: 600,
               fontFamily: 'var(--font-sans)',
@@ -143,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               transition: 'all 0.2s ease',
             }}
           >
-            <Globe size={15} style={{ color: 'var(--color-gold-dark)' }} />
+            <Globe size={15} style={{ color: 'var(--color-champagne-gold)' }} />
             <span>{t.nav.langSwitch}</span>
           </button>
         </div>

@@ -74,10 +74,10 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
+            <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
 
             {/* Header Badge */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(213, 181, 140, 0.18)', border: '1px solid rgba(213, 181, 140, 0.45)', padding: '0.3rem 0.85rem', borderRadius: 'var(--radius-full)', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(198, 164, 106, 0.16)', border: '1px solid rgba(198, 164, 106, 0.45)', padding: '0.3rem 0.85rem', borderRadius: 'var(--radius-full)', marginBottom: '1.25rem' }}>
               <Gift size={14} style={{ color: 'var(--color-gold-dark)' }} />
               <span style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--color-plum)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {t.gift.groomSide}
@@ -123,8 +123,8 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                   background: '#FFFFFF',
                   padding: '0.75rem',
                   borderRadius: '16px',
-                  border: '1.5px solid rgba(213, 181, 140, 0.5)',
-                  boxShadow: '0 8px 24px rgba(73, 52, 58, 0.08)',
+                  border: '1.5px solid rgba(198, 164, 106, 0.5)',
+                  boxShadow: '0 8px 24px rgba(64, 53, 47, 0.08)',
                   width: '185px',
                   cursor: 'pointer',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease',
@@ -140,7 +140,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                   style={{
                     marginTop: '0.5rem',
                     fontSize: '0.73rem',
-                    color: 'var(--color-rose-dark)',
+                    color: 'var(--color-gold-dark)',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
@@ -161,7 +161,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                   background: 'rgba(255, 255, 255, 0.92)',
                   borderRadius: 'var(--radius-md)',
                   padding: '1.1rem 1.25rem',
-                  border: '1px solid rgba(213, 181, 140, 0.35)',
+                  border: '1px solid rgba(198, 164, 106, 0.35)',
                   textAlign: 'left',
                 }}
               >
@@ -198,9 +198,9 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                         borderRadius: 'var(--radius-full)',
                         fontSize: '0.78rem',
                         fontWeight: 600,
-                        border: '1px solid var(--color-rose)',
-                        background: copiedGroom ? 'var(--color-rose)' : 'rgba(243, 213, 218, 0.45)',
-                        color: copiedGroom ? '#FFFFFF' : 'var(--color-rose-dark)',
+                        border: '1px solid var(--color-gold-champagne)',
+                        background: copiedGroom ? 'var(--color-gold-champagne)' : 'rgba(198, 164, 106, 0.2)',
+                        color: copiedGroom ? '#FFFFFF' : 'var(--color-plum)',
                         cursor: 'pointer',
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -247,10 +247,10 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-right" size={54} color="rgba(201, 130, 145, 0.45)" />
+            <BotanicalCorner position="top-right" size={54} color="rgba(201, 154, 154, 0.45)" />
 
             {/* Header Badge */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(243, 213, 218, 0.45)', border: '1px solid rgba(201, 130, 145, 0.45)', padding: '0.3rem 0.85rem', borderRadius: 'var(--radius-full)', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(201, 154, 154, 0.2)', border: '1px solid rgba(201, 154, 154, 0.45)', padding: '0.3rem 0.85rem', borderRadius: 'var(--radius-full)', marginBottom: '1.25rem' }}>
               <QrCode size={14} style={{ color: 'var(--color-rose)' }} />
               <span style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--color-plum)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {t.gift.brideSide}
@@ -296,8 +296,8 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                   background: '#FFFFFF',
                   padding: '0.75rem',
                   borderRadius: '16px',
-                  border: '1.5px solid rgba(201, 130, 145, 0.5)',
-                  boxShadow: '0 8px 24px rgba(73, 52, 58, 0.08)',
+                  border: '1.5px solid rgba(201, 154, 154, 0.5)',
+                  boxShadow: '0 8px 24px rgba(64, 53, 47, 0.08)',
                   width: '185px',
                   cursor: 'pointer',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease',
@@ -334,7 +334,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                   background: 'rgba(255, 255, 255, 0.92)',
                   borderRadius: 'var(--radius-md)',
                   padding: '1.1rem 1.25rem',
-                  border: '1px solid rgba(201, 130, 145, 0.35)',
+                  border: '1px solid rgba(201, 154, 154, 0.35)',
                   textAlign: 'left',
                 }}
               >
@@ -372,7 +372,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                         fontSize: '0.78rem',
                         fontWeight: 600,
                         border: '1px solid var(--color-rose)',
-                        background: copiedBride ? 'var(--color-rose)' : 'rgba(243, 213, 218, 0.45)',
+                        background: copiedBride ? 'var(--color-rose)' : 'rgba(201, 154, 154, 0.2)',
                         color: copiedBride ? '#FFFFFF' : 'var(--color-rose-dark)',
                         cursor: 'pointer',
                         display: 'inline-flex',
@@ -421,7 +421,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
             position: 'fixed',
             inset: 0,
             zIndex: 1000,
-            background: 'rgba(73, 52, 58, 0.75)',
+            background: 'rgba(64, 53, 47, 0.75)',
             backdropFilter: 'blur(8px)',
             display: 'flex',
             alignItems: 'center',
@@ -433,14 +433,14 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: '#FFF9F6',
+              background: '#FFFFFF',
               borderRadius: '24px',
               padding: '2rem 1.5rem',
               maxWidth: '380px',
               width: '100%',
               textAlign: 'center',
               boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
-              border: '2px solid rgba(213, 181, 140, 0.6)',
+              border: '2px solid rgba(198, 164, 106, 0.6)',
               position: 'relative',
             }}
           >
@@ -452,7 +452,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                 position: 'absolute',
                 top: '1rem',
                 right: '1rem',
-                background: 'rgba(73, 52, 58, 0.08)',
+                background: 'rgba(64, 53, 47, 0.08)',
                 border: 'none',
                 borderRadius: '50%',
                 width: '32px',
@@ -484,7 +484,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
                 background: '#FFFFFF',
                 padding: '0.85rem',
                 borderRadius: '16px',
-                border: '1.5px solid rgba(213, 181, 140, 0.5)',
+                border: '1.5px solid rgba(198, 164, 106, 0.5)',
                 margin: '0 auto 1.25rem',
                 maxWidth: '240px',
               }}

@@ -26,7 +26,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
       id="closing"
       style={{
         position: 'relative',
-        background: 'linear-gradient(180deg, #FDF7F4 0%, #F5ECE6 45%, #3B272E 100%)',
+        background: 'linear-gradient(180deg, var(--color-ivory) 0%, var(--color-warm-beige-light) 45%, var(--color-deep-brown) 100%)',
         paddingTop: '6rem',
         paddingBottom: '3.5rem',
         overflow: 'hidden',
@@ -49,7 +49,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             style={{
               position: 'absolute',
               inset: '-10px',
-              border: '1.5px solid rgba(213, 181, 140, 0.45)',
+              border: '1.5px solid rgba(198, 164, 106, 0.45)',
               borderRadius: 'var(--radius-arch)',
               pointerEvents: 'none',
               transform: 'translate(6px, 8px)',
@@ -63,9 +63,9 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
               aspectRatio: '2/3',
               borderRadius: 'var(--radius-arch)',
               overflow: 'hidden',
-              border: '4px solid #FFF9F6',
+              border: '4px solid var(--color-ivory)',
               boxShadow: 'var(--shadow-paper-lg)',
-              background: '#F7EFE9',
+              background: 'var(--color-warm-beige-light)',
             }}
           >
             <picture>
@@ -94,9 +94,9 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.2em',
-            color: 'var(--color-rose-dark)',
-            background: 'rgba(255, 249, 246, 0.95)',
-            border: '1px solid rgba(201, 130, 145, 0.35)',
+            color: 'var(--color-champagne-gold)',
+            background: 'rgba(250, 247, 240, 0.95)',
+            border: '1px solid rgba(198, 164, 106, 0.35)',
             padding: '0.35rem 1.25rem',
             borderRadius: 'var(--radius-full)',
             marginBottom: '1.25rem',
@@ -110,7 +110,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-            color: 'var(--color-plum)',
+            color: 'var(--color-deep-brown)',
             maxWidth: '680px',
             margin: '0 auto 1rem',
             lineHeight: 1.2,
@@ -143,7 +143,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
               fontSize: 'clamp(2rem, 5vw, 3rem)',
               fontWeight: 700,
               letterSpacing: '0.2em',
-              color: 'var(--color-rose-dark)',
+              color: 'var(--color-champagne-gold)',
               margin: '0.5rem 0',
               lineHeight: 1.1,
             }}
@@ -154,7 +154,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: '1.25rem',
-              color: 'var(--color-plum)',
+              color: '#FAF7F0',
               letterSpacing: '0.08em',
               fontWeight: 600,
             }}
@@ -165,7 +165,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: '0.88rem',
-              color: 'var(--color-text-muted)',
+              color: 'rgba(250, 247, 240, 0.75)',
               marginTop: '0.4rem',
             }}
           >
@@ -186,9 +186,9 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             gap: '0.5rem',
             padding: '0.7rem 1.6rem',
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(255, 255, 255, 0.22)',
-            border: '1px solid rgba(255, 255, 255, 0.45)',
-            color: '#FFFFFF',
+            background: 'rgba(250, 247, 240, 0.18)',
+            border: '1px solid rgba(198, 164, 106, 0.45)',
+            color: '#FAF7F0',
             fontSize: '0.85rem',
             fontFamily: 'var(--font-sans)',
             letterSpacing: '0.04em',
@@ -198,11 +198,11 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             marginBottom: '3rem',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.38)';
+            e.currentTarget.style.background = 'rgba(198, 164, 106, 0.35)';
             e.currentTarget.style.transform = 'translateY(-2px)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)';
+            e.currentTarget.style.background = 'rgba(250, 247, 240, 0.18)';
             e.currentTarget.style.transform = 'translateY(0)';
           }}
         >
@@ -215,7 +215,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           style={{
             borderTop: '1px solid rgba(255, 255, 255, 0.15)',
             paddingTop: '2.25rem',
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: 'rgba(250, 247, 240, 0.7)',
             fontSize: '0.82rem',
             fontFamily: 'var(--font-sans)',
             display: 'flex',
@@ -227,7 +227,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
             <span>{t.closing.copyright}</span>
-            <Heart size={14} fill="rgba(201, 130, 145, 0.85)" stroke="none" />
+            <Heart size={14} fill="var(--color-champagne-gold)" stroke="none" />
           </div>
 
           {/* Discreet portal link for bride & groom */}
@@ -236,13 +236,13 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             title="Khu vực dâu rể tạo link thiệp riêng"
             style={{
               fontSize: '0.74rem',
-              color: 'rgba(255, 255, 255, 0.35)',
+              color: 'rgba(250, 247, 240, 0.45)',
               textDecoration: 'none',
               letterSpacing: '0.04em',
               transition: 'color 0.2s ease',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.85)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.35)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-champagne-gold)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(250, 247, 240, 0.45)')}
           >
             ✦ Quản lý tạo thiệp riêng
           </a>

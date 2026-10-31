@@ -30,7 +30,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           position: 'absolute',
           inset: '-20px -25px',
           borderRadius: 'inherit',
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(213, 181, 140, 0.35) 0%, rgba(243, 213, 218, 0.22) 50%, transparent 75%)',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(198, 164, 106, 0.35) 0%, rgba(201, 154, 154, 0.2) 50%, transparent 75%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}
@@ -42,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           position: 'absolute',
           inset: '-8px',
           borderRadius: 'clamp(148px, 42vw, 185px) clamp(148px, 42vw, 185px) 28px 28px',
-          border: '1.5px solid rgba(213, 181, 140, 0.45)',
+          border: '1.5px solid rgba(198, 164, 106, 0.45)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, transparent 72%, rgba(73, 52, 58, 0.18) 100%)',
+            background: 'linear-gradient(180deg, transparent 72%, rgba(64, 53, 47, 0.16) 100%)',
             pointerEvents: 'none',
           }}
         />
@@ -87,9 +87,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             width: '46px',
             height: '46px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #EAD7C2 0%, #D5B58C 45%, #B89363 100%)',
+            background: 'linear-gradient(135deg, #FAF7F0 0%, #C6A46A 45%, #9F7E46 100%)',
             border: '2px solid #FFFFFF',
-            boxShadow: '0 4px 14px rgba(73, 52, 58, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6)',
+            boxShadow: '0 4px 14px rgba(64, 53, 47, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -103,7 +103,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontWeight: 700,
               color: '#FFFFFF',
               letterSpacing: '0.08em',
-              textShadow: '0 1px 2px rgba(73, 52, 58, 0.35)',
+              textShadow: '0 1px 2px rgba(64, 53, 47, 0.35)',
             }}
           >
             {weddingConfig.couple.monogram}
@@ -116,8 +116,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
   return (
     <section id="hero" className="hero-light-section">
       {/* Delicate Botanical Corner Flourishes */}
-      <BotanicalCorner position="top-left" size={68} color="rgba(213, 181, 140, 0.45)" />
-      <BotanicalCorner position="top-right" size={68} color="rgba(213, 181, 140, 0.45)" />
+      <BotanicalCorner position="top-left" size={68} color="rgba(198, 164, 106, 0.45)" />
+      <BotanicalCorner position="top-right" size={68} color="rgba(198, 164, 106, 0.45)" />
 
       {/* Ambient Sparkle Dust Canvas Glow */}
       <div
@@ -145,20 +145,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               gap: '0.45rem',
               padding: '0.38rem 1.15rem',
               background: '#FFFFFF',
-              border: '1px solid #D5B58C',
+              border: '1px solid #C6A46A',
               borderRadius: 'var(--radius-full)',
-              boxShadow: '0 4px 14px rgba(73, 52, 58, 0.05)',
+              boxShadow: '0 4px 14px rgba(64, 53, 47, 0.05)',
               marginBottom: '0.75rem',
             }}
           >
-            <Calendar size={13} style={{ color: '#B89363' }} />
+            <Calendar size={13} style={{ color: '#9F7E46' }} />
             <span
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.76rem',
                 fontWeight: 600,
                 letterSpacing: '0.18em',
-                color: '#6E535C',
+                color: '#5C4D44',
                 textTransform: 'uppercase',
               }}
             >
@@ -177,18 +177,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                   gap: '0.45rem',
                   padding: '0.45rem 1.35rem',
                   borderRadius: 'var(--radius-full)',
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #FAF0EB 100%)',
-                  border: '1.5px solid #D5B58C',
-                  boxShadow: '0 4px 16px rgba(213, 181, 140, 0.25)',
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #FAF7F0 100%)',
+                  border: '1.5px solid #C6A46A',
+                  boxShadow: '0 4px 16px rgba(198, 164, 106, 0.25)',
                   marginBottom: '0.85rem',
                   fontSize: '0.9rem',
-                  color: '#49343A',
+                  color: '#40352F',
                 }}
               >
-                <Sparkles size={14} style={{ color: '#B89363' }} />
+                <Sparkles size={14} style={{ color: '#9F7E46' }} />
                 <span>
                   {lang === 'vi' ? 'Trân trọng kính mời ' : 'Cordially inviting '}
-                  <strong style={{ color: '#A86070', fontWeight: 700, fontSize: '0.98rem' }}>
+                  <strong style={{ color: '#A67575', fontWeight: 700, fontSize: '0.98rem' }}>
                     {guestName}
                   </strong>
                 </span>
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontFamily: 'var(--font-serif)',
               fontSize: '1.02rem',
               fontStyle: 'italic',
-              color: '#84636C',
+              color: '#7A6960',
               letterSpacing: '0.04em',
               marginBottom: '0.2rem',
             }}
@@ -218,7 +218,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(2.5rem, 8.5vw, 3.4rem)',
               fontWeight: 600,
-              color: '#49343A',
+              color: '#40352F',
               letterSpacing: '0.03em',
               lineHeight: 1.15,
               margin: '0.15rem 0 0.5rem',
@@ -232,7 +232,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
                 fontWeight: 300,
-                color: '#C98291',
+                color: '#C99A9A',
                 fontSize: '0.86em',
               }}
             >
@@ -242,7 +242,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           </h1>
         </div>
 
-        {/* Centerpiece Full Arch Portrait (Điểm Nhấn Trung Tâm) */}
+        {/* Centerpiece Full Arch Portrait */}
         <div className="reveal-init is-revealed stagger-3" style={{ margin: '0.5rem 0 1.5rem' }}>
           {CenterpiecePortrait}
         </div>
@@ -254,7 +254,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontFamily: 'var(--font-serif)',
               fontSize: '1.45rem',
               fontWeight: 600,
-              color: '#49343A',
+              color: '#40352F',
               letterSpacing: '0.06em',
             }}
           >
@@ -266,12 +266,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              color: '#6E535C',
+              color: '#5C4D44',
               fontSize: '0.92rem',
               marginTop: '0.25rem',
             }}
           >
-            <Clock size={13} style={{ color: '#B89363' }} />
+            <Clock size={13} style={{ color: '#9F7E46' }} />
             <span>{t.hero.weddingDay}</span>
           </div>
 
@@ -280,7 +280,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.82rem',
-                color: '#B89363',
+                color: '#9F7E46',
                 fontStyle: 'italic',
               }}
             >
@@ -295,15 +295,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               gap: '0.45rem',
               marginTop: '0.65rem',
               fontSize: '0.86rem',
-              color: '#49343A',
+              color: '#40352F',
               background: '#FFFFFF',
               padding: '0.4rem 1.1rem',
               borderRadius: 'var(--radius-full)',
-              border: '1px solid rgba(213, 181, 140, 0.6)',
-              boxShadow: '0 2px 8px rgba(73, 52, 58, 0.05)',
+              border: '1px solid rgba(198, 164, 106, 0.6)',
+              boxShadow: '0 2px 8px rgba(64, 53, 47, 0.05)',
             }}
           >
-            <MapPin size={13} style={{ color: '#C98291' }} />
+            <MapPin size={13} style={{ color: '#C99A9A' }} />
             <span>{weddingConfig.event.reception.venueVi}</span>
           </div>
         </div>
@@ -323,10 +323,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             href="#rsvp"
             className="btn-primary sheen-effect"
             style={{
-              background: 'linear-gradient(135deg, #C98291 0%, #A86070 100%)',
-              borderColor: '#E5C193',
+              background: 'linear-gradient(135deg, #C6A46A 0%, #A38148 100%)',
+              borderColor: '#C6A46A',
               color: '#FFFFFF',
-              boxShadow: '0 6px 20px rgba(201, 130, 145, 0.35)',
+              boxShadow: '0 6px 20px rgba(198, 164, 106, 0.35)',
               padding: '0.75rem 1.6rem',
               fontSize: '0.92rem',
               borderRadius: 'var(--radius-full)',
@@ -343,18 +343,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             className="btn-outline"
             style={{
               background: '#FFFFFF',
-              borderColor: '#D5B58C',
-              color: '#49343A',
+              borderColor: '#C6A46A',
+              color: '#40352F',
               padding: '0.75rem 1.6rem',
               fontSize: '0.92rem',
               borderRadius: 'var(--radius-full)',
-              boxShadow: '0 4px 12px rgba(73, 52, 58, 0.05)',
+              boxShadow: '0 4px 12px rgba(64, 53, 47, 0.05)',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
             }}
           >
-            <Calendar size={16} style={{ color: '#B89363' }} />
+            <Calendar size={16} style={{ color: '#9F7E46' }} />
             <span>{translations[lang].event.title}</span>
           </a>
           <AddToCalendarButton lang={lang} />
@@ -376,9 +376,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               width: '52px',
               height: '52px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #FAF0EB 0%, #F5ECE6 100%)',
-              border: '1.5px solid #D5B58C',
-              boxShadow: '0 4px 16px rgba(73, 52, 58, 0.08)',
+              background: 'linear-gradient(135deg, #FAF7F0 0%, #E8DFD2 100%)',
+              border: '1.5px solid #C6A46A',
+              boxShadow: '0 4px 16px rgba(64, 53, 47, 0.08)',
               marginBottom: '1.25rem',
             }}
           >
@@ -388,7 +388,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontSize: '1.15rem',
                 fontWeight: 600,
                 letterSpacing: '0.12em',
-                color: '#A86070',
+                color: '#A67575',
               }}
             >
               {weddingConfig.couple.monogram}
@@ -405,13 +405,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 gap: '0.5rem',
                 padding: '0.4rem 1.3rem',
                 background: '#FFFFFF',
-                border: '1px solid #D5B58C',
+                border: '1px solid #C6A46A',
                 borderRadius: 'var(--radius-full)',
                 marginBottom: '1rem',
-                boxShadow: '0 4px 14px rgba(73, 52, 58, 0.05)',
+                boxShadow: '0 4px 14px rgba(64, 53, 47, 0.05)',
               }}
             >
-              <Calendar size={13} style={{ color: '#B89363' }} />
+              <Calendar size={13} style={{ color: '#9F7E46' }} />
               <span
                 style={{
                   fontFamily: 'var(--font-sans)',
@@ -419,7 +419,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                   fontWeight: 600,
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
-                  color: '#6E535C',
+                  color: '#5C4D44',
                 }}
               >
                 {t.hero.saveTheDate} • 28 &amp; 29 . 11 . 2026
@@ -438,18 +438,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                   gap: '0.5rem',
                   padding: '0.5rem 1.4rem',
                   borderRadius: 'var(--radius-full)',
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #FAF0EB 100%)',
-                  border: '1.5px solid #D5B58C',
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #FAF7F0 100%)',
+                  border: '1.5px solid #C6A46A',
                   marginBottom: '1.25rem',
                   fontSize: '0.94rem',
-                  color: '#49343A',
-                  boxShadow: '0 4px 18px rgba(213, 181, 140, 0.25)',
+                  color: '#40352F',
+                  boxShadow: '0 4px 18px rgba(198, 164, 106, 0.25)',
                 }}
               >
-                <Sparkles size={15} style={{ color: '#B89363' }} />
+                <Sparkles size={15} style={{ color: '#9F7E46' }} />
                 <span>
                   {lang === 'vi' ? 'Trân trọng kính mời ' : 'Cordially inviting '}
-                  <strong style={{ color: '#A86070', fontWeight: 700, fontSize: '1.04rem' }}>
+                  <strong style={{ color: '#A67575', fontWeight: 700, fontSize: '1.04rem' }}>
                     {guestName}
                   </strong>
                 </span>
@@ -464,7 +464,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontFamily: 'var(--font-serif)',
               fontSize: '1.15rem',
               fontStyle: 'italic',
-              color: '#84636C',
+              color: '#7A6960',
               letterSpacing: '0.04em',
               marginBottom: '0.4rem',
             }}
@@ -479,7 +479,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(3rem, 4.5vw, 4.5rem)',
               fontWeight: 600,
-              color: '#49343A',
+              color: '#40352F',
               letterSpacing: '0.03em',
               lineHeight: 1.15,
               margin: '0.25rem 0 1rem',
@@ -493,7 +493,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
                 fontWeight: 300,
-                color: '#C98291',
+                color: '#C99A9A',
                 fontSize: '0.88em',
               }}
             >
@@ -513,19 +513,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontFamily: 'var(--font-serif)',
                 fontSize: '1.75rem',
                 fontWeight: 600,
-                color: '#49343A',
+                color: '#40352F',
                 letterSpacing: '0.08em',
               }}
             >
               {t.hero.weddingDate}
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.35rem' }}>
-              <Clock size={15} style={{ color: '#B89363' }} />
+              <Clock size={15} style={{ color: '#9F7E46' }} />
               <p
                 style={{
                   fontFamily: 'var(--font-sans)',
                   fontSize: '0.98rem',
-                  color: '#6E535C',
+                  color: '#5C4D44',
                 }}
               >
                 {t.hero.weddingDay}
@@ -535,7 +535,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.88rem',
-                color: '#B89363',
+                color: '#9F7E46',
                 fontStyle: 'italic',
                 marginTop: '0.25rem',
               }}
@@ -551,15 +551,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 gap: '0.45rem',
                 marginTop: '0.85rem',
                 fontSize: '0.88rem',
-                color: '#49343A',
+                color: '#40352F',
                 background: '#FFFFFF',
                 padding: '0.45rem 1.15rem',
                 borderRadius: 'var(--radius-full)',
-                border: '1.5px solid rgba(213, 181, 140, 0.6)',
-                boxShadow: '0 2px 10px rgba(73, 52, 58, 0.05)',
+                border: '1.5px solid rgba(198, 164, 106, 0.6)',
+                boxShadow: '0 2px 10px rgba(64, 53, 47, 0.05)',
               }}
             >
-              <MapPin size={14} style={{ color: '#C98291' }} />
+              <MapPin size={14} style={{ color: '#C99A9A' }} />
               <span>{weddingConfig.event.reception.venueVi}</span>
             </div>
           </div>
@@ -578,10 +578,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               href="#rsvp"
               className="btn-primary magnetic-btn sheen-effect"
               style={{
-                background: 'linear-gradient(135deg, #C98291 0%, #A86070 100%)',
-                borderColor: '#E5C193',
+                background: 'linear-gradient(135deg, #C6A46A 0%, #A38148 100%)',
+                borderColor: '#C6A46A',
                 color: '#FFFFFF',
-                boxShadow: '0 8px 24px rgba(201, 130, 145, 0.35)',
+                boxShadow: '0 8px 24px rgba(198, 164, 106, 0.35)',
                 padding: '0.85rem 1.9rem',
                 fontSize: '0.96rem',
               }}
@@ -595,14 +595,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               className="btn-outline magnetic-btn"
               style={{
                 background: '#FFFFFF',
-                borderColor: '#D5B58C',
-                color: '#49343A',
+                borderColor: '#C6A46A',
+                color: '#40352F',
                 padding: '0.85rem 1.9rem',
                 fontSize: '0.96rem',
-                boxShadow: '0 4px 16px rgba(73, 52, 58, 0.06)',
+                boxShadow: '0 4px 16px rgba(64, 53, 47, 0.06)',
               }}
             >
-              <Calendar size={16} style={{ color: '#B89363' }} />
+              <Calendar size={16} style={{ color: '#9F7E46' }} />
               <span>{translations[lang].event.title}</span>
             </a>
             <AddToCalendarButton lang={lang} />
@@ -635,7 +635,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '0.2rem',
-          color: '#84636C',
+          color: '#7A6960',
           fontSize: '0.74rem',
           fontFamily: 'var(--font-sans)',
           textTransform: 'uppercase',
@@ -646,7 +646,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
         }}
       >
         <span>{t.hero.scrollDown}</span>
-        <ChevronDown size={17} style={{ color: '#B89363' }} />
+        <ChevronDown size={17} style={{ color: '#9F7E46' }} />
       </a>
     </section>
   );

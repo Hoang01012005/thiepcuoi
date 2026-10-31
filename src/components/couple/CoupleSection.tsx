@@ -17,7 +17,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
   const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
 
   return (
-    <section ref={sectionRef} id="couple" className="section-wrapper" style={{ backgroundColor: '#FDF7F4' }}>
+    <section ref={sectionRef} id="couple" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.couple.badge}
@@ -44,7 +44,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
+            <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
             {/* Top Traditional Honorific Tag */}
             <span
               style={{
@@ -55,8 +55,8 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 textTransform: 'uppercase',
                 letterSpacing: '0.2em',
                 color: 'var(--color-gold-dark)',
-                background: 'rgba(213, 181, 140, 0.15)',
-                border: '1px solid rgba(213, 181, 140, 0.4)',
+                background: 'rgba(198, 164, 106, 0.14)',
+                border: '1px solid rgba(198, 164, 106, 0.4)',
                 padding: '0.35rem 1.1rem',
                 borderRadius: 'var(--radius-full)',
                 marginBottom: '1.75rem',
@@ -74,9 +74,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 margin: '0 auto 1.75rem',
                 borderRadius: '130px 130px 14px 14px',
                 overflow: 'hidden',
-                border: '3px solid #FFF9F6',
-                boxShadow: '0 10px 30px rgba(73, 52, 58, 0.12), 0 0 0 1px rgba(213, 181, 140, 0.45)',
-                background: '#F7EFE9',
+                border: '3px solid #FFFFFF',
+                boxShadow: '0 10px 30px rgba(64, 53, 47, 0.1), 0 0 0 1px rgba(198, 164, 106, 0.45)',
+                background: 'var(--color-beige)',
               }}
             >
               <picture>
@@ -124,11 +124,11 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             {/* Hometown & Parents Info Card */}
             <div
               style={{
-                background: 'rgba(255, 249, 246, 0.85)',
+                background: 'rgba(255, 255, 255, 0.85)',
                 padding: '0.85rem 1.25rem',
                 borderRadius: 'var(--radius-md)',
                 margin: '1.25rem 0',
-                border: '1px solid rgba(213, 181, 140, 0.3)',
+                border: '1px solid rgba(198, 164, 106, 0.3)',
               }}
             >
               <div
@@ -180,7 +180,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-right" size={54} color="rgba(201, 130, 145, 0.45)" />
+            <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.45)" />
             {/* Top Traditional Honorific Tag */}
             <span
               style={{
@@ -191,8 +191,8 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 textTransform: 'uppercase',
                 letterSpacing: '0.2em',
                 color: 'var(--color-rose-dark)',
-                background: 'rgba(243, 213, 218, 0.45)',
-                border: '1px solid rgba(201, 130, 145, 0.35)',
+                background: 'rgba(201, 154, 154, 0.2)',
+                border: '1px solid rgba(201, 154, 154, 0.4)',
                 padding: '0.35rem 1.1rem',
                 borderRadius: 'var(--radius-full)',
                 marginBottom: '1.75rem',
@@ -210,9 +210,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
                 margin: '0 auto 1.75rem',
                 borderRadius: '130px 130px 14px 14px',
                 overflow: 'hidden',
-                border: '3px solid #FFF9F6',
-                boxShadow: '0 10px 30px rgba(73, 52, 58, 0.12), 0 0 0 1px rgba(201, 130, 145, 0.4)',
-                background: '#F7EFE9',
+                border: '3px solid #FFFFFF',
+                boxShadow: '0 10px 30px rgba(64, 53, 47, 0.1), 0 0 0 1px rgba(198, 164, 106, 0.45)',
+                background: 'var(--color-beige)',
               }}
             >
               <picture>
@@ -260,11 +260,11 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             {/* Hometown & Parents Info Card */}
             <div
               style={{
-                background: 'rgba(255, 249, 246, 0.85)',
+                background: 'rgba(255, 255, 255, 0.85)',
                 padding: '0.85rem 1.25rem',
                 borderRadius: 'var(--radius-md)',
                 margin: '1.25rem 0',
-                border: '1px solid rgba(201, 130, 145, 0.3)',
+                border: '1px solid rgba(198, 164, 106, 0.3)',
               }}
             >
               <div
@@ -317,7 +317,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
               width: '46px',
               height: '46px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--color-blush) 0%, #FFF9F6 100%)',
+              background: 'linear-gradient(135deg, var(--color-beige) 0%, #FFFFFF 100%)',
               border: '1px solid var(--color-gold)',
               boxShadow: 'var(--shadow-sm)',
             }}

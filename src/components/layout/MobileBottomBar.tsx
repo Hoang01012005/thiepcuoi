@@ -77,13 +77,13 @@ export const MobileBottomBar: React.FC<MobileBottomBarProps> = ({ lang }) => {
               padding: '0.35rem 0.65rem',
               borderRadius: '9999px',
               textDecoration: 'none',
-              color: isActive ? 'var(--color-rose-dark)' : 'var(--color-plum)',
-              background: isActive ? 'rgba(243, 213, 218, 0.45)' : 'transparent',
+              color: isActive ? 'var(--color-champagne-gold)' : 'var(--color-deep-brown)',
+              background: isActive ? 'rgba(198, 164, 106, 0.16)' : 'transparent',
               transition: 'all 0.25s ease',
               minWidth: '54px',
             }}
           >
-            <Icon size={18} strokeWidth={isActive ? 2.3 : 1.8} style={{ color: isActive ? 'var(--color-rose-dark)' : 'var(--color-plum)' }} />
+            <Icon size={18} strokeWidth={isActive ? 2.3 : 1.8} style={{ color: isActive ? 'var(--color-champagne-gold)' : 'var(--color-deep-brown)' }} />
             <span
               style={{
                 fontSize: '0.66rem',

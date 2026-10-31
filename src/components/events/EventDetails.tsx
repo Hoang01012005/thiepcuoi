@@ -33,7 +33,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
   };
 
   return (
-    <section ref={sectionRef} id="event" className="section-wrapper" style={{ backgroundColor: '#FDF7F4' }}>
+    <section ref={sectionRef} id="event" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.event.badge}
@@ -62,7 +62,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-left" size={54} color="rgba(213, 181, 140, 0.45)" />
+            <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
             <div>
               <span
                 style={{
@@ -72,8 +72,8 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                   textTransform: 'uppercase',
                   letterSpacing: '0.2em',
                   color: 'var(--color-gold-dark)',
-                  background: 'rgba(213, 181, 140, 0.15)',
-                  border: '1px solid rgba(213, 181, 140, 0.4)',
+                  background: 'rgba(198, 164, 106, 0.14)',
+                  border: '1px solid rgba(198, 164, 106, 0.4)',
                   padding: '0.3rem 0.95rem',
                   borderRadius: 'var(--radius-full)',
                   marginBottom: '1.25rem',
@@ -128,12 +128,12 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               style={{
                 marginTop: '1.75rem',
                 padding: '0.85rem 1rem',
-                background: 'rgba(255, 249, 246, 0.9)',
+                background: 'rgba(255, 255, 255, 0.9)',
                 borderRadius: 'var(--radius-md)',
                 fontSize: '0.85rem',
                 color: 'var(--color-text-muted)',
                 fontStyle: 'italic',
-                border: '1px solid rgba(213, 181, 140, 0.3)',
+                border: '1px solid rgba(198, 164, 106, 0.3)',
               }}
             >
               {t.event.lunarDateLabel} {lang === 'vi' ? event.lunarDateVi : event.lunarDateEn}
@@ -152,7 +152,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               overflow: 'hidden',
             }}
           >
-            <BotanicalCorner position="top-right" size={54} color="rgba(201, 130, 145, 0.45)" />
+            <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.45)" />
             <div>
               <span
                 style={{
@@ -162,8 +162,8 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                   textTransform: 'uppercase',
                   letterSpacing: '0.2em',
                   color: 'var(--color-rose-dark)',
-                  background: 'rgba(243, 213, 218, 0.45)',
-                  border: '1px solid rgba(201, 130, 145, 0.35)',
+                  background: 'rgba(201, 154, 154, 0.2)',
+                  border: '1px solid rgba(201, 154, 154, 0.35)',
                   padding: '0.3rem 0.95rem',
                   borderRadius: 'var(--radius-full)',
                   marginBottom: '1.25rem',
@@ -269,8 +269,8 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                 textTransform: 'uppercase',
                 letterSpacing: '0.22em',
                 color: 'var(--color-rose-dark)',
-                background: 'rgba(243, 213, 218, 0.45)',
-                border: '1px solid rgba(201, 130, 145, 0.3)',
+                background: 'rgba(201, 154, 154, 0.2)',
+                border: '1px solid rgba(201, 154, 154, 0.3)',
                 padding: '0.25rem 0.9rem',
                 borderRadius: 'var(--radius-full)',
               }}
@@ -333,17 +333,17 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                       borderRadius: '50%',
                       backgroundColor: color,
                       border: '3px solid rgba(255, 255, 255, 0.95)',
-                      boxShadow: '0 6px 18px rgba(73, 52, 58, 0.18), inset 0 1px 3px rgba(255,255,255,0.5)',
+                      boxShadow: '0 6px 18px rgba(64, 53, 47, 0.16), inset 0 1px 3px rgba(255,255,255,0.5)',
                       transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease',
                       cursor: 'default',
                     }}
                     onMouseEnter={e => {
                       (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.12) translateY(-4px)';
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = `0 12px 28px rgba(73, 52, 58, 0.22), 0 0 0 4px ${color}55`;
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = `0 12px 28px rgba(64, 53, 47, 0.22), 0 0 0 4px ${color}55`;
                     }}
                     onMouseLeave={e => {
                       (e.currentTarget as HTMLDivElement).style.transform = 'scale(1) translateY(0)';
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 18px rgba(73, 52, 58, 0.18), inset 0 1px 3px rgba(255,255,255,0.5)';
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 18px rgba(64, 53, 47, 0.16), inset 0 1px 3px rgba(255,255,255,0.5)';
                     }}
                     title={swatchName}
                     aria-label={swatchName}
@@ -383,7 +383,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               color: 'var(--color-text-muted)',
               fontStyle: 'italic',
               lineHeight: 1.6,
-              borderTop: '1px solid rgba(213, 181, 140, 0.3)',
+              borderTop: '1px solid rgba(198, 164, 106, 0.3)',
               paddingTop: '1.25rem',
               marginTop: '0.5rem',
             }}
