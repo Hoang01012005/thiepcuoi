@@ -47,10 +47,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.6rem',
+            gap: '0.65rem',
             textDecoration: 'none',
           }}
         >
+          <img
+            src={weddingConfig.couple.logo.src}
+            alt={weddingConfig.couple.logo.alt}
+            style={{
+              width: '34px',
+              height: '34px',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 2px 4px rgba(64, 53, 47, 0.15))',
+            }}
+          />
           <span
             style={{
               fontFamily: 'var(--font-display)',

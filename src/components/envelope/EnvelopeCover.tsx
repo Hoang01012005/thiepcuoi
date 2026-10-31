@@ -542,20 +542,20 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 }}
               />
 
-              {/* Embossed Monogram N & H */}
-              <div style={{ textAlign: 'center' }}>
-                <div
+              {/* Embossed Authentic Floral Monogram Logo N & H */}
+              <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img
+                  src={weddingConfig.couple.logo.src}
+                  alt={weddingConfig.couple.logo.alt}
                   style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.4rem, 3.4vw, 1.8rem)',
-                    fontWeight: 700,
-                    letterSpacing: '0.14em',
-                    color: '#40352F',
-                    textShadow: '0 1px 1px rgba(250, 247, 240, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.25)',
+                    width: 'clamp(56px, 11vw, 70px)',
+                    height: 'clamp(56px, 11vw, 70px)',
+                    objectFit: 'contain',
+                    filter: 'drop-shadow(0 2px 4px rgba(64, 53, 47, 0.45))',
+                    userSelect: 'none',
+                    pointerEvents: 'none',
                   }}
-                >
-                  {weddingConfig.couple.monogram}
-                </div>
+                />
               </div>
             </div>
 

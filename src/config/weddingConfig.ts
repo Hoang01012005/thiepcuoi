@@ -39,6 +39,12 @@ export interface WeddingConfig {
       parentsEn: string;
     };
     monogram: string;
+    logo: {
+      src: string;
+      srcPng: string;
+      badgeSrc: string;
+      alt: string;
+    };
   };
   event: {
     weddingDateISO: string; // ISO 8601 with explicit timezone
@@ -130,6 +136,12 @@ export const weddingConfig: WeddingConfig = {
       parentsEn: 'Mr. Doan Van Hung — Mrs. Doan Thi Huyen',
     },
     monogram: 'N & H',
+    logo: {
+      src: '/assets/photos/wedding-logo.webp',
+      srcPng: '/assets/photos/wedding-logo.png',
+      badgeSrc: '/assets/photos/wedding-logo-badge.webp',
+      alt: 'Logo cưới Hoàng Nam & Ngọc Hiệp (N & H)',
+    },
   },
   event: {
     weddingDateISO: '2026-11-29T09:00:00+07:00',

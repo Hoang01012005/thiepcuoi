@@ -136,21 +136,35 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           &ldquo;{t.closing.message}&rdquo;
         </p>
 
-        {/* Signatures */}
+        {/* Signatures & Authentic Circular Floral Monogram */}
         <div style={{ marginBottom: '3.5rem' }}>
-          <p
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-              fontWeight: 700,
-              letterSpacing: '0.25em',
-              color: 'var(--color-champagne-gold)',
-              margin: '0.5rem 0',
-              lineHeight: 1.1,
-            }}
-          >
-            {weddingConfig.couple.monogram}
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <div
+              style={{
+                width: 'clamp(96px, 18vw, 120px)',
+                height: 'clamp(96px, 18vw, 120px)',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #FAF7F0 0%, #FFFFFF 100%)',
+                border: '1.5px solid rgba(198, 164, 106, 0.45)',
+                padding: '8px',
+                boxShadow: '0 8px 24px rgba(64, 53, 47, 0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src={weddingConfig.couple.logo.src}
+                alt={weddingConfig.couple.logo.alt}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 2px 4px rgba(64, 53, 47, 0.15))',
+                }}
+              />
+            </div>
+          </div>
           <p
             style={{
               fontFamily: 'var(--font-serif)',
@@ -158,7 +172,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
               color: 'var(--color-deep-brown)',
               letterSpacing: '0.12em',
               fontWeight: 700,
-              marginTop: '0.75rem',
+              marginTop: '0.5rem',
             }}
           >
             {t.closing.signature}

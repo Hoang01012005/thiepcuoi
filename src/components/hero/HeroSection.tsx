@@ -84,30 +84,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             position: 'absolute',
             top: '16px',
             right: '16px',
-            width: '46px',
-            height: '46px',
+            width: '52px',
+            height: '52px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #FAF7F0 0%, #C6A46A 45%, #9F7E46 100%)',
-            border: '2px solid #FFFFFF',
-            boxShadow: '0 4px 14px rgba(64, 53, 47, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.6)',
+            background: 'linear-gradient(135deg, #FAF7F0 0%, #FFFFFF 100%)',
+            border: '2px solid #C6A46A',
+            boxShadow: '0 4px 16px rgba(64, 53, 47, 0.25)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 3,
+            padding: '4px',
           }}
         >
-          <span
+          <img
+            src={weddingConfig.couple.logo.src}
+            alt={weddingConfig.couple.logo.alt}
             style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: '0.86rem',
-              fontWeight: 700,
-              color: '#FFFFFF',
-              letterSpacing: '0.08em',
-              textShadow: '0 1px 2px rgba(64, 53, 47, 0.35)',
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 1px 2px rgba(64, 53, 47, 0.25))',
             }}
-          >
-            {weddingConfig.couple.monogram}
-          </span>
+          />
         </div>
       </div>
     </div>
