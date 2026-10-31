@@ -154,7 +154,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop: isOpening ? 'clamp(3rem, 8vh, 6rem)' : '0',
+          marginTop: isOpening ? 'clamp(6rem, 16vh, 9.5rem)' : '0',
           transition: 'margin-top 1.8s cubic-bezier(0.19, 1, 0.22, 1)',
         }}
       >
@@ -196,29 +196,29 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             />
           </div>
 
-          {/* 2. INNER STATIONERY INVITATION CARD (Slides out majestically) */}
+          {/* 2. INNER STATIONERY INVITATION CARD (Slides out high above flaps) */}
           <div
             style={{
               position: 'absolute',
               left: '50%',
               bottom: '12px',
               width: '92%',
-              height: '92%',
+              height: '95%',
               borderRadius: '14px',
               background: 'linear-gradient(165deg, #FFFFFF 0%, #FAF7F0 55%, #E8DFD2 100%)',
               border: '1.5px solid rgba(198, 164, 106, 0.65)',
               boxShadow: isOpening
-                ? '0 25px 55px rgba(64, 53, 47, 0.2), 0 0 0 1px rgba(198, 164, 106, 0.45)'
+                ? '0 30px 65px rgba(64, 53, 47, 0.22), 0 0 0 1px rgba(198, 164, 106, 0.45)'
                 : '0 8px 20px rgba(0, 0, 0, 0.1)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               textAlign: 'center',
-              padding: 'clamp(1.2rem, 3.5vw, 2.2rem) clamp(1rem, 3vw, 1.8rem)',
+              padding: 'clamp(0.95rem, 2.5vw, 1.5rem) clamp(0.75rem, 2vw, 1.4rem)',
               zIndex: 15,
               transform: isOpening
-                ? 'translate(-50%, -46%) scale(1.03)'
+                ? 'translate(-50%, -66%) scale(1.02)'
                 : 'translate(-50%, 0%) scale(0.96)',
               transition: 'transform 2.2s cubic-bezier(0.19, 1, 0.22, 1) 0.35s, box-shadow 1.5s ease',
               overflow: 'hidden',
@@ -226,32 +226,43 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             }}
           >
             {/* White Orchid & Champagne Botanical Corners */}
-            <BotanicalCorner position="top-left" size={48} variant="white-orchid" />
-            <BotanicalCorner position="top-right" size={48} variant="white-orchid" />
-            <BotanicalCorner position="bottom-left" size={48} variant="white-orchid" />
-            <BotanicalCorner position="bottom-right" size={48} variant="white-orchid" />
+            <BotanicalCorner position="top-left" size={44} variant="white-orchid" />
+            <BotanicalCorner position="top-right" size={44} variant="white-orchid" />
+            <BotanicalCorner position="bottom-left" size={44} variant="white-orchid" />
+            <BotanicalCorner position="bottom-right" size={44} variant="white-orchid" />
 
             {/* Inner Gold Foil Hairline Frame */}
             <div
               style={{
                 position: 'absolute',
-                inset: '8px',
+                inset: '7px',
                 border: '1px solid rgba(198, 164, 106, 0.38)',
                 borderRadius: '10px',
                 pointerEvents: 'none',
               }}
             />
 
-            {/* Official Floral Monogram Logo on Slide Card */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.65rem' }}>
+            {/* Official Floral Monogram Logo on Slide Card - Perfectly Straight & Upright */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '0.45rem',
+                transform: 'none',
+              }}
+            >
               <img
                 src={weddingConfig.couple.logo.src}
                 alt={weddingConfig.couple.logo.alt}
                 style={{
-                  width: 'clamp(68px, 12vw, 84px)',
-                  height: 'clamp(68px, 12vw, 84px)',
+                  width: 'clamp(66px, 12vw, 82px)',
+                  height: 'clamp(66px, 12vw, 82px)',
                   objectFit: 'contain',
                   filter: 'drop-shadow(0 2px 6px rgba(64, 53, 47, 0.16))',
+                  transform: 'none',
+                  display: 'block',
+                  margin: '0 auto',
                 }}
               />
             </div>
@@ -259,28 +270,29 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             <p
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.72rem',
+                fontSize: '0.7rem',
                 fontWeight: 700,
                 textTransform: 'uppercase',
                 letterSpacing: '0.22em',
                 color: '#A67575',
-                marginBottom: '0.65rem',
+                marginBottom: '0.5rem',
               }}
             >
               {t.envelope.formalInvite}
             </p>
 
-            {/* Real Couple Photo Accent Window */}
+            {/* Real Couple Photo Accent Window - Tall Oval Frame with Face Focus */}
             <div
               style={{
-                width: 'clamp(76px, 16vw, 92px)',
-                height: 'clamp(76px, 16vw, 92px)',
-                borderRadius: '50%',
+                width: 'clamp(82px, 17vw, 102px)',
+                height: 'clamp(104px, 22vw, 126px)',
+                borderRadius: 'var(--radius-full)',
                 padding: '3px',
                 background: 'linear-gradient(135deg, #FAF7F0 0%, #C6A46A 50%, #9F7E46 100%)',
                 boxShadow: '0 6px 18px rgba(64, 53, 47, 0.16)',
-                marginBottom: '0.65rem',
+                marginBottom: '0.55rem',
                 overflow: 'hidden',
+                flexShrink: 0,
               }}
             >
               <img
@@ -292,35 +304,42 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  borderRadius: '50%',
+                  objectPosition: 'top center',
+                  borderRadius: 'var(--radius-full)',
                 }}
               />
             </div>
 
-            {/* Couple Names */}
+            {/* Couple Names - Responsive 2-line auto wrapping */}
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.4rem, 3.8vw, 2rem)',
+                fontSize: 'clamp(1.2rem, 3.8vw, 1.85rem)',
                 color: '#40352F',
                 fontWeight: 700,
-                lineHeight: 1.2,
-                margin: '0 0 0.5rem',
+                lineHeight: 1.25,
+                margin: '0 0 0.4rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.2rem 0.45rem',
+                maxWidth: '100%',
               }}
             >
-              {weddingConfig.couple.groom.shortName}
+              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.groom.shortName}</span>
               <span
                 style={{
                   fontFamily: 'var(--font-script)',
                   fontSize: '1.25em',
                   color: '#C99A9A',
-                  margin: '0 0.4rem',
                   fontWeight: 400,
+                  display: 'inline-block',
                 }}
               >
                 &amp;
               </span>
-              {weddingConfig.couple.bride.shortName}
+              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.bride.shortName}</span>
             </h2>
 
             {/* Wedding Date Badge */}
@@ -329,24 +348,24 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.45rem',
-                padding: '0.3rem 1rem',
+                padding: '0.25rem 0.95rem',
                 borderRadius: 'var(--radius-full)',
                 background: 'rgba(198, 164, 106, 0.12)',
                 border: '1px solid rgba(198, 164, 106, 0.45)',
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 fontFamily: 'var(--font-serif)',
                 color: '#40352F',
                 fontWeight: 600,
                 letterSpacing: '0.04em',
               }}
             >
-              <Sparkles size={13} style={{ color: '#C6A46A' }} />
+              <Sparkles size={12} style={{ color: '#C6A46A' }} />
               <span>28 &bull; 29 . 11 . 2026</span>
             </div>
 
             <p
               style={{
-                marginTop: '0.65rem',
+                marginTop: '0.55rem',
                 fontSize: '0.78rem',
                 color: '#7A6960',
                 maxWidth: '340px',
@@ -359,12 +378,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             </p>
           </div>
 
-          {/* 3. ENVELOPE LEFT FOLD TRIANGLE */}
+          {/* 3. ENVELOPE LEFT FOLD TRIANGLE (Lowered peak to 68% so card is not covered) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              clipPath: 'polygon(0 0, 0 100%, 50% 50%)',
+              clipPath: 'polygon(0 0, 0 100%, 50% 68%)',
               background: 'linear-gradient(135deg, #4A3E37 0%, #3B302A 100%)',
               zIndex: 20,
               filter: 'drop-shadow(2px 0 6px rgba(0, 0, 0, 0.22))',
@@ -372,12 +391,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             }}
           />
 
-          {/* 4. ENVELOPE RIGHT FOLD TRIANGLE */}
+          {/* 4. ENVELOPE RIGHT FOLD TRIANGLE (Lowered peak to 68% so card is not covered) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              clipPath: 'polygon(100% 0, 100% 100%, 50% 50%)',
+              clipPath: 'polygon(100% 0, 100% 100%, 50% 68%)',
               background: 'linear-gradient(225deg, #4A3E37 0%, #3B302A 100%)',
               zIndex: 20,
               filter: 'drop-shadow(-2px 0 6px rgba(0, 0, 0, 0.22))',
@@ -385,12 +404,12 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             }}
           />
 
-          {/* 5. ENVELOPE BOTTOM FOLD TRIANGLE (With gold edge line) */}
+          {/* 5. ENVELOPE BOTTOM FOLD TRIANGLE (Lowered peak to 68% so all text is crystal clear) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              clipPath: 'polygon(0 100%, 100% 100%, 50% 46%)',
+              clipPath: 'polygon(0 100%, 100% 100%, 50% 68%)',
               background: 'linear-gradient(180deg, #5C4D44 0%, #40352F 100%)',
               zIndex: 22,
               filter: 'drop-shadow(0 -3px 8px rgba(0, 0, 0, 0.25))',
@@ -406,8 +425,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <line x1="0" y1="100" x2="50" y2="46" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
-              <line x1="100" y1="100" x2="50" y2="46" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
+              <line x1="0" y1="100" x2="50" y2="68" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
+              <line x1="100" y1="100" x2="50" y2="68" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
             </svg>
           </div>
 
@@ -553,6 +572,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                     filter: 'drop-shadow(0 2px 5px rgba(64, 53, 47, 0.5))',
                     userSelect: 'none',
                     pointerEvents: 'none',
+                    transform: 'none',
                   }}
                 />
               </div>
