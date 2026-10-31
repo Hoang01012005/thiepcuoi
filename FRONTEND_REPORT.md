@@ -44,3 +44,4 @@
 - [x] Full preservation of venue addresses, dates, calendar timestamps, and parent names.
 - [x] Responsive layout verified across all breakpoints (320px to 1440px+).
 - [x] Strict compliance with zero build errors (`tsc -b && vite build` succeeded).
+

@@ -128,3 +128,4 @@
 - **Mục đích:** Điều hướng và điều khiển âm nhạc trải nghiệm.
 - **Âm thanh:** Tự kích hoạt theo gesture người dùng, có visualizer sóng âm, hỗ trợ bật/tắt mọi lúc.
 - **Mobile Bottom Bar:** Cố định cạnh dưới màn hình di động giúp khách truy cập nhanh bất kỳ phân hệ nào.
+

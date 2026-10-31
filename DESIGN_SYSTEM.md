@@ -90,3 +90,4 @@ Hệ thống thiết kế lấy cảm hứng từ những ấn phẩm thiệp c�
 - **Chuyển động tự nhiên:** Sử dụng cubic-bezier thanh lịch `cubic-bezier(0.16, 1, 0.3, 1)`.
 - **Không lạm dụng hoạt họa:** Các hiệu ứng chỉ xuất hiện khi có tương tác (mở nắp phong bì, cuộn trang hiện dần với threshold 0.15, lật ảnh lightbox).
 - **Hỗ trợ Chế độ giảm chuyển động (`prefers-reduced-motion`):** Tự động tắt pháo hoa hoặc giảm thời gian animation xuống 0.01s cho người dùng kích hoạt giảm chuyển động trên thiết bị.
+

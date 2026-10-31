@@ -65,3 +65,4 @@ If any unforeseen issue arises post-deployment:
    git push origin main
    ```
    Instant build pipeline will redeploy the previous stable build.
+

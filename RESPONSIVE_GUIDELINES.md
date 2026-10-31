@@ -43,3 +43,4 @@ Hơn 92% khách mời sẽ mở thiệp cưới trên điện thoại di động
 6. **Thanh điều hướng đáy (Mobile Bottom Bar):**
    - Cố định ở đáy (`position: fixed; bottom: 0; left: 0; right: 0; z-index: 998`).
    - Có khoảng cách an toàn `env(safe-area-inset-bottom)` cho iPhone có thanh Home Indicator.
+

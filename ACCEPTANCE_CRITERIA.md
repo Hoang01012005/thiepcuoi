@@ -88,3 +88,4 @@
 | **AC-09** | **Sao chép STK** | Bấm nút "Sao chép số tài khoản" | Clipboard chứa đúng số tài khoản, hiển thị toast "Đã sao chép thành công!". |
 | **AC-10** | **Responsive Mobile** | Kiểm thử trên các kích thước 320px, 375px, 390px, 768px, 1024px, 1440px | Không có phần tử nào bị tràn chiều ngang (no horizontal overflow), văn bản dễ đọc, nút bấm kích thước tối thiểu 44x44px. |
 | **AC-11** | **Chất lượng mã nguồn** | Chạy `npm run build` | Lệnh `tsc -b && vite build` hoàn thành với mã thoát 0, không có lỗi TypeScript hay cảnh báo nghiêm trọng. |
+

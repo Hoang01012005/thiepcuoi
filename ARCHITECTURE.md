@@ -91,3 +91,4 @@ Website được xây dựng theo kiến trúc hiện đại **Single-Page Appli
    - Sử dụng định dạng QR chuẩn Napas247 từ `img.vietqr.io` và ảnh QR nội bộ trong `public/assets/photos/qr-groom.png` và `qr-bride.png`.
 3. **Google Maps Integration:**
    - Đường dẫn liên kết trực tiếp tới tọa độ chuẩn xác của tư gia.
+

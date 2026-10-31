@@ -61,3 +61,4 @@
 - **Endpoint:** `https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:json`
 - **Mục đích:** Đồng bộ danh sách khách mời đã phản hồi về trang quản trị nội bộ hoặc thống kê.
 - **Xử lý:** Parse JSON dạng Google Visualization table, loại bỏ các dòng tiêu đề trùng lặp, lọc số điện thoại và chuyển đổi thành đối tượng `RsvpSubmission`.
+

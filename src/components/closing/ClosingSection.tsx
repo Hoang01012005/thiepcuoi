@@ -26,11 +26,12 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
       id="closing"
       style={{
         position: 'relative',
-        background: 'linear-gradient(180deg, var(--color-ivory) 0%, var(--color-warm-beige-light) 45%, var(--color-deep-brown) 100%)',
+        background: 'linear-gradient(180deg, var(--color-ivory) 0%, var(--color-warm-beige-light) 60%, var(--color-warm-beige) 100%)',
         paddingTop: '6rem',
-        paddingBottom: '3.5rem',
+        paddingBottom: '4.5rem',
         overflow: 'hidden',
         textAlign: 'center',
+        borderTop: '1px solid rgba(198, 164, 106, 0.2)',
       }}
     >
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
@@ -95,9 +96,9 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             textTransform: 'uppercase',
             letterSpacing: '0.2em',
             color: 'var(--color-champagne-gold)',
-            background: 'rgba(250, 247, 240, 0.95)',
-            border: '1px solid rgba(198, 164, 106, 0.35)',
-            padding: '0.35rem 1.25rem',
+            background: '#FFFFFF',
+            border: '1px solid rgba(198, 164, 106, 0.4)',
+            padding: '0.4rem 1.35rem',
             borderRadius: 'var(--radius-full)',
             marginBottom: '1.25rem',
             boxShadow: 'var(--shadow-sm)',
@@ -113,7 +114,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             color: 'var(--color-deep-brown)',
             maxWidth: '680px',
             margin: '0 auto 1rem',
-            lineHeight: 1.2,
+            lineHeight: 1.25,
           }}
         >
           {t.closing.title}
@@ -140,9 +141,9 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           <p
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 5vw, 3rem)',
+              fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
               fontWeight: 700,
-              letterSpacing: '0.2em',
+              letterSpacing: '0.25em',
               color: 'var(--color-champagne-gold)',
               margin: '0.5rem 0',
               lineHeight: 1.1,
@@ -153,10 +154,11 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           <p
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: '1.25rem',
-              color: '#FAF7F0',
-              letterSpacing: '0.08em',
-              fontWeight: 600,
+              fontSize: '1.45rem',
+              color: 'var(--color-deep-brown)',
+              letterSpacing: '0.12em',
+              fontWeight: 700,
+              marginTop: '0.75rem',
             }}
           >
             {t.closing.signature}
@@ -164,9 +166,11 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           <p
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: '0.88rem',
-              color: 'rgba(250, 247, 240, 0.75)',
+              fontSize: '0.92rem',
+              fontWeight: 500,
+              color: 'var(--color-text-muted)',
               marginTop: '0.4rem',
+              letterSpacing: '0.04em',
             }}
           >
             {t.hero.weddingDate}
@@ -179,50 +183,55 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           type="button"
           onClick={scrollToTop}
           aria-label={t.nav.backToTop}
-          className="magnetic-btn"
+          className="magnetic-btn sheen-effect"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.7rem 1.6rem',
+            gap: '0.55rem',
+            padding: '0.75rem 1.85rem',
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(250, 247, 240, 0.18)',
-            border: '1px solid rgba(198, 164, 106, 0.45)',
-            color: '#FAF7F0',
-            fontSize: '0.85rem',
+            background: 'linear-gradient(135deg, #FAF7F0 0%, #FFFFFF 100%)',
+            border: '1.5px solid var(--color-champagne-gold)',
+            color: 'var(--color-deep-brown)',
+            fontSize: '0.88rem',
+            fontWeight: 600,
             fontFamily: 'var(--font-sans)',
-            letterSpacing: '0.04em',
-            backdropFilter: 'blur(10px)',
+            letterSpacing: '0.05em',
             cursor: 'pointer',
             transition: 'all 0.25s ease',
-            marginBottom: '3rem',
+            boxShadow: '0 4px 18px rgba(198, 164, 106, 0.22)',
+            marginBottom: '3.5rem',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(198, 164, 106, 0.35)';
+            e.currentTarget.style.background = 'var(--color-champagne-gold)';
+            e.currentTarget.style.color = '#FFFFFF';
             e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(198, 164, 106, 0.35)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(250, 247, 240, 0.18)';
+            e.currentTarget.style.background = 'linear-gradient(135deg, #FAF7F0 0%, #FFFFFF 100%)';
+            e.currentTarget.style.color = 'var(--color-deep-brown)';
             e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 18px rgba(198, 164, 106, 0.22)';
           }}
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={16} style={{ color: 'inherit' }} />
           <span>{t.nav.backToTop}</span>
         </button>
 
         {/* Copyright Footer */}
         <div
           style={{
-            borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+            borderTop: '1px solid rgba(198, 164, 106, 0.25)',
             paddingTop: '2.25rem',
-            color: 'rgba(250, 247, 240, 0.7)',
-            fontSize: '0.82rem',
+            color: 'var(--color-text-muted)',
+            fontSize: '0.85rem',
             fontFamily: 'var(--font-sans)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '0.5rem',
+            gap: '0.65rem',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
@@ -235,14 +244,24 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
             href="#invite"
             title="Khu vực dâu rể tạo link thiệp riêng"
             style={{
-              fontSize: '0.74rem',
-              color: 'rgba(250, 247, 240, 0.45)',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              color: 'var(--color-champagne-gold)',
               textDecoration: 'none',
               letterSpacing: '0.04em',
-              transition: 'color 0.2s ease',
+              transition: 'all 0.2s ease',
+              padding: '0.2rem 0.6rem',
+              borderRadius: 'var(--radius-sm)',
+              background: 'rgba(198, 164, 106, 0.08)',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-champagne-gold)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(250, 247, 240, 0.45)')}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(198, 164, 106, 0.18)';
+              e.currentTarget.style.textDecoration = 'underline';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(198, 164, 106, 0.08)';
+              e.currentTarget.style.textDecoration = 'none';
+            }}
           >
             ✦ Quản lý tạo thiệp riêng
           </a>

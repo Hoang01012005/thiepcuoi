@@ -42,3 +42,4 @@
 - **Static Assets:** Cached immutably (`Cache-Control: public, max-age=31536000, immutable`) via Vite content-hashing (`index-DjZdCG_h.css`, `index-DHE2_-jh.js`).
 - **Dynamic HTML:** Handled via Cloudflare Worker with `no-cache` / `must-revalidate` to ensure real-time query parameter parsing (`?to=...`) without stale preview issues.
 - **Audio Loading:** Preload set to `metadata` to avoid wasting cellular bandwidth on initial page download before user intent.
+

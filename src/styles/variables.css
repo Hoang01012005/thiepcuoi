@@ -2,10 +2,17 @@
 :root {
   /* Core Luxury Wedding Palette */
   --color-ivory: #FAF7F0;
+  --color-ivory-light: #FFFDF9;
+  --color-champagne-gold: #C6A46A;
   --color-gold-champagne: #C6A46A;
   --color-gold: #C6A46A;
+  --color-dusty-rose: #C99A9A;
   --color-rose: #C99A9A;
+  --color-warm-beige: #E8DFD2;
+  --color-warm-beige-light: #F5EFE6;
   --color-beige: #E8DFD2;
+  --color-deep-brown: #40352F;
+  --color-deep-brown-dark: #2B231F;
   --color-brown: #40352F;
 
   /* Extended Harmonious Hues */

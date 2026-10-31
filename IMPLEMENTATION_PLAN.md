@@ -72,3 +72,4 @@ Hiện đại hóa toàn diện giao diện website thiệp cưới sang phong c
 - Đối chiếu toàn bộ Acceptance Criteria trong `ACCEPTANCE_CRITERIA.md`.
 - Đảm bảo 100% dữ liệu thiệp cưới được bảo toàn nguyên vẹn.
 - Lập tài liệu nghiệm thu cuối cùng: `FINAL_REPORT.md`.
+

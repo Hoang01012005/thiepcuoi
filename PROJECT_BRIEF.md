@@ -75,3 +75,4 @@
 2. **Không làm hỏng API & Cloudflare Worker:** Giữ vững xử lý bảo mật CSP, HSTS, dynamic Open Graph metadata cho khách mời cá nhân hóa.
 3. **Mobile-First Responsive:** Hoạt động không tì vết từ 320px, 375px, 390px đến màn hình máy tính bảng và desktop lớn.
 4. **Không lỗi Build & Không lỗi Console.**
+

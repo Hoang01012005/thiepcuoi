@@ -67,3 +67,4 @@ This test plan defines the testing strategy, test cases, device matrices, and ac
 - **TC-09.1**: Sticky header is visible on desktop and mobile.
 - **TC-09.2**: Floating bottom dock bar displays on mobile viewports (<768px) and hides cleanly on desktop.
 - **TC-09.3**: Language switcher toggles between Vietnamese and English across all UI labels seamlessly.
+

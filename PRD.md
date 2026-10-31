@@ -69,3 +69,4 @@
 - **Khả năng tương thích:** Tương thích Safari iOS, Chrome Android, Samsung Internet, Edge, Chrome Desktop, Firefox.
 - **Bảo mật:** Tuân thủ CSP (Content Security Policy), HSTS, chống iframe clickjacking, sanitize toàn bộ input người dùng.
 - **Khả năng tiếp cận (Accessibility):** Tương phản màu sắc đạt chuẩn WCAG AA, có hỗ trợ chế độ giảm chuyển động (`prefers-reduced-motion`).
+

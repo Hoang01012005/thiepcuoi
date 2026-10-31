@@ -44,3 +44,4 @@ The application embeds wedding event structured data so search engines recognize
 - [x] `sitemap.xml` ready for deployment root.
 - [x] `robots.txt` configured to allow all search crawlers.
 - [x] Valid canonical URL structure avoiding duplicate parameter loops.
+
