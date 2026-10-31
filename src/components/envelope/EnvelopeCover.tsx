@@ -242,19 +242,18 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               }}
             />
 
-            {/* Monogram Seal Heading */}
-            <div
-              className="gold-foil-text"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.6rem, 3.8vw, 2.1rem)',
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                lineHeight: 1,
-                marginBottom: '0.35rem',
-              }}
-            >
-              {weddingConfig.couple.monogram}
+            {/* Official Floral Monogram Logo on Slide Card */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.65rem' }}>
+              <img
+                src={weddingConfig.couple.logo.src}
+                alt={weddingConfig.couple.logo.alt}
+                style={{
+                  width: 'clamp(68px, 12vw, 84px)',
+                  height: 'clamp(68px, 12vw, 84px)',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 2px 6px rgba(64, 53, 47, 0.16))',
+                }}
+              />
             </div>
 
             <p
@@ -548,10 +547,10 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                   src={weddingConfig.couple.logo.src}
                   alt={weddingConfig.couple.logo.alt}
                   style={{
-                    width: 'clamp(56px, 11vw, 70px)',
-                    height: 'clamp(56px, 11vw, 70px)',
+                    width: 'clamp(70px, 14vw, 86px)',
+                    height: 'clamp(70px, 14vw, 86px)',
                     objectFit: 'contain',
-                    filter: 'drop-shadow(0 2px 4px rgba(64, 53, 47, 0.45))',
+                    filter: 'drop-shadow(0 2px 5px rgba(64, 53, 47, 0.5))',
                     userSelect: 'none',
                     pointerEvents: 'none',
                   }}

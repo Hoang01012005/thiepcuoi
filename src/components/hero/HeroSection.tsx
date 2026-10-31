@@ -366,32 +366,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
       <div className="hero-desktop-view" style={{ position: 'relative', zIndex: 1 }}>
         {/* Left Column: Typography & Invitation Details */}
         <div style={{ textAlign: 'left', paddingRight: '1rem' }}>
-          {/* Monogram Seal */}
+          {/* Official Floral Monogram Logo */}
           <div
+            className="reveal-init is-revealed stagger-1"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '52px',
-              height: '52px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #FAF7F0 0%, #E8DFD2 100%)',
-              border: '1.5px solid #C6A46A',
-              boxShadow: '0 4px 16px rgba(64, 53, 47, 0.08)',
               marginBottom: '1.25rem',
             }}
           >
-            <span
+            <img
+              src={weddingConfig.couple.logo.src}
+              alt={weddingConfig.couple.logo.alt}
               style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.15rem',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                color: '#A67575',
+                width: 'clamp(76px, 8vw, 92px)',
+                height: 'clamp(76px, 8vw, 92px)',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 4px 14px rgba(64, 53, 47, 0.15))',
               }}
-            >
-              {weddingConfig.couple.monogram}
-            </span>
+            />
           </div>
 
           {/* Save The Date Pill */}

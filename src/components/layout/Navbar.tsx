@@ -41,13 +41,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           justifyContent: 'space-between',
         }}
       >
-        {/* Monogram Brand */}
+        {/* Official Floral Monogram Logo Brand */}
         <a
           href="#hero"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.65rem',
+            gap: '0.75rem',
             textDecoration: 'none',
           }}
         >
@@ -55,29 +55,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             src={weddingConfig.couple.logo.src}
             alt={weddingConfig.couple.logo.alt}
             style={{
-              width: '34px',
-              height: '34px',
+              width: 'clamp(46px, 5.5vw, 54px)',
+              height: 'clamp(46px, 5.5vw, 54px)',
               objectFit: 'contain',
-              filter: 'drop-shadow(0 2px 4px rgba(64, 53, 47, 0.15))',
+              filter: 'drop-shadow(0 2px 6px rgba(64, 53, 47, 0.18))',
+              transition: 'transform 0.25s ease',
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           />
           <span
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.25rem',
-              fontWeight: 700,
-              letterSpacing: '0.14em',
-              color: 'var(--color-champagne-gold)',
-              lineHeight: 1,
-            }}
-          >
-            {weddingConfig.couple.monogram}
-          </span>
-          <span
-            style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: '0.88rem',
-              letterSpacing: '0.15em',
+              fontSize: '0.92rem',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
               textTransform: 'uppercase',
               color: 'var(--color-deep-brown)',
               display: 'none',

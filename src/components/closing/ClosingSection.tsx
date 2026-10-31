@@ -141,13 +141,13 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
             <div
               style={{
-                width: 'clamp(96px, 18vw, 120px)',
-                height: 'clamp(96px, 18vw, 120px)',
+                width: 'clamp(120px, 22vw, 150px)',
+                height: 'clamp(120px, 22vw, 150px)',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #FAF7F0 0%, #FFFFFF 100%)',
-                border: '1.5px solid rgba(198, 164, 106, 0.45)',
-                padding: '8px',
-                boxShadow: '0 8px 24px rgba(64, 53, 47, 0.08)',
+                border: '2px solid rgba(198, 164, 106, 0.5)',
+                padding: '10px',
+                boxShadow: '0 10px 30px rgba(64, 53, 47, 0.12)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
