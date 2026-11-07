@@ -1,6 +1,5 @@
 import React from 'react';
 import { FloralDivider } from './FloralDivider';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 interface SectionHeadingProps {
   badge?: string;
@@ -19,12 +18,9 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   variant = 'gold',
   className = '',
 }) => {
-  const { ref, isIntersecting } = useScrollReveal<HTMLDivElement>({ threshold: 0.12 });
-
   return (
     <div
-      ref={ref}
-      className={`section-heading reveal-init ${isIntersecting ? 'is-revealed' : ''} ${className}`}
+      className={`section-heading reveal-init ${className}`}
       style={{
         textAlign: align,
         marginBottom: 'clamp(1.2rem, 3vw, 2.2rem)',

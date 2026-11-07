@@ -24,7 +24,6 @@ import { InviteGeneratorPage } from './components/admin/InviteGeneratorPage';
 export function App() {
   const { lang, toggleLang } = useLanguage();
   const { isPlaying, togglePlay, playAudio } = useAudio(weddingConfig.audio.src);
-  useGlobalScrollReveal(true);
 
   // Check if user is navigating to the dedicated Host / Admin invitation generator portal
   const [isAdminView, setIsAdminView] = useState(() => {
@@ -50,6 +49,8 @@ export function App() {
     const hasSectionHash = Boolean(hash && hash !== '#' && hash !== '#invite' && hash !== '#tao-thiep');
     return hasSectionHash;
   });
+
+  useGlobalScrollReveal(isEnvelopeOpened);
 
   // Automatically initiate music on first touch/interaction on the site
   useEffect(() => {
