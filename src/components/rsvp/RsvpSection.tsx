@@ -3,7 +3,6 @@ import { translations, type Language } from '../../config/translations';
 import { useGuestName } from '../../hooks/useGuestName';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useMagnetic } from '../../hooks/useMagnetic';
 import { submitRsvp } from '../../services/rsvpService';
 import confetti from 'canvas-confetti';
@@ -24,7 +23,6 @@ interface RsvpFormData {
 export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
   const guestName = useGuestName();
   const t = translations[lang];
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
   const submitBtnRef = useMagnetic<HTMLButtonElement>(0.22);
 
   const [formData, setFormData] = useState<RsvpFormData>({
@@ -100,7 +98,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section ref={sectionRef} id="rsvp" className="section-wrapper">
+    <section id="rsvp" className="section-wrapper">
       <div className="container">
         <SectionHeading
           badge={t.rsvp.badge}
@@ -109,7 +107,7 @@ export const RsvpSection: React.FC<RsvpSectionProps> = ({ lang }) => {
         />
 
         <div
-          className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed' : ''}`}
+          className="stationery-card reveal-init"
           style={{
             maxWidth: '640px',
             margin: '0 auto',

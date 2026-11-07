@@ -3,7 +3,6 @@ import { weddingConfig } from '../../config/weddingConfig';
 import { PHOTO_REGISTRY } from '../../config/photos';
 import { translations, type Language } from '../../config/translations';
 import { FloralDivider } from '../common/FloralDivider';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useMagnetic } from '../../hooks/useMagnetic';
 import { ArrowUp, Heart } from 'lucide-react';
 
@@ -13,7 +12,6 @@ interface ClosingSectionProps {
 
 export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
   const t = translations[lang];
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
   const topBtnRef = useMagnetic<HTMLButtonElement>(0.2);
 
   const scrollToTop = () => {
@@ -22,7 +20,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
 
   return (
     <footer
-      ref={sectionRef}
+      
       id="closing"
       style={{
         position: 'relative',
@@ -37,7 +35,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ lang }) => {
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         {/* Double Gilded Arch-Framed Photo #8 (Embrace Hug) */}
         <div
-          className={`reveal-init ${isIntersecting ? 'is-revealed' : ''}`}
+          className="closing-arch-photo reveal-init"
           style={{
             position: 'relative',
             width: '100%',

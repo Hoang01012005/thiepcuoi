@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GALLERY_PHOTOS, GALLERY_CATEGORIES, type PhotoAsset } from '../../config/photos';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { LightboxModal } from './LightboxModal';
 import { Maximize2, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -78,7 +77,7 @@ const TiltGalleryCard: React.FC<TiltGalleryCardProps> = ({
         gridColumn: isFeatured ? 'span 2' : 'span 1',
         transformStyle: 'preserve-3d',
       }}
-      className={`gallery-card ${isFeatured ? 'gallery-card-featured' : ''}`}
+      className={`gallery-card reveal-init ${isFeatured ? 'gallery-card-featured' : ''}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -239,13 +238,12 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
     return GALLERY_PHOTOS.filter((p) => p.category === catId).length;
   };
 
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.08 });
 
   const isFilteredSmall = selectedCategory !== 'all' && filteredPhotos.length <= 2;
   const isFilteredMedium = selectedCategory !== 'all' && filteredPhotos.length === 3;
 
   return (
-    <section ref={sectionRef} id="gallery" className={`section-wrapper reveal-init ${isIntersecting ? "is-revealed" : ""}`} style={{ backgroundColor: 'var(--color-ivory)' }}>
+    <section id="gallery" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div style={{ width: '100%', maxWidth: '1220px', margin: '0 auto', padding: '0 clamp(1rem, 3vw, 2rem)' }}>
         <SectionHeading
           badge={t.gallery.badge}
@@ -329,7 +327,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
             margin: '0 auto',
             transition: 'all 0.3s ease',
           }}
-          className={`editorial-gallery-grid ${selectedCategory === 'all' ? 'is-all-view' : ''} reveal-init ${isIntersecting ? "is-revealed stagger-2" : ""}`}
+          className={`editorial-gallery-grid ${selectedCategory === 'all' ? 'is-all-view' : ''}`}
         >
           {filteredPhotos.map((photo: PhotoAsset, index: number) => {
             const isFeatured = selectedCategory === 'all' && photo.editorialSpanDesktop === 2;
@@ -349,7 +347,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
         </div>
 
         {/* MOBILE VIEW: Horizontal Swipeable Carousel */}
-        <div className={`gallery-mobile-slider-container reveal-init ${isIntersecting ? "is-revealed stagger-2" : ""}`}>
+        <div className="gallery-mobile-slider-container reveal-init">
           {/* Top Counter Bar */}
           <div
             style={{

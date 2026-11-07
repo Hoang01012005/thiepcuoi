@@ -3,7 +3,6 @@ import { weddingConfig } from '../../config/weddingConfig';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { Clock, MapPin, ExternalLink, Copy, Check, Shirt } from 'lucide-react';
 
 interface EventDetailsProps {
@@ -22,7 +21,6 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
   const [copied, setCopied] = useState(false);
   const t = translations[lang];
   const { event } = weddingConfig;
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
 
   const handleCopyAddress = () => {
     const addr = lang === 'vi' ? event.reception.addressVi : event.reception.addressEn;
@@ -33,7 +31,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
   };
 
   return (
-    <section ref={sectionRef} id="event" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
+    <section id="event" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.event.badge}
@@ -52,7 +50,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
         >
           {/* 1. Traditional Ceremony Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-1' : ''}`}
+            className="stationery-card reveal-init"
             style={{
               padding: 'clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem)',
               display: 'flex',
@@ -142,7 +140,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
 
           {/* 2. Wedding Banquet Reception Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
+            className="stationery-card reveal-init"
             style={{
               padding: 'clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem)',
               display: 'flex',
@@ -245,7 +243,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
         {/* DRESS CODE VISUAL GUIDE — Premium Edition */}
         {/* ========================================= */}
         <div
-          className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-3' : ''}`}
+          className="stationery-card reveal-init"
           style={{
             maxWidth: '760px',
             margin: '3.5rem auto 0',

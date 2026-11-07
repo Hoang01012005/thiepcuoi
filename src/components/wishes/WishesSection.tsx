@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useMagnetic } from '../../hooks/useMagnetic';
 import { MessageSquare, Send, Heart, User } from 'lucide-react';
 
@@ -40,7 +39,6 @@ const INITIAL_WISHES: WishItem[] = [
 
 export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
   const t = translations[lang];
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
   const sendBtnRef = useMagnetic<HTMLButtonElement>(0.2);
 
   const [wishes, setWishes] = useState<WishItem[]>(() => {
@@ -87,7 +85,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section ref={sectionRef} id="wishes" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
+    <section id="wishes" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.wishes.badge}
@@ -106,7 +104,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
         >
           {/* Left Form */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed' : ''}`}
+            className="stationery-card reveal-init"
             style={{
               padding: 'clamp(1.85rem, 4.5vw, 2.75rem)',
               height: 'fit-content',
@@ -216,7 +214,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
 
           {/* Right Wishes Wall Feed */}
           <div
-            className={`reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
+            className="reveal-init wishes-feed-container"
             style={{
               display: 'flex',
               flexDirection: 'column',

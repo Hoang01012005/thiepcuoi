@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { weddingConfig } from './config/weddingConfig';
 import { useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
+import { useGlobalScrollReveal } from './hooks/useScrollReveal';
 import { AmbientPetals } from './components/effects/AmbientPetals';
 import { LuxuryCursor } from './components/effects/LuxuryCursor';
 import { ScrollProgressBar } from './components/effects/ScrollProgressBar';
@@ -23,6 +24,7 @@ import { InviteGeneratorPage } from './components/admin/InviteGeneratorPage';
 export function App() {
   const { lang, toggleLang } = useLanguage();
   const { isPlaying, togglePlay, playAudio } = useAudio(weddingConfig.audio.src);
+  useGlobalScrollReveal(true);
 
   // Check if user is navigating to the dedicated Host / Admin invitation generator portal
   const [isAdminView, setIsAdminView] = useState(() => {

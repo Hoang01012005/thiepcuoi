@@ -3,7 +3,6 @@ import { weddingConfig } from '../../config/weddingConfig';
 import { translations, type Language } from '../../config/translations';
 import { useCountdown } from '../../hooks/useCountdown';
 import { SectionHeading } from '../common/SectionHeading';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { BotanicalCorner } from '../common/BotanicalCorners';
 import { Heart } from 'lucide-react';
 import { WeddingCalendar } from './WeddingCalendar';
@@ -68,7 +67,6 @@ const RollingDigit: React.FC<RollingDigitProps> = ({ value }) => {
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
   const t = translations[lang];
   const { days, hours, minutes, seconds, isPassed } = useCountdown(weddingConfig.event.weddingDateISO);
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.1 });
 
   const units = [
     { label: t.countdown.days, value: days },
@@ -78,7 +76,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
   ];
 
   return (
-    <section ref={sectionRef} id="countdown" className={`section-wrapper reveal-init ${isIntersecting ? "is-revealed" : ""}`}>
+    <section id="countdown" className="section-wrapper">
 
       <div className="container">
         <SectionHeading
@@ -88,7 +86,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
         />
 
         {/* Wedding Calendar Widget with Heart Markings */}
-        <div className={`reveal-init ${isIntersecting ? "is-revealed stagger-1" : ""}`}>
+        <div className="wedding-calendar-container stationery-card reveal-init" style={{ maxWidth: '840px', margin: '0 auto 2.5rem' }}>
           <WeddingCalendar lang={lang} />
         </div>
 
@@ -109,7 +107,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ lang }) => {
           </div>
         ) : (
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? "is-revealed stagger-2" : ""}`}
+            className="stationery-card reveal-init"
             style={{
               maxWidth: '840px',
               margin: '3rem auto 0',

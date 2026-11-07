@@ -3,7 +3,6 @@ import { weddingConfig } from '../../config/weddingConfig';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { Gift, Copy, Check, QrCode, Maximize2, X } from 'lucide-react';
 
 interface GiftSectionProps {
@@ -24,7 +23,6 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
   const [copiedGroom, setCopiedGroom] = useState(false);
   const [copiedBride, setCopiedBride] = useState(false);
   const [previewQr, setPreviewQr] = useState<QrPreviewData | null>(null);
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
 
   if (!gift.enabled) return null;
 
@@ -45,7 +43,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
   const brideQr = gift.brideBank.qrUrl || `https://img.vietqr.io/image/TCB-${gift.brideBank.accountNumber.replace(/\s+/g, '')}-compact2.png?amount=0&addInfo=Mung%20Cuoi%20Hoang%20Nam%20Ngoc%20Hiep&accountName=${encodeURIComponent(gift.brideBank.accountHolder)}`;
 
   return (
-    <section ref={sectionRef} id="gift" className="section-wrapper">
+    <section id="gift" className="section-wrapper">
       <div className="container">
         <SectionHeading
           badge={t.gift.badge}
@@ -66,7 +64,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
         >
           {/* Groom Bank & QR Card */}
           <div
-            className={`stationery-card gift-card-groom reveal-init ${isIntersecting ? 'is-revealed stagger-1' : ''}`}
+            className="stationery-card gift-card-groom reveal-init"
             style={{
               padding: 'clamp(1.5rem, 4vw, 2.5rem)',
               textAlign: 'center',
@@ -239,7 +237,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ lang }) => {
 
           {/* Bride Bank & QR Card */}
           <div
-            className={`stationery-card gift-card-bride reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
+            className="stationery-card gift-card-bride reveal-init"
             style={{
               padding: 'clamp(1.5rem, 4vw, 2.5rem)',
               textAlign: 'center',

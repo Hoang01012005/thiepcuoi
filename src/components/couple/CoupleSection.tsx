@@ -4,7 +4,6 @@ import { PHOTO_REGISTRY } from '../../config/photos';
 import { translations, type Language } from '../../config/translations';
 import { SectionHeading } from '../common/SectionHeading';
 import { BotanicalCorner } from '../common/BotanicalCorners';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { Heart, MapPin } from 'lucide-react';
 
 interface CoupleSectionProps {
@@ -14,10 +13,9 @@ interface CoupleSectionProps {
 export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
   const t = translations[lang];
   const { groom, bride } = weddingConfig.couple;
-  const { ref: sectionRef, isIntersecting } = useScrollReveal({ threshold: 0.15 });
 
   return (
-    <section ref={sectionRef} id="couple" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
+    <section id="couple" className="section-wrapper" style={{ backgroundColor: 'var(--color-ivory)' }}>
       <div className="container">
         <SectionHeading
           badge={t.couple.badge}
@@ -36,7 +34,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
         >
           {/* Groom Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-1' : ''}`}
+            className="stationery-card reveal-init"
             style={{
               padding: 'clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem)',
               textAlign: 'center',
@@ -172,7 +170,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
           {/* Bride Card */}
           <div
-            className={`stationery-card reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
+            className="stationery-card reveal-init"
             style={{
               padding: 'clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem)',
               textAlign: 'center',
