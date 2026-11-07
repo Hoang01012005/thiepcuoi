@@ -49,7 +49,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       )}
 
       <h2
-        className="reveal-soft stagger-2"
+        className="reveal-soft reveal-heading heading-clip stagger-2"
         style={{
           fontFamily: 'var(--font-serif)',
           fontSize: 'clamp(2rem, 4vw, 2.85rem)',
@@ -60,7 +60,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           margin: '0.25rem 0',
         }}
       >
-        {title}
+        <span className="heading-clip__text">{title}</span>
       </h2>
 
       <div className="reveal-soft stagger-3">

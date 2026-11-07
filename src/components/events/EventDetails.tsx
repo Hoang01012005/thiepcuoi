@@ -63,6 +63,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
             <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
             <div>
               <span
+                className="event-card-stage event-card-stage-1"
                 style={{
                   display: 'inline-block',
                   fontSize: '0.75rem',
@@ -81,6 +82,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               </span>
 
               <h3
+                className="event-card-stage event-card-stage-2"
                 style={{
                   fontFamily: 'var(--font-serif)',
                   fontSize: 'clamp(1.75rem, 3.5vw, 2.1rem)',
@@ -92,7 +94,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                 {lang === 'vi' ? event.ceremony.nameVi : event.ceremony.nameEn}
               </h3>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', margin: '1.5rem 0' }}>
+              <div className="event-card-stage event-card-stage-3" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', margin: '1.5rem 0' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
                   <Clock size={19} style={{ color: 'var(--color-rose)', marginTop: '3px', flexShrink: 0 }} />
                   <div>
@@ -105,7 +107,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                <div className="event-card-stage event-card-stage-4" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
                   <MapPin size={19} style={{ color: 'var(--color-rose)', marginTop: '3px', flexShrink: 0 }} />
                   <div>
                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
@@ -114,7 +116,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                     <p style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
                       {lang === 'vi' ? event.ceremony.venueVi : event.ceremony.venueEn}
                     </p>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', lineHeight: 1.5 }}>
+                    <p className="event-card-stage event-card-stage-5" style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', lineHeight: 1.5 }}>
                       {lang === 'vi' ? event.ceremony.addressVi : event.ceremony.addressEn}
                     </p>
                   </div>
@@ -123,6 +125,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
             </div>
 
             <div
+              className="event-card-stage event-card-stage-6"
               style={{
                 marginTop: '1.75rem',
                 padding: '0.85rem 1rem',
@@ -153,6 +156,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
             <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.45)" />
             <div>
               <span
+                className="event-card-stage event-card-stage-1"
                 style={{
                   display: 'inline-block',
                   fontSize: '0.75rem',
@@ -171,6 +175,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
               </span>
 
               <h3
+                className="event-card-stage event-card-stage-2"
                 style={{
                   fontFamily: 'var(--font-serif)',
                   fontSize: 'clamp(1.75rem, 3.5vw, 2.1rem)',
@@ -182,7 +187,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                 {lang === 'vi' ? event.reception.nameVi : event.reception.nameEn}
               </h3>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', margin: '1.5rem 0' }}>
+              <div className="event-card-stage event-card-stage-3" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', margin: '1.5rem 0' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
                   <Clock size={19} style={{ color: 'var(--color-rose)', marginTop: '3px', flexShrink: 0 }} />
                   <div>
@@ -195,7 +200,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                <div className="event-card-stage event-card-stage-4" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
                   <MapPin size={19} style={{ color: 'var(--color-rose)', marginTop: '3px', flexShrink: 0 }} />
                   <div>
                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
@@ -204,7 +209,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
                     <p style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--color-plum)', marginTop: '0.15rem' }}>
                       {lang === 'vi' ? event.reception.venueVi : event.reception.venueEn}
                     </p>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', lineHeight: 1.5 }}>
+                    <p className="event-card-stage event-card-stage-5" style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', lineHeight: 1.5 }}>
                       {lang === 'vi' ? event.reception.addressVi : event.reception.addressEn}
                     </p>
                   </div>
@@ -213,7 +218,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({ lang }) => {
             </div>
 
             {/* Actions: Directions & Copy Address */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.75rem' }}>
+            <div className="event-card-stage event-card-stage-7" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.75rem' }}>
               <a
                 href={event.reception.mapUrl}
                 target="_blank"
