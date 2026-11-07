@@ -216,6 +216,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
 
           {/* Right Wishes Wall Feed */}
           <div
+            className={`reveal-init ${isIntersecting ? 'is-revealed stagger-2' : ''}`}
             style={{
               display: 'flex',
               flexDirection: 'column',

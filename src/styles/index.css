@@ -544,7 +544,8 @@ img {
   will-change: opacity, transform, filter;
 }
 
-.reveal-init.is-revealed {
+.reveal-init.is-revealed,
+.is-revealed .reveal-init {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
@@ -560,7 +561,8 @@ img {
     filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-scale.is-revealed {
+.reveal-scale.is-revealed,
+.is-revealed .reveal-scale {
   opacity: 1;
   transform: scale(1);
   filter: blur(0);
@@ -588,6 +590,17 @@ img {
 .stagger-3 { transition-delay: 0.38s; }
 .stagger-4 { transition-delay: 0.52s; }
 .stagger-5 { transition-delay: 0.66s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init,
+  .reveal-scale,
+  .reveal-soft {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
 
 /* 6. Magnetic Button Helper */
 .magnetic-btn {

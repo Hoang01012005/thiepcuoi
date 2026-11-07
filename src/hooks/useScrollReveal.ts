@@ -7,21 +7,21 @@ interface ScrollRevealOptions {
 }
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>({
-  threshold = 0.15,
-  rootMargin = '0px 0px -40px 0px',
+  threshold = 0.1,
+  rootMargin = '0px 0px -20px 0px',
   triggerOnce = true,
 }: ScrollRevealOptions = {}) {
   const ref = useRef<T | null>(null);
-  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      setIsIntersecting(true);
+    if (isIntersecting && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
