@@ -260,7 +260,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ lang }) => {
             flexWrap: 'wrap',
             justifyContent: 'center',
             gap: '0.65rem',
-            margin: '2rem 0 3.25rem',
+            margin: 'clamp(0.75rem, 2vw, 2rem) 0 clamp(1rem, 2.5vw, 3.25rem)',
           }}
         >
           {GALLERY_CATEGORIES.map((cat) => {

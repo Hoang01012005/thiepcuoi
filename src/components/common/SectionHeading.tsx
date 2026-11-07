@@ -23,7 +23,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       className={`section-heading reveal-init ${className}`}
       style={{
         textAlign: align,
-        marginBottom: 'clamp(1.2rem, 3vw, 2.2rem)',
+        marginBottom: 'clamp(0.8rem, 2vw, 1.8rem)',
       }}
     >
       {badge && (

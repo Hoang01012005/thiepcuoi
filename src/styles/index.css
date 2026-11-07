@@ -585,11 +585,11 @@ img {
   filter: blur(0) !important;
 }
 
-.stagger-1 { transition-delay: 0.08s; }
-.stagger-2 { transition-delay: 0.16s; }
-.stagger-3 { transition-delay: 0.26s; }
-.stagger-4 { transition-delay: 0.36s; }
-.stagger-5 { transition-delay: 0.46s; }
+.stagger-1 { transition-delay: 0.15s; }
+.stagger-2 { transition-delay: 0.35s; }
+.stagger-3 { transition-delay: 0.55s; }
+.stagger-4 { transition-delay: 0.75s; }
+.stagger-5 { transition-delay: 0.95s; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-init,
