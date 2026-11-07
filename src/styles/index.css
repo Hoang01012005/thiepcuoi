@@ -68,13 +68,13 @@ img {
 }
 
 .section-wrapper {
-  padding: 2.75rem 0;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem) 0;
   position: relative;
 }
 
 @media (min-width: 768px) {
   .section-wrapper {
-    padding: 6.5rem 0;
+    padding: 5.5rem 0;
   }
 }
 
@@ -568,16 +568,18 @@ img {
 }
 
 .reveal-soft {
-  opacity: 0;
-  transform: translateY(16px);
-  filter: blur(3px);
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
   transition: 
     opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
     filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-soft.is-revealed {
+.section-heading .reveal-soft,
+.reveal-soft.is-revealed,
+.is-revealed .reveal-soft {
   opacity: 1 !important;
   transform: translateY(0) !important;
   filter: blur(0) !important;

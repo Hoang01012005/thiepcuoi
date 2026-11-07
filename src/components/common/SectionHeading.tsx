@@ -27,7 +27,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       className={`section-heading reveal-init ${isIntersecting ? 'is-revealed' : ''} ${className}`}
       style={{
         textAlign: align,
-        marginBottom: '2.5rem',
+        marginBottom: 'clamp(1.2rem, 3vw, 2.2rem)',
       }}
     >
       {badge && (
