@@ -65,10 +65,12 @@ export function useGlobalScrollReveal(isReady: boolean = true) {
     const selector = [
       'main section:not(#hero) .stationery-card',
       'main section:not(#hero) .section-heading',
+      'main section:not(#hero) .cinematic-group',
       'main section:not(#hero) .gallery-card',
       'main section:not(#hero) .gallery-mobile-slider-container',
       'main section:not(#hero) .wedding-calendar-container',
       'main section:not(#hero) .reveal-init',
+      'main #hero .cinematic-group',
       'footer#closing .closing-arch-photo',
       'footer#closing .closing-card',
       'footer#closing .reveal-init',
@@ -94,8 +96,8 @@ export function useGlobalScrollReveal(isReady: boolean = true) {
     const scanAndObserve = () => {
       const elements = document.querySelectorAll<HTMLElement>(selector);
       elements.forEach((el) => {
-        // Skip elements inside hero or already marked revealed
-        if (el.closest('#hero') || el.closest('.envelope-cover-root')) {
+        // The hero is observed only after the envelope handoff; the cover stays outside this flow.
+        if (el.closest('.envelope-cover-root')) {
           el.classList.add('is-revealed');
           return;
         }

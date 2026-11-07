@@ -28,7 +28,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
     >
       {badge && (
         <span
-          className="reveal-soft stagger-1"
+          className="reveal-soft cinematic-text-group stagger-1"
           style={{
             display: 'inline-block',
             fontFamily: 'var(--font-sans)',
@@ -49,7 +49,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       )}
 
       <h2
-        className="reveal-soft reveal-heading heading-clip stagger-2"
+        className="reveal-soft cinematic-text-group reveal-heading heading-clip stagger-2"
         style={{
           fontFamily: 'var(--font-serif)',
           fontSize: 'clamp(2rem, 4vw, 2.85rem)',
@@ -63,13 +63,13 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         <span className="heading-clip__text">{title}</span>
       </h2>
 
-      <div className="reveal-soft stagger-3">
+      <div className="reveal-soft cinematic-text-group stagger-3">
         <FloralDivider variant={variant} />
       </div>
 
       {subtitle && (
         <p
-          className="reveal-soft stagger-4"
+          className="reveal-soft cinematic-text-group stagger-4"
           style={{
             fontFamily: 'var(--font-sans)',
             fontSize: '1rem',

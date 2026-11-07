@@ -137,7 +137,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
         <div style={{ marginBottom: '1.25rem' }}>
           {/* Save The Date Pill */}
           <div
-            className="reveal-init is-revealed stagger-1"
+            className="cinematic-group cinematic-delay-1"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -169,7 +169,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           {guestName && (
             <div>
               <div
-                className="reveal-init is-revealed stagger-2"
+                className="cinematic-group cinematic-delay-2"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -197,7 +197,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Invitation Subtitle */}
           <p
-            className="reveal-init is-revealed stagger-2"
+            className="cinematic-group cinematic-delay-3"
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: '1.02rem',
@@ -212,7 +212,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Couple Names */}
           <h1
-            className="reveal-init is-revealed stagger-3"
+            className="cinematic-names cinematic-group cinematic-delay-4"
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(2.5rem, 8.5vw, 3.4rem)',
@@ -223,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               margin: '0.15rem 0 0.5rem',
             }}
           >
-            <span>{weddingConfig.couple.groom.fullName}</span>
+            <span className="cinematic-name cinematic-delay-5">{weddingConfig.couple.groom.fullName}</span>
             <span
               style={{
                 display: 'inline-block',
@@ -235,19 +235,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontSize: '0.86em',
               }}
             >
-              &amp;
+              <span className="cinematic-name cinematic-delay-6">&amp;</span>
             </span>
-            <span>{weddingConfig.couple.bride.fullName}</span>
+            <span className="cinematic-name cinematic-delay-7">{weddingConfig.couple.bride.fullName}</span>
           </h1>
         </div>
 
         {/* Centerpiece Full Arch Portrait */}
-        <div className="reveal-init is-revealed stagger-3" style={{ margin: '0.5rem 0 1.5rem' }}>
+        <div className="cinematic-group cinematic-delay-8" style={{ margin: '0.5rem 0 1.5rem' }}>
           {CenterpiecePortrait}
         </div>
 
         {/* Date, Time & Venue Card */}
-        <div className="reveal-init is-revealed stagger-4" style={{ marginBottom: '1.75rem', width: '100%' }}>
+        <div className="cinematic-group cinematic-delay-9" style={{ marginBottom: '1.75rem', width: '100%' }}>
           <p
             style={{
               fontFamily: 'var(--font-serif)',
@@ -309,7 +309,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
         {/* Action Buttons */}
         <div
-          className="reveal-init is-revealed stagger-4"
+          className="cinematic-group cinematic-delay-10"
           style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -368,7 +368,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
         <div style={{ textAlign: 'left', paddingRight: '1rem' }}>
           {/* Official Floral Monogram Logo */}
           <div
-            className="reveal-init is-revealed stagger-1"
+            className="cinematic-group cinematic-delay-1"
             style={{
               marginBottom: '1.25rem',
             }}
@@ -388,7 +388,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           {/* Save The Date Pill */}
           <div>
             <div
-              className="reveal-init is-revealed stagger-1"
+              className="cinematic-group cinematic-delay-2"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -421,7 +421,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           {guestName && (
             <div>
               <div
-                className="reveal-init is-revealed stagger-2"
+                className="cinematic-group cinematic-delay-3"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -449,7 +449,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Subtitle / Invitation Prefix */}
           <p
-            className="reveal-init is-revealed stagger-2"
+            className="cinematic-group cinematic-delay-4"
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: '1.15rem',
@@ -464,7 +464,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Grand Couple Names */}
           <h1
-            className="reveal-init is-revealed stagger-3"
+            className="cinematic-names cinematic-group cinematic-delay-5"
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(3rem, 4.5vw, 4.5rem)',
@@ -475,7 +475,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               margin: '0.25rem 0 1rem',
             }}
           >
-            <span>{weddingConfig.couple.groom.fullName}</span>
+            <span className="cinematic-name cinematic-delay-6">{weddingConfig.couple.groom.fullName}</span>
             <span
               style={{
                 display: 'inline-block',
@@ -487,9 +487,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
                 fontSize: '0.88em',
               }}
             >
-              &amp;
+              <span className="cinematic-name cinematic-delay-7">&amp;</span>
             </span>
-            <span>{weddingConfig.couple.bride.fullName}</span>
+            <span className="cinematic-name cinematic-delay-8">{weddingConfig.couple.bride.fullName}</span>
           </h1>
 
           <div style={{ margin: '1rem 0' }}>
@@ -497,7 +497,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
           </div>
 
           {/* Date & Location Highlight */}
-          <div className="reveal-init is-revealed stagger-4" style={{ marginBottom: '2.25rem' }}>
+          <div className="cinematic-group cinematic-delay-9" style={{ marginBottom: '2.25rem' }}>
             <p
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -556,7 +556,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
           {/* Magnetic CTA Buttons */}
           <div
-            className="reveal-init is-revealed stagger-4"
+            className="cinematic-group cinematic-delay-10"
             style={{
               display: 'flex',
               flexWrap: 'wrap',
@@ -601,7 +601,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
         {/* Right Column: Majestic Arched Centerpiece Portrait */}
         <div
-          className="reveal-init is-revealed stagger-3"
+          className="cinematic-group cinematic-delay-8"
           style={{
             display: 'flex',
             alignItems: 'center',
