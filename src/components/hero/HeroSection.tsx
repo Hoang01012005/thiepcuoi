@@ -223,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               margin: '0.15rem 0 0.5rem',
             }}
           >
-            <span className="cinematic-name cinematic-delay-5">{weddingConfig.couple.groom.fullName}</span>
+            <span className="cinematic-name cinematic-delay-5">{weddingConfig.couple.bride.fullName}</span>
             <span
               style={{
                 display: 'inline-block',
@@ -237,7 +237,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             >
               <span className="cinematic-name cinematic-delay-6">&amp;</span>
             </span>
-            <span className="cinematic-name cinematic-delay-7">{weddingConfig.couple.bride.fullName}</span>
+            <span className="cinematic-name cinematic-delay-7">{weddingConfig.couple.groom.fullName}</span>
           </h1>
         </div>
 
@@ -475,7 +475,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
               margin: '0.25rem 0 1rem',
             }}
           >
-            <span className="cinematic-name cinematic-delay-6">{weddingConfig.couple.groom.fullName}</span>
+            <span className="cinematic-name cinematic-delay-6">{weddingConfig.couple.bride.fullName}</span>
             <span
               style={{
                 display: 'inline-block',
@@ -489,7 +489,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
             >
               <span className="cinematic-name cinematic-delay-7">&amp;</span>
             </span>
-            <span className="cinematic-name cinematic-delay-8">{weddingConfig.couple.bride.fullName}</span>
+            <span className="cinematic-name cinematic-delay-8">{weddingConfig.couple.groom.fullName}</span>
           </h1>
 
           <div style={{ margin: '1rem 0' }}>

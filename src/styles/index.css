@@ -689,11 +689,36 @@ img {
 .event-card-stage-6 { transition-delay: 1.65s; }
 .event-card-stage-7 { transition-delay: 1.95s; }
 
+.couple-card-stage {
+  opacity: 0;
+  transform: translateY(16px);
+  clip-path: inset(0 100% 0 0);
+  transition:
+    opacity 1.2s var(--reveal-easing),
+    transform 1.2s var(--reveal-easing),
+    clip-path 1.2s var(--reveal-easing);
+  will-change: opacity, transform, clip-path;
+}
+
+.is-revealed .couple-card-stage {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+}
+
+.couple-card-stage-1 { transition-delay: 0.15s; }
+.couple-card-stage-2 { transition-delay: 0.35s; }
+.couple-card-stage-3 { transition-delay: 0.55s; }
+.couple-card-stage-4 { transition-delay: 0.75s; }
+.couple-card-stage-5 { transition-delay: 0.95s; }
+.couple-card-stage-6 { transition-delay: 1.15s; }
+
 @media (prefers-reduced-motion: reduce) {
   .reveal-init,
   .reveal-scale,
   .reveal-soft,
   .event-card-stage,
+  .couple-card-stage,
   .heading-clip__text,
   .cinematic-group,
   .cinematic-name,

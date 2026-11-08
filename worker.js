@@ -95,12 +95,12 @@ export default {
 
       // Dynamic title and description for Zalo, Messenger, Telegram, Facebook link previews
       const pageTitle = guestName
-        ? `Thiệp Mời: ${guestName} — Hoàng Nam & Ngọc Hiệp`
-        : 'Hoàng Nam & Ngọc Hiệp — Thiệp Cưới | Wedding Invitation';
+        ? `Thiệp Mời: ${guestName} — Đoàn Hiệp & Nguyễn Nam`
+        : 'Đoàn Hiệp & Nguyễn Nam — Thiệp Cưới | Wedding Invitation';
 
       const pageDesc = guestName
-        ? `Trân trọng kính mời ${guestName} tới tham dự lễ cưới của Hoàng Nam & Ngọc Hiệp vào ngày 28 & 29 tháng 11 năm 2026.`
-        : 'Trân trọng kính mời quý khách tham dự lễ thành hôn của Hoàng Nam & Ngọc Hiệp. Warmly invite you to celebrate the wedding of Hoang Nam & Ngoc Hiep.';
+        ? `Trân trọng kính mời ${guestName} tới tham dự lễ cưới của Đoàn Hiệp & Nguyễn Nam vào ngày 28 & 29 tháng 11 năm 2026.`
+        : 'Trân trọng kính mời quý khách tham dự lễ thành hôn của Đoàn Hiệp & Nguyễn Nam. Warmly invite you to celebrate the wedding of Doan Hiep & Nguyen Nam.';
 
       const ogImage = `${url.origin}/assets/photos/hero.jpg?v=20261021`;
 
@@ -135,7 +135,7 @@ export default {
 
       // Ensure og:url, og:site_name, and twitter cards are present
       const extraTags = `    <meta property="og:url" content="${escapeHtml(url.href)}" />
-    <meta property="og:site_name" content="Thiệp Cưới Hoàng Nam &amp; Ngọc Hiệp" />
+    <meta property="og:site_name" content="Thiệp Cưới Đoàn Hiệp &amp; Nguyễn Nam" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(pageTitle)}" />
     <meta name="twitter:description" content="${escapeHtml(pageDesc)}" />

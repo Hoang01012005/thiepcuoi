@@ -14,6 +14,7 @@ const SWATCH_NAMES: Record<string, { vi: string; en: string }> = {
   '#FFF9ED': { vi: 'Kem', en: 'Cream' },
   '#C2A68C': { vi: 'Nâu nhạt', en: 'Soft Brown' },
   '#B8C9C4': { vi: 'Xanh pastel', en: 'Pastel Sage' },
+  '#F8C8DC': { vi: 'Hồng pastel', en: 'Pastel Pink' },
   '#A7A6A6': { vi: 'Ghi xám', en: 'Warm Grey' },
 };
 

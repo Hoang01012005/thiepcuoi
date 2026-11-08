@@ -168,17 +168,17 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
             WebkitTransformStyle: 'preserve-3d',
           }}
         >
-          {/* 1. ENVELOPE BACK PLATE (Royal Deep Brown & Mahogany Lining) */}
+          {/* 1. ENVELOPE BACK PLATE (Royal Blush Velvet & Champagne Lining) */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
               borderRadius: '16px',
-              background: 'linear-gradient(150deg, #40352F 0%, #502B32 45%, #6E323D 100%)',
-              border: '1.5px solid rgba(198, 164, 106, 0.5)',
+              background: 'linear-gradient(150deg, #F3D0D7 0%, #E29AA6 45%, #C86D7C 100%)',
+              border: '1.5px solid rgba(212, 175, 55, 0.65)',
               boxShadow: isOpening
-                ? '0 30px 70px rgba(64, 53, 47, 0.35)'
-                : '0 25px 60px rgba(64, 53, 47, 0.28), 0 0 0 1px rgba(198, 164, 106, 0.3)',
+                ? '0 30px 70px rgba(200, 109, 124, 0.35)'
+                : '0 25px 60px rgba(200, 109, 124, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.35)',
               overflow: 'hidden',
               zIndex: 5,
             }}
@@ -188,8 +188,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               style={{
                 position: 'absolute',
                 inset: 0,
-                opacity: 0.08,
-                backgroundImage: `radial-gradient(circle, #C6A46A 1.5px, transparent 1.5px)`,
+                opacity: 0.12,
+                backgroundImage: `radial-gradient(circle, #D4AF37 1.5px, transparent 1.5px)`,
                 backgroundSize: '24px 24px',
                 pointerEvents: 'none',
               }}
@@ -327,7 +327,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
                 maxWidth: '100%',
               }}
             >
-              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.groom.shortName}</span>
+              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.bride.shortName}</span>
               <span
                 style={{
                   fontFamily: 'var(--font-script)',
@@ -339,7 +339,7 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               >
                 &amp;
               </span>
-              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.bride.shortName}</span>
+              <span style={{ whiteSpace: 'nowrap' }}>{weddingConfig.couple.groom.shortName}</span>
             </h2>
 
             {/* Wedding Date Badge */}
@@ -384,9 +384,9 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(0 0, 0 100%, 50% 68%)',
-              background: 'linear-gradient(135deg, #4A3E37 0%, #3B302A 100%)',
+              background: 'linear-gradient(135deg, #FDF0F2 0%, #F8CED5 50%, #EAA8B2 100%)',
               zIndex: 20,
-              filter: 'drop-shadow(2px 0 6px rgba(0, 0, 0, 0.22))',
+              filter: 'drop-shadow(2px 0 6px rgba(184, 115, 125, 0.22))',
               pointerEvents: 'none',
             }}
           />
@@ -397,9 +397,9 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(100% 0, 100% 100%, 50% 68%)',
-              background: 'linear-gradient(225deg, #4A3E37 0%, #3B302A 100%)',
+              background: 'linear-gradient(225deg, #FDF0F2 0%, #F8CED5 50%, #EAA8B2 100%)',
               zIndex: 20,
-              filter: 'drop-shadow(-2px 0 6px rgba(0, 0, 0, 0.22))',
+              filter: 'drop-shadow(-2px 0 6px rgba(184, 115, 125, 0.22))',
               pointerEvents: 'none',
             }}
           />
@@ -410,9 +410,9 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               position: 'absolute',
               inset: 0,
               clipPath: 'polygon(0 100%, 100% 100%, 50% 68%)',
-              background: 'linear-gradient(180deg, #5C4D44 0%, #40352F 100%)',
+              background: 'linear-gradient(180deg, #FDF2F4 0%, #FAD2D8 50%, #EFB5BE 100%)',
               zIndex: 22,
-              filter: 'drop-shadow(0 -3px 8px rgba(0, 0, 0, 0.25))',
+              filter: 'drop-shadow(0 -3px 8px rgba(184, 115, 125, 0.25))',
               pointerEvents: 'none',
             }}
           >
@@ -425,8 +425,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <line x1="0" y1="100" x2="50" y2="68" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
-              <line x1="100" y1="100" x2="50" y2="68" stroke="rgba(198, 164, 106, 0.45)" strokeWidth="0.8" />
+              <line x1="0" y1="100" x2="50" y2="68" stroke="rgba(212, 175, 55, 0.55)" strokeWidth="0.8" />
+              <line x1="100" y1="100" x2="50" y2="68" stroke="rgba(212, 175, 55, 0.55)" strokeWidth="0.8" />
             </svg>
           </div>
 
@@ -443,13 +443,13 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               WebkitTransformStyle: 'preserve-3d',
               clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
               background: isOpening
-                ? 'linear-gradient(180deg, #3B302A 0%, #2A221E 100%)'
-                : 'linear-gradient(180deg, #6E5346 0%, #504037 100%)',
-              borderTop: '1.5px solid rgba(198, 164, 106, 0.55)',
+                ? 'linear-gradient(180deg, #C86D7C 0%, #A8505F 100%)'
+                : 'linear-gradient(180deg, #FEF5F6 0%, #F8CBD2 50%, #ECA6B1 100%)',
+              borderTop: '1.5px solid rgba(212, 175, 55, 0.65)',
               zIndex: isOpening ? 8 : 28,
               transform: isOpening ? 'rotateX(-180deg)' : 'rotateX(0deg)',
               transition: 'transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.35s',
-              filter: 'drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3))',
+              filter: 'drop-shadow(0 6px 12px rgba(184, 115, 125, 0.25))',
               pointerEvents: isOpening ? 'none' : 'auto',
             }}
           >
@@ -462,8 +462,8 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ lang, onStartOpen,
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <line x1="0" y1="0" x2="50" y2="100" stroke="rgba(198, 164, 106, 0.5)" strokeWidth="0.9" />
-              <line x1="100" y1="0" x2="50" y2="100" stroke="rgba(198, 164, 106, 0.5)" strokeWidth="0.9" />
+              <line x1="0" y1="0" x2="50" y2="100" stroke="rgba(212, 175, 55, 0.55)" strokeWidth="0.9" />
+              <line x1="100" y1="0" x2="50" y2="100" stroke="rgba(212, 175, 55, 0.55)" strokeWidth="0.9" />
             </svg>
           </div>
 

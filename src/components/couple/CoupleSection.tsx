@@ -45,6 +45,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             <BotanicalCorner position="top-left" size={54} color="rgba(198, 164, 106, 0.45)" />
             {/* Top Traditional Honorific Tag */}
             <span
+              className="couple-card-stage couple-card-stage-1"
               style={{
                 display: 'inline-block',
                 fontFamily: 'var(--font-sans)',
@@ -65,7 +66,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Museum Arched Portrait Frame */}
             <div
-              className="couple-portrait-frame"
+              className="couple-portrait-frame couple-card-stage couple-card-stage-2"
               style={{
                 width: '190px',
                 height: '255px',
@@ -94,6 +95,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             </div>
 
             <p
+              className="couple-card-stage couple-card-stage-3"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.85rem',
@@ -108,6 +110,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             </p>
 
             <h3
+              className="couple-card-stage couple-card-stage-4"
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.75rem, 3.5vw, 2.2rem)',
@@ -121,6 +124,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Hometown & Parents Info Card */}
             <div
+              className="couple-card-stage couple-card-stage-5"
               style={{
                 background: 'rgba(255, 255, 255, 0.85)',
                 padding: '0.85rem 1.25rem',
@@ -154,6 +158,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Bio */}
             <p
+              className="couple-card-stage couple-card-stage-6"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.92rem',
@@ -181,6 +186,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             <BotanicalCorner position="top-right" size={54} color="rgba(198, 164, 106, 0.45)" />
             {/* Top Traditional Honorific Tag */}
             <span
+              className="couple-card-stage couple-card-stage-1"
               style={{
                 display: 'inline-block',
                 fontFamily: 'var(--font-sans)',
@@ -201,7 +207,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Museum Arched Portrait Frame */}
             <div
-              className="couple-portrait-frame"
+              className="couple-portrait-frame couple-card-stage couple-card-stage-2"
               style={{
                 width: '190px',
                 height: '255px',
@@ -230,6 +236,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             </div>
 
             <p
+              className="couple-card-stage couple-card-stage-3"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.85rem',
@@ -244,6 +251,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
             </p>
 
             <h3
+              className="couple-card-stage couple-card-stage-4"
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.75rem, 3.5vw, 2.2rem)',
@@ -257,6 +265,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Hometown & Parents Info Card */}
             <div
+              className="couple-card-stage couple-card-stage-5"
               style={{
                 background: 'rgba(255, 255, 255, 0.85)',
                 padding: '0.85rem 1.25rem',
@@ -290,6 +299,7 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ lang }) => {
 
             {/* Bio */}
             <p
+              className="couple-card-stage couple-card-stage-6"
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.92rem',
