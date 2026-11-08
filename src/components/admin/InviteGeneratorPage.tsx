@@ -23,6 +23,12 @@ import {
   Users,
   Code2,
   RefreshCw,
+  Share2,
+  MessageCircle,
+  Utensils,
+  Calculator,
+  ListPlus,
+  X,
 } from 'lucide-react';
 import {
   getSavedRsvps,
@@ -42,7 +48,52 @@ interface ManagedGuest {
   createdAt: string;
 }
 
+type MessageTone = 'elder' | 'friend' | 'formal' | 'reminder';
+
+interface MessageTemplateConfig {
+  id: MessageTone;
+  label: string;
+  icon: string;
+  badge: string;
+  generate: (guestName: string, url: string) => string;
+}
+
 const DEFAULT_CHIPS = ['Anh', 'Chị', 'Em', 'Bạn', 'Gia đình', 'Cô Chú', 'Bác'];
+
+const INVITE_TEMPLATES: MessageTemplateConfig[] = [
+  {
+    id: 'elder',
+    label: 'Kính Gửi Bác / Cô / Chú',
+    icon: '🏛️',
+    badge: 'Trang trọng & Lễ phép',
+    generate: (name, url) =>
+      `Dạ cháu Đoàn Hiệp và Nguyễn Nam xin kính chào ${name} ạ!\n\nNhân dịp ngày vui trọng đại của hai cháu, gia đình cùng hai cháu xin trân trọng gửi thiệp cưới online kính mời ${name} và gia đình đến chung vui cùng chúng cháu.\n\nKính mời ${name} xem thông tin chi tiết ngày giờ và địa điểm tại thiệp cưới riêng:\n👉 ${url}\n\nSự hiện diện và lời chúc phúc của ${name} cùng gia đình là niềm vinh hạnh và hạnh phúc lớn nhất của chúng cháu ạ!`,
+  },
+  {
+    id: 'formal',
+    label: 'Kính Gửi Anh / Chị / Đối Tác',
+    icon: '🌸',
+    badge: 'Lịch sự & Ấm áp',
+    generate: (name, url) =>
+      `Em Đoàn Hiệp và Nguyễn Nam xin gửi lời chào trân trọng đến ${name}!\n\nNhân ngày hạnh phúc trăm năm của hai em, chúng em xin trân trọng kính mời ${name} bớt chút thời gian quý báu đến tham dự lễ thành hôn và chung vui bữa cơm thân mật cùng hai đứa.\n\nThông tin chi tiết thời gian và địa điểm tại thiệp cưới:\n👉 ${url}\n\nRất mong được đón tiếp ${name} trong ngày vui của chúng em!`,
+  },
+  {
+    id: 'friend',
+    label: 'Bạn Bè & Đồng Nghiệp',
+    icon: '🎉',
+    badge: 'Thân mật & Trẻ trung',
+    generate: (name, url) =>
+      `Alo ${name} ơi! Đoàn Hiệp và Nguyễn Nam chính thức về chung một nhà rồi đây! 🎉\n\nChúng mình trân trọng gửi thiệp cưới online tới ${name}, mở link xem chi tiết nhé:\n👉 ${url}\n\nNhớ giữ lịch ngày 28 & 29/11/2026 để đến quẩy cùng tụi mình nha! Báo lại số lượng tham dự trên thiệp sớm giúp chúng mình chuẩn bị chu đáo nhé!`,
+  },
+  {
+    id: 'reminder',
+    label: 'Nhắc Hẹn Save-the-Date',
+    icon: '⏰',
+    badge: 'Nhắc hẹn trước tiệc',
+    generate: (name, url) =>
+      `Dạ ${name} ơi, chỉ còn ít ngày nữa là đến lễ cưới của Đoàn Hiệp & Nguyễn Nam (28 & 29/11/2026) rồi ạ!\n\nChúng mình xin phép gửi lại link thiệp cưới để ${name} tiện xem lại lịch trình và chỉ đường trên bản đồ nhé:\n👉 ${url}\n\nRất mong được gặp và đón tiếp ${name} vào ngày vui sắp tới!`,
+  },
+];
 
 const APPS_SCRIPT_SNIPPET = `function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -69,7 +120,7 @@ const APPS_SCRIPT_SNIPPET = `function doPost(e) {
     var count = data.count !== undefined ? data.count : 1;
     var phone = data.phone ? "'" + data.phone : "";
     var message = data.message || "";
-    var source = data.source || "Thiệp cưới online Nam & Hiệp";
+    var source = data.source || "Thiệp cưới online Đoàn Hiệp & Nguyễn Nam";
     sheet.appendRow([timestamp, name, status, count, phone, message, source]);
     var lastRow = sheet.getLastRow();
     sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
@@ -87,6 +138,19 @@ export const InviteGeneratorPage: React.FC = () => {
   const [guestNameInput, setGuestNameInput] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Bulk input mode
+  const [addMode, setAddMode] = useState<'single' | 'bulk'>('single');
+  const [bulkInputText, setBulkInputText] = useState('');
+
+  // 1-Click Message Assistant Modal State
+  const [selectedGuestForMessage, setSelectedGuestForMessage] = useState<ManagedGuest | null>(null);
+  const [selectedTone, setSelectedTone] = useState<MessageTone>('elder');
+  const [customMessageText, setCustomMessageText] = useState('');
+  const [copiedMessageToast, setCopiedMessageToast] = useState(false);
+
+  // Table estimator capacity (6: traditional northern table, 10: round banquet table)
+  const [tableCapacity, setTableCapacity] = useState<6 | 10>(6);
 
   // RSVP Management State
   const [rsvps, setRsvps] = useState<RsvpSubmission[]>([]);
@@ -205,6 +269,38 @@ export const InviteGeneratorPage: React.FC = () => {
     setGuestNameInput('');
   };
 
+  const handleBulkAddGuests = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bulkInputText.trim()) return;
+
+    const lines = bulkInputText
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    if (lines.length === 0) return;
+
+    const existingNames = new Set(guestList.map((g) => g.name.toLowerCase()));
+    const newGuests: ManagedGuest[] = [];
+
+    lines.forEach((name, idx) => {
+      if (!existingNames.has(name.toLowerCase())) {
+        existingNames.add(name.toLowerCase());
+        newGuests.push({
+          id: `g-bulk-${Date.now()}-${idx}`,
+          name,
+          createdAt: 'Hàng loạt',
+        });
+      }
+    });
+
+    if (newGuests.length > 0) {
+      setGuestList([...newGuests, ...guestList]);
+      setBulkInputText('');
+      setAddMode('single');
+    }
+  };
+
   const handleDeleteGuest = (id: string) => {
     setGuestList(guestList.filter((g) => g.id !== id));
   };
@@ -217,6 +313,88 @@ export const InviteGeneratorPage: React.FC = () => {
       current = `${chip} ${current}`;
     }
     setGuestNameInput(current);
+  };
+
+  // Export Guest Links to CSV
+  const handleExportGuestLinks = () => {
+    if (guestList.length === 0) return;
+
+    const headers = ['STT', 'Họ Và Tên Khách Mời', 'Link Thiệp Riêng (Click để mở)', 'Ngày Tạo'];
+    const rows = guestList.map((guest, idx) => [
+      idx + 1,
+      `"${guest.name.replace(/"/g, '""')}"`,
+      `"${getFullUrl(guest.name)}"`,
+      `"${guest.createdAt}"`,
+    ]);
+
+    const csvContent = '﻿' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    const now = new Date().toISOString().slice(0, 10);
+    link.setAttribute('download', `danh_sach_link_thiep_doanhiep_nguyennam_${now}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // 1-Click Message Assistant Handlers
+  const handleOpenMessageModal = (guest: ManagedGuest) => {
+    setSelectedGuestForMessage(guest);
+    setSelectedTone('elder');
+    const tmpl = INVITE_TEMPLATES.find((t) => t.id === 'elder') || INVITE_TEMPLATES[0];
+    setCustomMessageText(tmpl.generate(guest.name, getFullUrl(guest.name)));
+    setCopiedMessageToast(false);
+  };
+
+  const handleSelectTone = (tone: MessageTone) => {
+    if (!selectedGuestForMessage) return;
+    setSelectedTone(tone);
+    const tmpl = INVITE_TEMPLATES.find((t) => t.id === tone) || INVITE_TEMPLATES[0];
+    setCustomMessageText(tmpl.generate(selectedGuestForMessage.name, getFullUrl(selectedGuestForMessage.name)));
+  };
+
+  const handleCopyMessage = async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(customMessageText);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = customMessageText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      setCopiedMessageToast(true);
+      setTimeout(() => setCopiedMessageToast(false), 2500);
+    } catch {
+      // fallback
+    }
+  };
+
+  const handleOpenZalo = async () => {
+    await handleCopyMessage();
+    window.open('https://chat.zalo.me/', '_blank');
+  };
+
+  const handleNativeShare = async () => {
+    if (!selectedGuestForMessage) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Thiệp Cưới Đoàn Hiệp & Nguyễn Nam - Kính gửi ${selectedGuestForMessage.name}`,
+          text: customMessageText,
+          url: getFullUrl(selectedGuestForMessage.name),
+        });
+      } catch {
+        // User cancelled share
+      }
+    } else {
+      handleCopyMessage();
+    }
   };
 
   const handleSaveScriptUrl = (e: React.FormEvent) => {
@@ -247,7 +425,7 @@ export const InviteGeneratorPage: React.FC = () => {
         status: 'yes',
         count: 2,
         phone: '0901234567',
-        message: 'Chúc mừng trăm năm hạnh phúc Hoàng Nam & Ngọc Hiệp!',
+        message: 'Chúc mừng trăm năm hạnh phúc Đoàn Hiệp & Nguyễn Nam!',
       });
       await handleSyncWithGoogleSheet(false);
       setTestSuccess(true);
@@ -270,6 +448,53 @@ export const InviteGeneratorPage: React.FC = () => {
   const notAttendingRsvps = rsvps.filter((r) => r.status === 'no');
   const totalGuestsAttending = attendingRsvps.reduce((sum, r) => sum + (r.count || 1), 0);
 
+  // Catering Estimator metrics
+  const mainTables = Math.ceil(totalGuestsAttending / tableCapacity);
+  const bufferTables = totalGuestsAttending > 0 ? Math.max(1, Math.ceil(mainTables * 0.1)) : 0;
+  const totalTables = mainTables + bufferTables;
+  const remainderGuests = totalGuestsAttending % tableCapacity;
+
+  // Export Catering & Table Report to CSV
+  const handleExportCateringReport = () => {
+    const lines = [
+      '﻿BÁO CÁO DỰ TRÙ VÀ CHỐT MÂM CỖ CƯỚI - ĐOÀN HIỆP & NGUYỄN NAM',
+      `Thời gian xuất báo cáo:,"${new Date().toLocaleString('vi-VN')}"`,
+      `Tiêu chuẩn bàn tiệc:,"${tableCapacity} người / mâm (${tableCapacity === 6 ? 'Cỗ Miền Bắc truyền thống' : 'Bàn tiệc tròn'})"`,
+      `Tổng số khách chốt tham dự:,${totalGuestsAttending} khách`,
+      `Số mâm cỗ chính cần phục vụ:,${mainTables} mâm`,
+      `Số mâm cỗ dự phòng (+10% an toàn):,${bufferTables} mâm`,
+      `TỔNG SỐ MÂM CỖ CẦN ĐẶT NẤU:,${totalTables} mâm`,
+      '',
+      'DANH SÁCH CHI TIẾT KHÁCH XÁC NHẬN THAM DỰ:',
+      'STT,Họ và Tên,Số Lượng Đi Cùng,Số Điện Thoại,Lời Nhắn / Lời Chúc,Thời Gian Xác Nhận',
+    ];
+
+    attendingRsvps.forEach((r, idx) => {
+      lines.push(
+        [
+          idx + 1,
+          `"${r.name.replace(/"/g, '""')}"`,
+          r.count || 1,
+          r.phone ? `"	${r.phone}"` : '""',
+          `"${(r.message || '').replace(/"/g, '""')}"`,
+          `"${r.submittedAt}"`,
+        ].join(',')
+      );
+    });
+
+    const csvContent = lines.join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    const now = new Date().toISOString().slice(0, 10);
+    link.setAttribute('download', `bao_cao_chot_mam_co_doanhiep_nguyennam_${now}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const filteredGuests = guestList.filter((g) =>
     g.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
   );
@@ -284,7 +509,7 @@ export const InviteGeneratorPage: React.FC = () => {
         padding: 'clamp(2rem, 5vw, 4rem) 1.25rem',
       }}
     >
-      <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '880px', margin: '0 auto' }}>
         {/* Top Back Navigation */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
           <a
@@ -341,7 +566,7 @@ export const InviteGeneratorPage: React.FC = () => {
             }}
           >
             <ShieldCheck size={16} />
-            <span>Khu Vực Quản Trị Thiệp Cưới (Dành Riêng Cho Nam &amp; Hiệp)</span>
+            <span>Khu Vực Quản Trị Thiệp Cưới (Dành Riêng Cho Đoàn Hiệp &amp; Nguyễn Nam)</span>
           </div>
 
           <h1
@@ -358,12 +583,12 @@ export const InviteGeneratorPage: React.FC = () => {
             style={{
               fontSize: '1rem',
               color: 'var(--color-text-muted)',
-              maxWidth: '580px',
+              maxWidth: '620px',
               margin: '0 auto',
               lineHeight: 1.6,
             }}
           >
-            Tạo link thiệp riêng cho từng khách và theo dõi phản hồi tham dự tự động đồng bộ vào Google Sheet.
+            Tạo link thiệp riêng, trợ lý soạn tin nhắn 1-chạm gửi Zalo/SMS và dự trù số mâm cỗ tiệc cưới tự động.
           </p>
         </header>
 
@@ -374,6 +599,7 @@ export const InviteGeneratorPage: React.FC = () => {
             justifyContent: 'center',
             gap: '0.75rem',
             marginBottom: '2.5rem',
+            flexWrap: 'wrap',
           }}
         >
           <button
@@ -396,7 +622,7 @@ export const InviteGeneratorPage: React.FC = () => {
             }}
           >
             <Sparkles size={16} />
-            <span>Tạo Link Khách Mời ({guestList.length})</span>
+            <span>Tạo Link &amp; Soạn Tin ({guestList.length})</span>
           </button>
 
           <button
@@ -422,151 +648,295 @@ export const InviteGeneratorPage: React.FC = () => {
             }}
           >
             <FileSpreadsheet size={16} />
-            <span>Phản Hồi RSVP &amp; Google Sheet ({rsvps.length})</span>
+            <span>RSVP &amp; Dự Trù Mâm Cỗ ({rsvps.length})</span>
           </button>
         </div>
 
-        {/* TAB 1: INVITE LINK GENERATOR */}
+        {/* TAB 1: INVITE LINK GENERATOR & 1-CLICK ASSISTANT */}
         {activeTab === 'invite' && (
           <>
             {/* Generator Card */}
             <div
               className="stationery-card"
               style={{
-                padding: 'clamp(2rem, 5vw, 2.85rem)',
-                marginBottom: '3rem',
+                padding: 'clamp(1.75rem, 5vw, 2.5rem)',
+                marginBottom: '2.5rem',
                 position: 'relative',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.25rem' }}>
-                <Sparkles size={22} style={{ color: 'var(--color-gold-dark)' }} />
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', margin: 0, color: 'var(--color-plum)' }}>
-                  Tạo Link Thiệp Mới
-                </h2>
-              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <Sparkles size={22} style={{ color: 'var(--color-gold-dark)' }} />
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', margin: 0, color: 'var(--color-plum)' }}>
+                    {addMode === 'single' ? 'Tạo Link Thiệp Mời Riêng' : 'Thêm Danh Sách Khách Hàng Loạt'}
+                  </h2>
+                </div>
 
-              {/* Quick Chips */}
-              <div style={{ marginBottom: '1rem' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.45rem' }}>
-                  Gợi ý xưng hô nhanh:
-                </span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {DEFAULT_CHIPS.map((chip) => (
-                    <button
-                      key={chip}
-                      type="button"
-                      onClick={() => handleChipClick(chip)}
-                      style={{
-                        fontSize: '0.8rem',
-                        padding: '0.25rem 0.65rem',
-                        borderRadius: 'var(--radius-full)',
-                        border: '1px solid rgba(213, 181, 140, 0.45)',
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        color: 'var(--color-plum)',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      + {chip}
-                    </button>
-                  ))}
+                {/* Mode Switcher */}
+                <div style={{ display: 'flex', background: 'rgba(213, 181, 140, 0.2)', padding: '3px', borderRadius: 'var(--radius-full)' }}>
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('single')}
+                    style={{
+                      padding: '0.35rem 0.85rem',
+                      borderRadius: 'var(--radius-full)',
+                      border: 'none',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      background: addMode === 'single' ? '#FFF9F6' : 'transparent',
+                      color: addMode === 'single' ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+                      boxShadow: addMode === 'single' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                    }}
+                  >
+                    Từng khách
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAddMode('bulk')}
+                    style={{
+                      padding: '0.35rem 0.85rem',
+                      borderRadius: 'var(--radius-full)',
+                      border: 'none',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.3rem',
+                      background: addMode === 'bulk' ? '#FFF9F6' : 'transparent',
+                      color: addMode === 'bulk' ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+                      boxShadow: addMode === 'bulk' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                    }}
+                  >
+                    <ListPlus size={14} />
+                    <span>Dán hàng loạt</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Input Form */}
-              <form onSubmit={handleAddGuest} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <div style={{ position: 'relative', flex: '1 1 280px' }}>
-                  <User
-                    size={18}
-                    style={{
-                      position: 'absolute',
-                      left: '1rem',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      color: 'var(--color-gold-dark)',
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={guestNameInput}
-                    onChange={(e) => setGuestNameInput(e.target.value)}
-                    placeholder="Nhập tên khách (ví dụ: Gia đình Bác Hùng, Bạn Lan...)"
+              {addMode === 'single' ? (
+                <>
+                  {/* Quick Chips */}
+                  <div style={{ marginBottom: '1rem' }}>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.45rem' }}>
+                      Gợi ý xưng hô nhanh:
+                    </span>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      {DEFAULT_CHIPS.map((chip) => (
+                        <button
+                          key={chip}
+                          type="button"
+                          onClick={() => handleChipClick(chip)}
+                          style={{
+                            fontSize: '0.8rem',
+                            padding: '0.25rem 0.65rem',
+                            borderRadius: 'var(--radius-full)',
+                            border: '1px solid rgba(213, 181, 140, 0.45)',
+                            background: 'rgba(255, 255, 255, 0.8)',
+                            color: 'var(--color-plum)',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          + {chip}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Input Form */}
+                  <form onSubmit={handleAddGuest} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <div style={{ position: 'relative', flex: '1 1 280px' }}>
+                      <User
+                        size={18}
+                        style={{
+                          position: 'absolute',
+                          left: '1rem',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          color: 'var(--color-gold-dark)',
+                        }}
+                      />
+                      <input
+                        type="text"
+                        value={guestNameInput}
+                        onChange={(e) => setGuestNameInput(e.target.value)}
+                        placeholder="Nhập tên khách (ví dụ: Gia đình Bác Hùng, Bạn Lan...)"
+                        style={{
+                          width: '100%',
+                          padding: '0.85rem 1rem 0.85rem 2.85rem',
+                          borderRadius: 'var(--radius-md)',
+                          border: '1px solid var(--color-gold)',
+                          background: '#FFF9F6',
+                          color: 'var(--color-plum)',
+                          fontSize: '0.95rem',
+                          fontFamily: 'inherit',
+                          outline: 'none',
+                        }}
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={!guestNameInput.trim()}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        padding: '0.85rem 1.6rem',
+                        borderRadius: 'var(--radius-md)',
+                        border: 'none',
+                        background: guestNameInput.trim() ? 'var(--color-rose-dark)' : '#D5C4BD',
+                        color: '#FFF9F6',
+                        fontSize: '0.92rem',
+                        fontWeight: 600,
+                        cursor: guestNameInput.trim() ? 'pointer' : 'not-allowed',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <Plus size={18} />
+                      <span>Tạo Link</span>
+                    </button>
+                  </form>
+                </>
+              ) : (
+                /* Bulk Add Form */
+                <form onSubmit={handleBulkAddGuests} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
+                    Dán danh sách tên khách mời vào ô bên dưới (<strong>mỗi dòng 1 tên khách</strong>, ví dụ: <em>Bác Ba, Cô Bảy, Bạn Tuấn Anh</em>). Hệ thống sẽ tự động tạo link riêng cho tất cả trong 1 giây.
+                  </p>
+                  <textarea
+                    rows={5}
+                    value={bulkInputText}
+                    onChange={(e) => setBulkInputText(e.target.value)}
+                    placeholder="Gia đình Bác Hùng&#10;Gia đình Cô Mai&#10;Anh Hoàng & Bạn gái&#10;Bạn Thảo My&#10;Tập thể phòng Kế toán"
                     style={{
                       width: '100%',
-                      padding: '0.85rem 1rem 0.85rem 2.85rem',
+                      padding: '0.85rem 1rem',
                       borderRadius: 'var(--radius-md)',
                       border: '1px solid var(--color-gold)',
                       background: '#FFF9F6',
                       color: 'var(--color-plum)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.92rem',
                       fontFamily: 'inherit',
                       outline: 'none',
+                      lineHeight: 1.6,
                     }}
                   />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={!guestNameInput.trim()}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    padding: '0.85rem 1.6rem',
-                    borderRadius: 'var(--radius-md)',
-                    border: 'none',
-                    background: guestNameInput.trim() ? 'var(--color-rose-dark)' : '#D5C4BD',
-                    color: '#FFF9F6',
-                    fontSize: '0.92rem',
-                    fontWeight: 600,
-                    cursor: guestNameInput.trim() ? 'pointer' : 'not-allowed',
-                    transition: 'all 0.2s ease',
-                  }}
-                >
-                  <Plus size={18} />
-                  <span>Tạo Link</span>
-                </button>
-              </form>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBulkInputText('');
+                        setAddMode('single');
+                      }}
+                      style={{
+                        padding: '0.65rem 1.25rem',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid rgba(213, 181, 140, 0.5)',
+                        background: '#FFF9F6',
+                        color: 'var(--color-plum)',
+                        fontSize: '0.88rem',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Hủy bỏ
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={!bulkInputText.trim()}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        padding: '0.65rem 1.4rem',
+                        borderRadius: 'var(--radius-md)',
+                        border: 'none',
+                        background: bulkInputText.trim() ? 'var(--color-rose-dark)' : '#D5C4BD',
+                        color: '#FFF9F6',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        cursor: bulkInputText.trim() ? 'pointer' : 'not-allowed',
+                      }}
+                    >
+                      <ListPlus size={16} />
+                      <span>Thêm Toàn Bộ Vào Danh Sách</span>
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
 
             {/* Guest List Card */}
             <div
               className="stationery-card"
               style={{
-                padding: 'clamp(2rem, 5vw, 2.85rem)',
+                padding: 'clamp(1.75rem, 5vw, 2.5rem)',
                 position: 'relative',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', margin: 0, color: 'var(--color-plum)' }}>
-                  Danh Sách Khách Mời ({guestList.length})
-                </h2>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', margin: 0, color: 'var(--color-plum)' }}>
+                    Danh Sách Khách Mời ({guestList.length})
+                  </h2>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                    Bấm <strong>"💬 Soạn Tin"</strong> để lấy mẫu tin nhắn Zalo/SMS chuẩn lịch sự kèm link thiệp riêng
+                  </span>
+                </div>
 
-                <div style={{ position: 'relative', width: '220px' }}>
-                  <Search
-                    size={16}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '200px' }}>
+                    <Search
+                      size={15}
+                      style={{
+                        position: 'absolute',
+                        left: '0.75rem',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: 'var(--color-text-muted)',
+                      }}
+                    />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Tìm tên khách..."
+                      style={{
+                        width: '100%',
+                        padding: '0.45rem 0.75rem 0.45rem 2.15rem',
+                        borderRadius: 'var(--radius-full)',
+                        border: '1px solid rgba(213, 181, 140, 0.45)',
+                        background: 'rgba(255, 255, 255, 0.8)',
+                        fontSize: '0.82rem',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleExportGuestLinks}
+                    disabled={guestList.length === 0}
+                    title="Xuất toàn bộ link khách mời sang file Excel (.csv)"
                     style={{
-                      position: 'absolute',
-                      left: '0.75rem',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      color: 'var(--color-text-muted)',
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Tìm tên khách..."
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem 0.5rem 2.25rem',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      padding: '0.45rem 0.95rem',
                       borderRadius: 'var(--radius-full)',
-                      border: '1px solid rgba(213, 181, 140, 0.45)',
-                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: '1px solid var(--color-gold)',
+                      background: '#FFF9F6',
+                      color: 'var(--color-plum)',
                       fontSize: '0.82rem',
-                      outline: 'none',
+                      fontWeight: 600,
+                      cursor: guestList.length === 0 ? 'not-allowed' : 'pointer',
+                      opacity: guestList.length === 0 ? 0.6 : 1,
                     }}
-                  />
+                  >
+                    <Download size={14} />
+                    <span>Xuất File Link (.csv)</span>
+                  </button>
                 </div>
               </div>
 
@@ -591,16 +961,49 @@ export const InviteGeneratorPage: React.FC = () => {
                         gap: '0.75rem',
                       }}
                     >
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--color-plum)' }}>
+                      <div style={{ flex: '1 1 240px', minWidth: '180px' }}>
+                        <div style={{ fontWeight: 600, fontSize: '0.98rem', color: 'var(--color-plum)' }}>
                           {item.name}
                         </div>
-                        <div style={{ fontSize: '0.76rem', color: 'var(--color-text-muted)', marginTop: '0.15rem' }}>
+                        <div
+                          style={{
+                            fontSize: '0.75rem',
+                            color: 'var(--color-text-muted)',
+                            marginTop: '0.15rem',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '360px',
+                          }}
+                        >
                           {getFullUrl(item.name)}
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
+                        {/* 1-Click Message Assistant Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleOpenMessageModal(item)}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem',
+                            padding: '0.45rem 0.85rem',
+                            borderRadius: 'var(--radius-full)',
+                            border: '1px solid var(--color-rose)',
+                            background: 'rgba(201, 130, 145, 0.12)',
+                            color: 'var(--color-rose-dark)',
+                            fontSize: '0.8rem',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                          }}
+                        >
+                          <MessageCircle size={14} />
+                          <span>Soạn Tin</span>
+                        </button>
+
                         <button
                           type="button"
                           onClick={() => handleCopy(item.id, item.name)}
@@ -626,7 +1029,7 @@ export const InviteGeneratorPage: React.FC = () => {
                           href={getFullUrl(item.name)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          title="Mở tab mới xem thử"
+                          title="Mở tab mới xem thử giao diện khách nhận"
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -671,7 +1074,7 @@ export const InviteGeneratorPage: React.FC = () => {
           </>
         )}
 
-        {/* TAB 2: RSVP & GOOGLE SHEET SYNC */}
+        {/* TAB 2: RSVP & WEDDING CATERING ESTIMATOR */}
         {activeTab === 'rsvp' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Google Sheet Direct Access Banner */}
@@ -1013,6 +1416,221 @@ export const InviteGeneratorPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Wedding Catering & Table Estimator Card */}
+            <div
+              className="stationery-card"
+              style={{
+                padding: 'clamp(1.75rem, 4vw, 2.25rem)',
+                background: 'linear-gradient(135deg, #FFFDFB 0%, #FBF3EE 100%)',
+                border: '1px solid rgba(213, 181, 140, 0.7)',
+                position: 'relative',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '12px',
+                      background: 'rgba(184, 134, 11, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--color-gold-dark)',
+                    }}
+                  >
+                    <Utensils size={22} />
+                  </div>
+                  <div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', margin: 0, color: 'var(--color-plum)' }}>
+                      Dự Trù &amp; Chốt Mâm Cỗ Tiệc Cưới
+                    </h2>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                      Tự động tính toán số mâm chính và số mâm dự phòng an toàn theo phản hồi RSVP
+                    </span>
+                  </div>
+                </div>
+
+                {/* Capacity Selector Toggle */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
+                    Tiêu chuẩn:
+                  </span>
+                  <div style={{ display: 'flex', background: 'rgba(213, 181, 140, 0.25)', padding: '3px', borderRadius: 'var(--radius-full)' }}>
+                    <button
+                      type="button"
+                      onClick={() => setTableCapacity(6)}
+                      style={{
+                        padding: '0.35rem 0.85rem',
+                        borderRadius: 'var(--radius-full)',
+                        border: 'none',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        background: tableCapacity === 6 ? '#FFF9F6' : 'transparent',
+                        color: tableCapacity === 6 ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+                        boxShadow: tableCapacity === 6 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                      }}
+                    >
+                      6 người / mâm (Miền Bắc)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTableCapacity(10)}
+                      style={{
+                        padding: '0.35rem 0.85rem',
+                        borderRadius: 'var(--radius-full)',
+                        border: 'none',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        background: tableCapacity === 10 ? '#FFF9F6' : 'transparent',
+                        color: tableCapacity === 10 ? 'var(--color-rose-dark)' : 'var(--color-text-muted)',
+                        boxShadow: tableCapacity === 10 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                      }}
+                    >
+                      10 người / mâm (Bàn tròn)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4 Calculation Metrics */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                  gap: '1rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div
+                  style={{
+                    padding: '1.1rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(213, 181, 140, 0.4)',
+                  }}
+                >
+                  <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Khách Chắc Chắn Đi
+                  </div>
+                  <div style={{ fontSize: '1.7rem', fontWeight: 700, color: '#107C41', marginTop: '0.2rem' }}>
+                    {totalGuestsAttending}
+                    <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--color-text-muted)', marginLeft: '0.35rem' }}>khách</span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
+                    Từ {attendingRsvps.length} lượt gửi xác nhận
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: '1.1rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(213, 181, 140, 0.4)',
+                  }}
+                >
+                  <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Mâm Cỗ Chính
+                  </div>
+                  <div style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-plum)', marginTop: '0.2rem' }}>
+                    {mainTables}
+                    <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--color-text-muted)', marginLeft: '0.35rem' }}>mâm</span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
+                    {remainderGuests > 0 ? `Lẻ ${remainderGuests} khách xếp thêm` : 'Đủ trọn vẹn số mâm'}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: '1.1rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(213, 181, 140, 0.4)',
+                  }}
+                >
+                  <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Dự Phòng (+10%)
+                  </div>
+                  <div style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-gold-dark)', marginTop: '0.2rem' }}>
+                    +{bufferTables}
+                    <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--color-text-muted)', marginLeft: '0.35rem' }}>mâm</span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
+                    Đề phòng khách phát sinh
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: '1.1rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: 'linear-gradient(135deg, rgba(201, 130, 145, 0.15) 0%, rgba(213, 181, 140, 0.25) 100%)',
+                    border: '1px solid var(--color-rose)',
+                  }}
+                >
+                  <div style={{ fontSize: '0.78rem', color: 'var(--color-rose-dark)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Tổng Mâm Chốt Đặt
+                  </div>
+                  <div style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--color-rose-dark)', marginTop: '0.2rem' }}>
+                    {totalTables}
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-plum)', marginLeft: '0.35rem' }}>mâm</span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-plum)', marginTop: '0.35rem', fontWeight: 500 }}>
+                    Số lượng gửi bên làm cỗ
+                  </div>
+                </div>
+              </div>
+
+              {/* Catering Advice & Export */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '1rem',
+                  paddingTop: '1.25rem',
+                  borderTop: '1px dashed rgba(213, 181, 140, 0.5)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.82rem', color: 'var(--color-text-muted)', maxWidth: '520px' }}>
+                  <Calculator size={16} style={{ color: 'var(--color-gold-dark)', flexShrink: 0 }} />
+                  <span>
+                    Tiêu chuẩn <strong>{tableCapacity} người/mâm</strong> phù hợp nhất cho Tiệc Mừng tại Tư Gia Nhà Gái (Hùng Huyền Home) ngày 28/11/2026.
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleExportCateringReport}
+                  disabled={attendingRsvps.length === 0}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    padding: '0.6rem 1.25rem',
+                    borderRadius: 'var(--radius-full)',
+                    background: 'var(--color-plum)',
+                    color: '#FFF9F6',
+                    border: 'none',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    cursor: attendingRsvps.length === 0 ? 'not-allowed' : 'pointer',
+                    opacity: attendingRsvps.length === 0 ? 0.6 : 1,
+                    boxShadow: '0 3px 8px rgba(90, 45, 58, 0.25)',
+                  }}
+                >
+                  <Download size={15} />
+                  <span>Xuất Báo Cáo Chốt Mâm Cỗ (.csv)</span>
+                </button>
+              </div>
+            </div>
+
             {/* Submissions Table Card */}
             <div
               className="stationery-card"
@@ -1228,10 +1846,255 @@ export const InviteGeneratorPage: React.FC = () => {
           </div>
         )}
 
+        {/* Floating 1-Click Message Assistant Modal */}
+        {selectedGuestForMessage && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 9999,
+              background: 'rgba(43, 35, 39, 0.65)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '1rem',
+            }}
+            onClick={() => setSelectedGuestForMessage(null)}
+          >
+            <div
+              className="stationery-card"
+              style={{
+                width: '100%',
+                maxWidth: '560px',
+                background: '#FFFDFB',
+                padding: 'clamp(1.5rem, 4vw, 2.25rem)',
+                position: 'relative',
+                boxShadow: '0 20px 45px rgba(0, 0, 0, 0.25)',
+                border: '1px solid var(--color-gold)',
+                maxHeight: '90vh',
+                overflowY: 'auto',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+                <div>
+                  <div
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      color: 'var(--color-gold-dark)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: '0.35rem',
+                    }}
+                  >
+                    <Sparkles size={14} />
+                    <span>Trợ Lý Soạn Tin Nhắn 1-Chạm</span>
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontSize: '1.45rem',
+                      margin: 0,
+                      color: 'var(--color-plum)',
+                    }}
+                  >
+                    Gửi Thiệp Cho: {selectedGuestForMessage.name}
+                  </h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedGuestForMessage(null)}
+                  style={{
+                    background: 'rgba(213, 181, 140, 0.2)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '32px',
+                    height: '32px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-plum)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Tone Selection Tabs */}
+              <div style={{ marginBottom: '1.25rem' }}>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>
+                  Chọn giọng điệu phù hợp với khách mời:
+                </span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+                  {INVITE_TEMPLATES.map((tmpl) => (
+                    <button
+                      key={tmpl.id}
+                      type="button"
+                      onClick={() => handleSelectTone(tmpl.id)}
+                      style={{
+                        padding: '0.65rem 0.75rem',
+                        borderRadius: 'var(--radius-md)',
+                        border: selectedTone === tmpl.id ? '1.5px solid var(--color-rose)' : '1px solid rgba(213, 181, 140, 0.5)',
+                        background: selectedTone === tmpl.id ? 'rgba(201, 130, 145, 0.12)' : '#FFFFFF',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-plum)' }}>
+                        <span>{tmpl.icon}</span>
+                        <span>{tmpl.label}</span>
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
+                        {tmpl.badge}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Message Editor / Preview */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.45rem' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-plum)' }}>
+                    Nội dung tin nhắn (Có thể chỉnh sửa thêm):
+                  </span>
+                  <span style={{ fontSize: '0.74rem', color: 'var(--color-text-muted)' }}>
+                    {customMessageText.length} ký tự
+                  </span>
+                </div>
+
+                <textarea
+                  rows={8}
+                  value={customMessageText}
+                  onChange={(e) => setCustomMessageText(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.85rem 1rem',
+                    borderRadius: 'var(--radius-md)',
+                    border: '1px solid var(--color-gold)',
+                    background: '#FFFFFF',
+                    color: 'var(--color-plum)',
+                    fontSize: '0.88rem',
+                    lineHeight: 1.6,
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                    resize: 'vertical',
+                  }}
+                />
+              </div>
+
+              {/* Toast Feedback */}
+              {copiedMessageToast && (
+                <div
+                  style={{
+                    marginBottom: '1rem',
+                    padding: '0.55rem 0.85rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: 'rgba(16, 124, 65, 0.12)',
+                    color: '#107C41',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                  }}
+                >
+                  <Check size={15} />
+                  <span>Đã sao chép tin nhắn vào khay nhớ tạm! Giờ bạn có thể dán ngay vào tin nhắn.</span>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
+                  <button
+                    type="button"
+                    onClick={handleCopyMessage}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.45rem',
+                      padding: '0.75rem 1rem',
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid var(--color-rose)',
+                      background: '#FFF9F6',
+                      color: 'var(--color-rose-dark)',
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <Copy size={16} />
+                    <span>Sao Chép Tin Nhắn</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleOpenZalo}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.45rem',
+                      padding: '0.75rem 1rem',
+                      borderRadius: 'var(--radius-md)',
+                      border: 'none',
+                      background: '#0068FF',
+                      color: '#FFFFFF',
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      boxShadow: '0 3px 8px rgba(0, 104, 255, 0.25)',
+                    }}
+                  >
+                    <Send size={15} />
+                    <span>Mở Zalo Gửi Ngay</span>
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleNativeShare}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.45rem',
+                    padding: '0.75rem 1rem',
+                    borderRadius: 'var(--radius-md)',
+                    border: 'none',
+                    background: 'var(--color-rose-dark)',
+                    color: '#FFF9F6',
+                    fontSize: '0.88rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    boxShadow: 'var(--shadow-sm)',
+                  }}
+                >
+                  <Share2 size={16} />
+                  <span>Chia Sẻ Qua Điện Thoại (SMS / Messenger)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Footer Note */}
         <footer style={{ textAlign: 'center', marginTop: '3rem', color: 'var(--color-text-muted)', fontSize: '0.82rem' }}>
           <p style={{ margin: '0 0 0.5rem' }}>
-            Thiệp Cưới Nam &amp; Hiệp © 2026. Chúc hai bạn có những kỷ niệm ngọt ngào và một ngày trọng đại trọn vẹn!
+            Thiệp Cưới Đoàn Hiệp &amp; Nguyễn Nam © 2026. Chúc hai bạn có những kỷ niệm ngọt ngào và một ngày trọng đại trọn vẹn!
           </p>
           <Heart size={14} fill="var(--color-rose)" stroke="none" style={{ margin: '0 auto' }} />
         </footer>

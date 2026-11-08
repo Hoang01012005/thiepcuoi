@@ -231,7 +231,7 @@ export const submitRsvp = async (
         count: data.status === 'yes' ? data.count : 0,
         phone: data.phone || '',
         message: data.message || '',
-        source: 'Thiệp cưới online Hoàng Nam & Ngọc Hiệp',
+        source: 'Thiệp cưới online Đoàn Hiệp & Nguyễn Nam',
         sheetId: weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
       };
 
@@ -285,7 +285,7 @@ export const exportRsvpsToCsv = (): void => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.setAttribute('href', url);
-  link.setAttribute('download', `danh_sach_rsvp_hoangnam_ngochiep_${new Date().toISOString().slice(0, 10)}.csv`);
+  link.setAttribute('download', `danh_sach_rsvp_doanhiep_nguyennam_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
