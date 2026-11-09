@@ -20,10 +20,13 @@ import { GiftSection } from './components/gift/GiftSection';
 import { ClosingSection } from './components/closing/ClosingSection';
 import { MobileBottomBar } from './components/layout/MobileBottomBar';
 import { InviteGeneratorPage } from './components/admin/InviteGeneratorPage';
+import { useGuestName } from './hooks/useGuestName';
+import { autoRecordGuestVisit } from './services/rsvpService';
 
 export function App() {
   const { lang, toggleLang } = useLanguage();
   const { isPlaying, togglePlay, playAudio } = useAudio(weddingConfig.audio.src);
+  const guestName = useGuestName();
 
   // Check if user is navigating to the dedicated Host / Admin invitation generator portal
   const [isAdminView, setIsAdminView] = useState(() => {
@@ -32,6 +35,13 @@ export function App() {
     const search = window.location.search.toLowerCase();
     return hash === '#invite' || hash === '#tao-thiep' || search.includes('admin') || search.includes('host');
   });
+
+  // Tự động ghi nhận vào Sheet & hệ thống khi khách mở link thiệp riêng (?to=...)
+  useEffect(() => {
+    if (guestName && !isAdminView) {
+      autoRecordGuestVisit(guestName);
+    }
+  }, [guestName, isAdminView]);
 
   useEffect(() => {
     const handleHashChange = () => {

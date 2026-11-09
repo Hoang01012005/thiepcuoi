@@ -257,6 +257,84 @@ export const submitRsvp = async (
   return { success: true, synced };
 };
 
+/**
+ * Tự động ghi nhận khi khách mời nhấp vào link thiệp riêng (?to=...)
+ * Không ghi trùng lặp trong cùng một phiên duyệt web
+ */
+export const autoRecordGuestVisit = async (guestName: string): Promise<void> => {
+  if (typeof window === 'undefined' || !guestName || !guestName.trim()) return;
+  const cleanName = guestName.trim();
+
+  // Chặn spam ghi đúp nhiều lần khi F5 hoặc mở lại cùng 1 phiên
+  const sessionKey = `wedding_auto_visit_${cleanName.toLowerCase()}`;
+  if (sessionStorage.getItem(sessionKey)) {
+    return;
+  }
+  sessionStorage.setItem(sessionKey, '1');
+
+  const timestamp = new Date().toLocaleString('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    hour12: false,
+  });
+
+  const submission: RsvpSubmission = {
+    id: `visit-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    name: cleanName,
+    status: 'yes',
+    count: 1,
+    phone: '',
+    message: 'Khách đã nhấp vào link mở xem thiệp cưới',
+    submittedAt: timestamp,
+    syncedToGoogleSheet: false,
+  };
+
+  // 1. Lưu vào danh sách local của hệ thống nếu chưa có phản hồi nào của khách này
+  const existing = getSavedRsvps();
+  const alreadySubmitted = existing.some(
+    (r) => r.name.toLowerCase() === cleanName.toLowerCase()
+  );
+
+  if (!alreadySubmitted) {
+    const updated = [submission, ...existing];
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.warn('Could not save auto visit to localStorage:', err);
+    }
+    broadcastRsvpUpdate(submission);
+  }
+
+  // 2. Tự động bắn vào Google Sheet qua Google Apps Script Web App
+  const scriptUrl = getSavedRsvpScriptUrl();
+  if (scriptUrl) {
+    try {
+      const payload = {
+        timestamp,
+        name: cleanName,
+        status: 'Đã mở thiệp / Xác nhận xem thiệp',
+        count: 1,
+        phone: '',
+        message: 'Khách đã nhấp vào link mở xem thiệp cưới',
+        source: 'Tự động ghi nhận khi khách mở link riêng (?to=...)',
+        sheetId: weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
+      };
+
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      submission.syncedToGoogleSheet = true;
+    } catch (err) {
+      console.warn('Error auto-syncing guest visit to Google Sheet:', err);
+    }
+  }
+};
+
 export const exportRsvpsToCsv = (): void => {
   const rsvps = getSavedRsvps();
   if (rsvps.length === 0) {
