@@ -240,8 +240,8 @@ export const weddingConfig: WeddingConfig = {
     title: 'Cưới Đi — Nhạc Lễ Cưới Đoàn Hiệp & Nguyễn Nam',
   },
   rsvp: {
-    googleSheetUrl: 'https://docs.google.com/spreadsheets/d/18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo/edit?gid=0#gid=0',
-    googleSheetId: '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
-    scriptUrl: 'https://script.google.com/macros/s/AKfycbw4yoT5YwRPxKvX7VtrqNxDUynRzoN2K_B9Cskyk_vOF8G8mipajUca5lTL0coFrhjU/exec',
+    googleSheetUrl: 'https://docs.google.com/spreadsheets/d/14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4/edit?usp=sharing',
+    googleSheetId: '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4',
+    scriptUrl: '',
   },
 };

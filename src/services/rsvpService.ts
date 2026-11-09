@@ -38,10 +38,10 @@ export const getSavedRsvps = (): RsvpSubmission[] => {
 
 /**
  * Fetch live RSVP records directly from the shared public Google Sheet
- * https://docs.google.com/spreadsheets/d/18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo
+ * https://docs.google.com/spreadsheets/d/14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4
  */
 export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => {
-  const sheetId = weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo';
+  const sheetId = weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4';
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
 
   try {
@@ -232,7 +232,7 @@ export const submitRsvp = async (
         phone: data.phone || '',
         message: data.message || '',
         source: 'Thiệp cưới online Đoàn Hiệp & Nguyễn Nam',
-        sheetId: weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
+        sheetId: weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4',
       };
 
       // Use Content-Type: text/plain;charset=utf-8 so browsers allow sending under mode: 'no-cors'
@@ -316,7 +316,7 @@ export const autoRecordGuestVisit = async (guestName: string): Promise<void> => 
         phone: '',
         message: 'Khách đã nhấp vào link mở xem thiệp cưới',
         source: 'Tự động ghi nhận khi khách mở link riêng (?to=...)',
-        sheetId: weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
+        sheetId: weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4',
       };
 
       await fetch(scriptUrl, {
