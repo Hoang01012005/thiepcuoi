@@ -235,11 +235,13 @@ export const submitRsvp = async (
         sheetId: weddingConfig.rsvp?.googleSheetId || '18ZRmmnf7wJhgfRVMqxJewOLsps4IPV9J--CqG1lPtLo',
       };
 
+      // Use Content-Type: text/plain;charset=utf-8 so browsers allow sending under mode: 'no-cors'
+      // without triggering preflight CORS errors while Google Apps Script receives full JSON in e.postData.contents
       await fetch(scriptUrl, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain;charset=utf-8',
         },
         body: JSON.stringify(payload),
       });

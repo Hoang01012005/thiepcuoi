@@ -14,17 +14,17 @@ export const AddToCalendarButton: React.FC<AddToCalendarButtonProps> = ({ lang }
   const menuRef = useRef<HTMLDivElement>(null);
 
   const banquet = {
-    titleVi: '💍 Tiệc Cưới Hoàng Nam & Ngọc Hiệp',
-    titleEn: '💍 Wedding Banquet — Nam & Hiep',
-    descVi: 'Tiệc cưới chung vui của Hoàng Nam & Ngọc Hiệp tại Số 11, Bảo Lộc 2, Phúc Lộc, Hà Nội. Kính mời quý khách đến chung vui!',
-    descEn: 'Wedding Banquet of Hoang Nam & Ngoc Hiep at No. 11, Bao Loc 2, Phuc Loc, Hanoi. We warmly welcome your attendance!',
+    titleVi: '💍 Tiệc Cưới Đoàn Hiệp & Nguyễn Nam',
+    titleEn: '💍 Wedding Banquet — Doan Hiep & Nguyen Nam',
+    descVi: 'Tiệc cưới chung vui của Đoàn Hiệp & Nguyễn Nam tại Số 11, Bảo Lộc 2, Phúc Lộc, Hà Nội (Hùng Huyền Home). Kính mời quý khách đến chung vui!',
+    descEn: 'Wedding Banquet of Doan Hiep & Nguyen Nam at Hung Huyen Home, No. 11, Bao Loc 2, Phuc Loc, Hanoi. We warmly welcome your attendance!',
   };
 
   const ceremony = {
-    titleVi: '🌸 Lễ Vu Quy — Hoàng Nam & Ngọc Hiệp',
-    titleEn: '🌸 Wedding Ceremony — Nam & Hiep',
-    descVi: 'Lễ vu quy của Hoàng Nam & Ngọc Hiệp. Nhà Gái: Số 11, Bảo Lộc 2, Phúc Lộc, Hà Nội.',
-    descEn: 'Traditional wedding ceremony of Hoang Nam & Ngoc Hiep. Bride Home: No. 11, Bao Loc 2, Phuc Loc, Hanoi.',
+    titleVi: '🌸 Lễ Vu Quy / Lễ Thành Hôn — Đoàn Hiệp & Nguyễn Nam',
+    titleEn: '🌸 Wedding Ceremony — Doan Hiep & Nguyen Nam',
+    descVi: 'Lễ Vu Quy & Lễ Thành Hôn của Đoàn Hiệp & Nguyễn Nam. Nhà Gái: Số 11, Bảo Lộc 2, Phúc Lộc, Hà Nội • Nhà Trai: Số 22, ngõ 11, Bảo Lộc 2, Phúc Lộc, Hà Nội.',
+    descEn: 'Traditional wedding ceremony of Doan Hiep & Nguyen Nam (Bride & Groom Residences).',
   };
 
   const isVi = lang === 'vi';

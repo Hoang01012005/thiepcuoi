@@ -6,7 +6,7 @@ export type Language = 'vi' | 'en';
 export const translations = {
   vi: {
     meta: {
-      siteTitle: 'Hoàng Nam & Ngọc Hiệp — Thiệp Cưới',
+      siteTitle: 'Đoàn Hiệp & Nguyễn Nam — Thiệp Cưới',
       siteSubtitle: 'Trân Trọng Kính Mời',
     },
     nav: {
@@ -53,7 +53,7 @@ export const translations = {
       title: 'Thời Gian & Địa Điểm',
       subtitle: 'Rất mong sự hiện diện đầy yêu thương của quý khách để ngày vui trọn vẹn',
       lunarDateLabel: 'Âm lịch:',
-      ceremonyTitle: 'Lễ Vu Quy',
+      ceremonyTitle: 'Lễ Vu Quy / Lễ Thành Hôn',
       receptionTitle: 'Tiệc Cưới Chung Vui',
       timeLabel: 'Thời gian:',
       venueLabel: 'Địa điểm:',

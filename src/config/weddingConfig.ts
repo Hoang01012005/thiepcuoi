@@ -151,7 +151,7 @@ export const weddingConfig: WeddingConfig = {
     lunarDateEn: '21st day of the 10th Lunar Month',
     ceremony: {
       time: '09:00 AM — Chủ Nhật, 29/11/2026',
-      nameVi: 'Lễ Vu Quy',
+      nameVi: 'Lễ Vu Quy / Lễ Thành Hôn',
       nameEn: 'Traditional Marriage Ceremony',
       venueVi: 'Tư Gia Nhà Gái & Nhà Trai',
       venueEn: 'Private Family Residences',

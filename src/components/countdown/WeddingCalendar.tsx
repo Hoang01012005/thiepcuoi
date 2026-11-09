@@ -210,7 +210,7 @@ export const WeddingCalendar: React.FC<WeddingCalendarProps> = ({ lang }) => {
                       zIndex: 3,
                     }}
                   >
-                    {lang === 'vi' ? 'Lễ Vu Quy' : 'Ceremony'}
+                    {lang === 'vi' ? 'Vu Quy / Thành Hôn' : 'Ceremony'}
                   </span>
                 </div>
               ) : isDay28 ? (
@@ -344,7 +344,7 @@ export const WeddingCalendar: React.FC<WeddingCalendarProps> = ({ lang }) => {
           <Sparkles size={14} style={{ color: 'var(--color-rose-dark)', flexShrink: 0 }} />
           <span>
             <strong>{lang === 'vi' ? 'Chủ Nhật, 29/11/2026' : 'Sunday, Nov 29, 2026'}:</strong>{' '}
-            09:00 &mdash; {lang === 'vi' ? 'Lễ Vu Quy (Nhà Gái & Nhà Trai)' : 'Marriage Ceremony'}
+            09:00 &mdash; {lang === 'vi' ? 'Lễ Vu Quy / Lễ Thành Hôn (Nhà Gái & Nhà Trai)' : 'Marriage Ceremony'}
           </span>
         </div>
       </div>

@@ -95,11 +95,13 @@ const INVITE_TEMPLATES: MessageTemplateConfig[] = [
   },
 ];
 
-const APPS_SCRIPT_SNIPPET = `function doPost(e) {
+const APPS_SCRIPT_SNIPPET = `// 1. Hàm tiếp nhận dữ liệu khi khách gửi form RSVP (POST từ web)
+function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
   try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getActiveSheet() || ss.getSheets()[0];
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(["Thời Gian Gửi", "Họ Và Tên", "Trạng Thái Tham Dự", "Số Lượng Khách", "Số Điện Thoại", "Lời Chúc / Lời Nhắn", "Nguồn Gửi"]);
       var headerRange = sheet.getRange(1, 1, 1, 7);
@@ -111,9 +113,11 @@ const APPS_SCRIPT_SNIPPET = `function doPost(e) {
       sheet.setFrozenRows(1);
     }
     var data = {};
-    if (e.postData && e.postData.contents) {
+    if (e && e.postData && e.postData.contents) {
       try { data = JSON.parse(e.postData.contents); } catch (err) { data = e.parameter || {}; }
-    } else { data = e.parameter || {}; }
+    } else if (e && e.parameter) {
+      data = e.parameter;
+    }
     var timestamp = data.timestamp || Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss");
     var name = data.name || "Khách mời";
     var status = data.status || "Chưa rõ";
@@ -130,7 +134,37 @@ const APPS_SCRIPT_SNIPPET = `function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ result: "success", row: lastRow })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ result: "error", error: error.toString() })).setMimeType(ContentService.MimeType.JSON);
-  } finally { lock.releaseLock(); }
+  } finally {
+    try { lock.releaseLock(); } catch(err) {}
+  }
+}
+
+// 2. Hàm kiểm tra trạng thái hoạt động khi mở link trực tiếp trên trình duyệt (GET)
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    result: "success",
+    message: "Hệ thống Google Apps Script RSVP Thiệp Cưới Đoàn Hiệp & Nguyễn Nam đang hoạt động tốt!",
+    time: Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss")
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// 3. Hàm bấm 'Chạy' (Run) trực tiếp trong Google Apps Script để test mà không bị lỗi undefined
+function testGhiDuLieuTrucTiep() {
+  var fakeEvent = {
+    postData: {
+      contents: JSON.stringify({
+        timestamp: Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss"),
+        name: "Khách Mời Chạy Thử",
+        status: "Chắc chắn tham dự",
+        count: 2,
+        phone: "0901234567",
+        message: "Chúc mừng hạnh phúc Đoàn Hiệp & Nguyễn Nam! Chạy thử thành công.",
+        source: "Nút Chạy Test Trong Apps Script"
+      })
+    }
+  };
+  var res = doPost(fakeEvent);
+  Logger.log(res.getContent());
 }`;
 
 export const InviteGeneratorPage: React.FC = () => {
