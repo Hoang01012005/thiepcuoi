@@ -242,6 +242,6 @@ export const weddingConfig: WeddingConfig = {
   rsvp: {
     googleSheetUrl: 'https://docs.google.com/spreadsheets/d/14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4/edit?usp=sharing',
     googleSheetId: '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4',
-    scriptUrl: '',
+    scriptUrl: 'https://script.google.com/macros/s/AKfycbxogeD8F2rTq0n6pUkNH5Qi41VwNtgu6qJkXLD41BZbv93wuFZ5iEpdrnmBmDVCNIlI/exec',
   },
 };
