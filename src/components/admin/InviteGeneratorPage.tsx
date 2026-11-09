@@ -95,43 +95,103 @@ const INVITE_TEMPLATES: MessageTemplateConfig[] = [
   },
 ];
 
-const APPS_SCRIPT_SNIPPET = `// 1. Hàm tiếp nhận dữ liệu khi khách gửi form RSVP (POST từ web)
+const APPS_SCRIPT_SNIPPET = `// HỆ THỐNG PHÂN CHIA 2 TRANG TÍNH: 1 TRANG XÁC NHẬN THAM GIA, 1 TRANG KHÁCH ĐÃ MỞ THIỆP
 function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet() || ss.getSheets()[0];
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Thời Gian Gửi", "Họ Và Tên", "Trạng Thái Tham Dự", "Số Lượng Khách", "Số Điện Thoại", "Lời Chúc / Lời Nhắn", "Nguồn Gửi"]);
-      var headerRange = sheet.getRange(1, 1, 1, 7);
-      headerRange.setBackground("#F3D5DA");
-      headerRange.setFontColor("#5A2D3A");
-      headerRange.setFontWeight("bold");
-      headerRange.setHorizontalAlignment("center");
-      headerRange.setFontSize(11);
-      sheet.setFrozenRows(1);
-    }
+    
     var data = {};
     if (e && e.postData && e.postData.contents) {
-      try { data = JSON.parse(e.postData.contents); } catch (err) { data = e.parameter || {}; }
+      try { 
+        data = JSON.parse(e.postData.contents); 
+      } catch (err) { 
+        data = e.parameter || {}; 
+      }
     } else if (e && e.parameter) {
       data = e.parameter;
     }
+    
     var timestamp = data.timestamp || Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss");
     var name = data.name || "Khách mời";
-    var status = data.status || "Chưa rõ";
-    var count = data.count !== undefined ? data.count : 1;
-    var phone = data.phone ? "'" + data.phone : "";
-    var message = data.message || "";
     var source = data.source || "Thiệp cưới online Đoàn Hiệp & Nguyễn Nam";
-    sheet.appendRow([timestamp, name, status, count, phone, message, source]);
-    var lastRow = sheet.getLastRow();
-    sheet.getRange(lastRow, 1).setHorizontalAlignment("center");
-    sheet.getRange(lastRow, 3).setHorizontalAlignment("center");
-    sheet.getRange(lastRow, 4).setHorizontalAlignment("center");
-    sheet.getRange(lastRow, 5).setHorizontalAlignment("center");
-    return ContentService.createTextOutput(JSON.stringify({ result: "success", row: lastRow })).setMimeType(ContentService.MimeType.JSON);
+    
+    // Kiểm tra loại: Khách nhấp mở thiệp (visit) hay Khách điền form (rsvp)
+    var isVisit = data.type === "visit" || 
+                  (data.status && data.status.indexOf("mở thiệp") !== -1) || 
+                  (source && source.indexOf("link riêng") !== -1);
+                  
+    if (isVisit) {
+      // ==========================================
+      // TRANG 2: KHÁCH ĐÃ NHẤP VÀO THIỆP
+      // ==========================================
+      var visitSheet = ss.getSheetByName("Khách Đã Mở Thiệp");
+      if (!visitSheet) {
+        visitSheet = ss.insertSheet("Khách Đã Mở Thiệp");
+      }
+      
+      if (visitSheet.getLastRow() === 0) {
+        visitSheet.appendRow(["Thời Gian Mở Link", "Họ Và Tên Khách Mời", "Trạng Thái", "Ghi Chú"]);
+        var hRange = visitSheet.getRange(1, 1, 1, 4);
+        hRange.setBackground("#EEDBC5");
+        hRange.setFontColor("#4A3B32");
+        hRange.setFontWeight("bold");
+        hRange.setHorizontalAlignment("center");
+        visitSheet.setFrozenRows(1);
+      }
+      
+      visitSheet.appendRow([
+        timestamp,
+        name,
+        "Đã mở thiệp xem",
+        data.message || "Khách đã nhấp vào link thiệp riêng"
+      ]);
+      
+      var lastRowVisit = visitSheet.getLastRow();
+      visitSheet.getRange(lastRowVisit, 1).setHorizontalAlignment("center");
+      visitSheet.getRange(lastRowVisit, 3).setHorizontalAlignment("center");
+      
+    } else {
+      // ==========================================
+      // TRANG 1: XÁC NHẬN THAM GIA (RSVP)
+      // ==========================================
+      var rsvpSheet = ss.getSheetByName("Xác Nhận Tham Gia");
+      if (!rsvpSheet) {
+        var firstSheet = ss.getSheets()[0];
+        if (firstSheet && firstSheet.getName() !== "Khách Đã Mở Thiệp") {
+          firstSheet.setName("Xác Nhận Tham Gia");
+          rsvpSheet = firstSheet;
+        } else {
+          rsvpSheet = ss.insertSheet("Xác Nhận Tham Gia", 0);
+        }
+      }
+      
+      if (rsvpSheet.getLastRow() === 0) {
+        rsvpSheet.appendRow(["Thời Gian Gửi", "Họ Và Tên", "Trạng Thái Tham Dự", "Số Lượng Khách", "Số Điện Thoại", "Lời Chúc / Lời Nhắn", "Nguồn Gửi"]);
+        var headerRange = rsvpSheet.getRange(1, 1, 1, 7);
+        headerRange.setBackground("#F3D5DA");
+        headerRange.setFontColor("#5A2D3A");
+        headerRange.setFontWeight("bold");
+        headerRange.setHorizontalAlignment("center");
+        rsvpSheet.setFrozenRows(1);
+      }
+      
+      var status = data.status || "Chưa rõ";
+      var count = data.count !== undefined ? data.count : 1;
+      var phone = data.phone ? "'" + data.phone : "";
+      var message = data.message || "";
+      
+      rsvpSheet.appendRow([timestamp, name, status, count, phone, message, source]);
+      
+      var lastRowRsvp = rsvpSheet.getLastRow();
+      rsvpSheet.getRange(lastRowRsvp, 1).setHorizontalAlignment("center");
+      rsvpSheet.getRange(lastRowRsvp, 3).setHorizontalAlignment("center");
+      rsvpSheet.getRange(lastRowRsvp, 4).setHorizontalAlignment("center");
+      rsvpSheet.getRange(lastRowRsvp, 5).setHorizontalAlignment("center");
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({ result: "success" })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ result: "error", error: error.toString() })).setMimeType(ContentService.MimeType.JSON);
   } finally {
@@ -139,32 +199,28 @@ function doPost(e) {
   }
 }
 
-// 2. Hàm kiểm tra trạng thái hoạt động khi mở link trực tiếp trên trình duyệt (GET)
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     result: "success",
-    message: "Hệ thống Google Apps Script RSVP Thiệp Cưới Đoàn Hiệp & Nguyễn Nam đang hoạt động tốt!",
-    time: Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss")
+    message: "Google Apps Script 2 trang (Xác Nhận & Đã Mở Thiệp) đang hoạt động tốt!"
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
-// 3. Hàm bấm 'Chạy' (Run) trực tiếp trong Google Apps Script để test mà không bị lỗi undefined
 function testGhiDuLieuTrucTiep() {
   var fakeEvent = {
     postData: {
       contents: JSON.stringify({
-        timestamp: Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss"),
-        name: "Khách Mời Chạy Thử",
+        type: "rsvp",
+        name: "Khách Mời Test 2 Trang",
         status: "Chắc chắn tham dự",
         count: 2,
         phone: "0901234567",
-        message: "Chúc mừng hạnh phúc Đoàn Hiệp & Nguyễn Nam! Chạy thử thành công.",
-        source: "Nút Chạy Test Trong Apps Script"
+        message: "Test phân chia 2 trang thành công!",
+        source: "Chạy test trong Apps Script"
       })
     }
   };
-  var res = doPost(fakeEvent);
-  Logger.log(res.getContent());
+  doPost(fakeEvent);
 }`;
 
 export const InviteGeneratorPage: React.FC = () => {

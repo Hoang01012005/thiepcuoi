@@ -61,12 +61,13 @@ export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => 
         const name = String(c[1]?.v || '').trim();
         const statusText = String(c[2]?.v || '').toLowerCase();
 
-        // Skip header rows if present in Google Sheet table
+        // Skip header rows or visit tracking rows in Google Sheet table
         if (
           !name ||
           name.toLowerCase().includes('họ và tên') ||
           name.toLowerCase().includes('họ tên') ||
           name.toLowerCase() === 'name' ||
+          statusText.includes('mở thiệp') ||
           (name.toLowerCase() === 'khách mời' && statusText.includes('trạng thái'))
         ) {
           return null;
@@ -225,6 +226,7 @@ export const submitRsvp = async (
   if (scriptUrl) {
     try {
       const payload = {
+        type: 'rsvp',
         timestamp,
         name: data.name,
         status: data.status === 'yes' ? 'Chắc chắn tham dự' : 'Rất tiếc không thể đến',
@@ -309,6 +311,7 @@ export const autoRecordGuestVisit = async (guestName: string): Promise<void> => 
   if (scriptUrl) {
     try {
       const payload = {
+        type: 'visit',
         timestamp,
         name: cleanName,
         status: 'Đã mở thiệp / Xác nhận xem thiệp',
