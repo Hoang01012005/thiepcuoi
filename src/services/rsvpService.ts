@@ -15,9 +15,21 @@ const STORAGE_KEY = 'wedding_rsvps';
 const SCRIPT_URL_KEY = 'wedding_rsvp_script_url';
 const SYNC_CHANNEL_NAME = 'wedding_rsvps_sync_bus';
 
+/**
+ * Lấy URL Google Apps Script Web App đang hoạt động.
+ * Tự động kiểm tra và ưu tiên URL hợp lệ (chứa script.google.com và /exec).
+ */
 export const getSavedRsvpScriptUrl = (): string => {
   if (typeof window === 'undefined') return '';
-  return localStorage.getItem(SCRIPT_URL_KEY) || weddingConfig.rsvp?.scriptUrl || '';
+  const saved = localStorage.getItem(SCRIPT_URL_KEY);
+  if (
+    saved &&
+    saved.trim().startsWith('https://script.google.com/macros/s/') &&
+    saved.includes('/exec')
+  ) {
+    return saved.trim();
+  }
+  return weddingConfig.rsvp?.scriptUrl || '';
 };
 
 export const setSavedRsvpScriptUrl = (url: string): void => {
@@ -37,16 +49,23 @@ export const getSavedRsvps = (): RsvpSubmission[] => {
 };
 
 /**
- * Fetch live RSVP records directly from the shared public Google Sheet
- * https://docs.google.com/spreadsheets/d/14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4
+ * Fetch live RSVP records directly from the shared Google Sheet.
+ * Sử dụng cache-busting timestamp và no-store để dữ liệu luôn phản ánh mới nhất ngay lập tức.
  */
 export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => {
   const sheetId = weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4';
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+  const timestamp = Date.now();
+  // Ưu tiên đọc từ trang tính 'Xác Nhận Tham Gia'
+  const primaryUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent('Xác Nhận Tham Gia')}&_t=${timestamp}`;
+  const fallbackUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&_t=${timestamp}`;
 
   try {
-    const res = await fetch(url);
+    let res = await fetch(primaryUrl, { cache: 'no-store' });
+    if (!res.ok) {
+      res = await fetch(fallbackUrl, { cache: 'no-store' });
+    }
     if (!res.ok) return [];
+
     const text = await res.text();
     const cleanJson = text
       .replace(/^\/\*O_o\*\/\s*google\.visualization\.Query\.setResponse\(/, '')
@@ -60,14 +79,18 @@ export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => 
         const timestamp = String(c[0]?.f || c[0]?.v || '').trim();
         const name = String(c[1]?.v || '').trim();
         const statusText = String(c[2]?.v || '').toLowerCase();
+        const count = Math.max(1, Number(c[3]?.v) || 1);
+        const phone = String(c[4]?.v || '').replace(/^'/, '').trim();
+        const message = String(c[5]?.v || '').trim();
 
-        // Skip header rows or visit tracking rows in Google Sheet table
+        // Bỏ qua dòng tiêu đề và dòng ghi nhận mở link (visit tracking)
         if (
           !name ||
           name.toLowerCase().includes('họ và tên') ||
           name.toLowerCase().includes('họ tên') ||
           name.toLowerCase() === 'name' ||
           statusText.includes('mở thiệp') ||
+          statusText.includes('xem thiệp') ||
           (name.toLowerCase() === 'khách mời' && statusText.includes('trạng thái'))
         ) {
           return null;
@@ -79,9 +102,6 @@ export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => 
           statusText.includes('tiếc') ||
           statusText.includes('bận');
         const status: 'yes' | 'no' = isNotAttending ? 'no' : 'yes';
-        const count = Math.max(1, Number(c[3]?.v) || 1);
-        const phone = String(c[4]?.v || '').replace(/^'/, '').trim();
-        const message = String(c[5]?.v || '').trim();
 
         return {
           id: `gs-${idx}-${encodeURIComponent(name)}`,
@@ -102,8 +122,7 @@ export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => 
 };
 
 /**
- * Unified getter that merges Google Sheet data with local storage submissions.
- * This guarantees that every device, tab, and invitation link views the exact same master list.
+ * Đồng bộ danh sách phản hồi từ Google Sheets với danh sách local storage.
  */
 export const getAllUnifiedRsvps = async (): Promise<RsvpSubmission[]> => {
   const localList = getSavedRsvps();
@@ -113,16 +132,17 @@ export const getAllUnifiedRsvps = async (): Promise<RsvpSubmission[]> => {
     return localList;
   }
 
-  // Merge remote and local (remote takes precedence, add any local not yet in remote)
+  // Remote list từ Google Sheet đóng vai trò là nguồn dữ liệu chuẩn
   const map = new Map<string, RsvpSubmission>();
 
   for (const item of remoteList) {
-    const key = `${item.name.toLowerCase().trim()}_${(item.phone || '').trim()}_${item.submittedAt || ''}`;
+    const key = `${item.name.toLowerCase().trim()}_${(item.phone || '').trim()}`;
     map.set(key, item);
   }
 
+  // Bổ sung các bản ghi local chưa kịp xuất hiện trong remote
   for (const item of localList) {
-    const key = `${item.name.toLowerCase().trim()}_${(item.phone || '').trim()}_${item.submittedAt || ''}`;
+    const key = `${item.name.toLowerCase().trim()}_${(item.phone || '').trim()}`;
     if (!map.has(key)) {
       map.set(key, item);
     }
@@ -192,6 +212,14 @@ export const deleteSavedRsvp = (id: string): RsvpSubmission[] => {
   return updated;
 };
 
+export const clearAllRsvps = (): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+  } catch {}
+  broadcastRsvpUpdate();
+};
+
 export const submitRsvp = async (
   data: Omit<RsvpSubmission, 'id' | 'submittedAt' | 'syncedToGoogleSheet'>
 ): Promise<{ success: boolean; synced: boolean; error?: string }> => {
@@ -207,7 +235,7 @@ export const submitRsvp = async (
     syncedToGoogleSheet: false,
   };
 
-  // 1. Save to local storage
+  // 1. Lưu tạm vào local storage
   const existing = getSavedRsvps();
   const updatedList = [submission, ...existing];
   try {
@@ -216,12 +244,13 @@ export const submitRsvp = async (
     console.warn('Could not save RSVP to localStorage:', err);
   }
 
-  // 2. Broadcast immediately across all open tabs/windows
+  // 2. Broadcast ngay lập tức cho các tab khác
   broadcastRsvpUpdate(submission);
 
-  // 3. Sync to Google Sheet via Google Apps Script Web App
+  // 3. Đồng bộ vào Google Sheet qua Google Apps Script Web App
   const scriptUrl = getSavedRsvpScriptUrl();
   let synced = false;
+  let syncError: string | undefined;
 
   if (scriptUrl) {
     try {
@@ -237,8 +266,8 @@ export const submitRsvp = async (
         sheetId: weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4',
       };
 
-      // Use Content-Type: text/plain;charset=utf-8 so browsers allow sending under mode: 'no-cors'
-      // without triggering preflight CORS errors while Google Apps Script receives full JSON in e.postData.contents
+      // Dùng Content-Type: text/plain;charset=utf-8 để gửi an toàn qua mode no-cors
+      // Google Apps Script nhận đầy đủ chuỗi JSON trong e.postData.contents
       await fetch(scriptUrl, {
         method: 'POST',
         mode: 'no-cors',
@@ -251,12 +280,15 @@ export const submitRsvp = async (
       synced = true;
       submission.syncedToGoogleSheet = true;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
-    } catch (err) {
+    } catch (err: any) {
+      syncError = err?.message || 'Lỗi khi gửi yêu cầu tới Google Apps Script';
       console.warn('Error syncing RSVP to Google Sheet:', err);
     }
+  } else {
+    syncError = 'Chưa cấu hình URL Google Apps Script Web App';
   }
 
-  return { success: true, synced };
+  return { success: true, synced, error: syncError };
 };
 
 /**
@@ -279,34 +311,6 @@ export const autoRecordGuestVisit = async (guestName: string): Promise<void> => 
     hour12: false,
   });
 
-  const submission: RsvpSubmission = {
-    id: `visit-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-    name: cleanName,
-    status: 'yes',
-    count: 1,
-    phone: '',
-    message: 'Khách đã nhấp vào link mở xem thiệp cưới',
-    submittedAt: timestamp,
-    syncedToGoogleSheet: false,
-  };
-
-  // 1. Lưu vào danh sách local của hệ thống nếu chưa có phản hồi nào của khách này
-  const existing = getSavedRsvps();
-  const alreadySubmitted = existing.some(
-    (r) => r.name.toLowerCase() === cleanName.toLowerCase()
-  );
-
-  if (!alreadySubmitted) {
-    const updated = [submission, ...existing];
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch (err) {
-      console.warn('Could not save auto visit to localStorage:', err);
-    }
-    broadcastRsvpUpdate(submission);
-  }
-
-  // 2. Tự động bắn vào Google Sheet qua Google Apps Script Web App
   const scriptUrl = getSavedRsvpScriptUrl();
   if (scriptUrl) {
     try {
@@ -330,8 +334,6 @@ export const autoRecordGuestVisit = async (guestName: string): Promise<void> => 
         },
         body: JSON.stringify(payload),
       });
-
-      submission.syncedToGoogleSheet = true;
     } catch (err) {
       console.warn('Error auto-syncing guest visit to Google Sheet:', err);
     }

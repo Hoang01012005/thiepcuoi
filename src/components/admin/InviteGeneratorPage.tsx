@@ -39,6 +39,7 @@ import {
   getAllUnifiedRsvps,
   subscribeToRsvpUpdates,
   deleteSavedRsvp,
+  clearAllRsvps,
   type RsvpSubmission,
 } from '../../services/rsvpService';
 
@@ -296,15 +297,16 @@ export const InviteGeneratorPage: React.FC = () => {
   const [guestList, setGuestList] = useState<ManagedGuest[]>(() => {
     try {
       const saved = localStorage.getItem('wedding_managed_guests');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed: ManagedGuest[] = JSON.parse(saved);
+        return parsed.filter(
+          (g) => g.createdAt !== 'Mẫu gợi ý' && !g.id.startsWith('g-sample') && !['g-1', 'g-2', 'g-3'].includes(g.id)
+        );
+      }
     } catch {
       // fallback
     }
-    return [
-      { id: 'g-1', name: 'Gia Đình Bác Hùng', createdAt: 'Mẫu gợi ý' },
-      { id: 'g-2', name: 'Anh Hoàng', createdAt: 'Mẫu gợi ý' },
-      { id: 'g-3', name: 'Bạn Thảo My', createdAt: 'Mẫu gợi ý' },
-    ];
+    return [];
   });
 
   useEffect(() => {
@@ -531,6 +533,14 @@ export const InviteGeneratorPage: React.FC = () => {
     if (!id) return;
     const updated = deleteSavedRsvp(id);
     setRsvps(updated);
+  };
+
+  const handleClearAllRsvps = () => {
+    if (rsvps.length === 0) return;
+    if (window.confirm('Bạn có chắc chắn muốn xóa toàn bộ danh sách phản hồi RSVP hiện tại không?')) {
+      clearAllRsvps();
+      setRsvps([]);
+    }
   };
 
   // RSVP statistics
@@ -1812,6 +1822,30 @@ export const InviteGeneratorPage: React.FC = () => {
                   >
                     <Download size={14} />
                     <span>Tải Excel (.csv)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleClearAllRsvps}
+                    disabled={rsvps.length === 0}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      padding: '0.45rem 1rem',
+                      borderRadius: 'var(--radius-full)',
+                      background: '#FFF1F0',
+                      border: '1px solid rgba(217, 83, 79, 0.4)',
+                      color: '#D9534F',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      cursor: rsvps.length === 0 ? 'not-allowed' : 'pointer',
+                      opacity: rsvps.length === 0 ? 0.6 : 1,
+                    }}
+                    title="Xóa toàn bộ dữ liệu phản hồi xác nhận tham dự"
+                  >
+                    <Trash2 size={14} />
+                    <span>Xóa toàn bộ</span>
                   </button>
                 </div>
               </div>

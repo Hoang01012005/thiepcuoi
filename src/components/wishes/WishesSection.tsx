@@ -16,27 +16,6 @@ interface WishItem {
   createdAt: string;
 }
 
-const INITIAL_WISHES: WishItem[] = [
-  {
-    id: 'w-1',
-    name: 'Hoàng Long & Thu Thảo',
-    message: 'Chúc mừng hạnh phúc đôi bạn trẻ! Chúc hai bạn trăm năm hòa hợp, luôn nắm chặt tay nhau vượt qua mọi thử thách của cuộc sống.',
-    createdAt: 'Hôm nay',
-  },
-  {
-    id: 'w-2',
-    name: 'Minh Anh',
-    message: 'Thật xúc động khi thấy hai bạn chính thức về chung một nhà! Chúc Nam và Hiệp một đời an yên, ngọt ngào và hạnh phúc viên mãn.',
-    createdAt: 'Hôm qua',
-  },
-  {
-    id: 'w-3',
-    name: 'Gia đình Bác Hùng',
-    message: 'Chúc hai cháu trăm năm hạnh phúc, con đàn cháu đống, gia đình êm ấm thuận hòa!',
-    createdAt: '2 ngày trước',
-  },
-];
-
 export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
   const t = translations[lang];
   const sendBtnRef = useMagnetic<HTMLButtonElement>(0.2);
@@ -45,12 +24,13 @@ export const WishesSection: React.FC<WishesSectionProps> = ({ lang }) => {
     const saved = localStorage.getItem('wedding_wishes');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed: WishItem[] = JSON.parse(saved);
+        return parsed.filter((w) => !['w-1', 'w-2', 'w-3'].includes(w.id));
       } catch {
-        return INITIAL_WISHES;
+        return [];
       }
     }
-    return INITIAL_WISHES;
+    return [];
   });
 
   const [name, setName] = useState('');

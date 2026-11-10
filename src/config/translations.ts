@@ -118,7 +118,7 @@ export const translations = {
     wishes: {
       badge: 'Sổ Lưu Bút Chúc Phúc',
       title: 'Gửi Lời Chúc Mừng',
-      subtitle: 'Để lại những dòng tâm tình ấm áp cho khởi đầu mới của Hoàng Nam & Ngọc Hiệp',
+      subtitle: 'Để lại những dòng tâm tình ấm áp cho khởi đầu mới của Đoàn Hiệp & Nguyễn Nam',
       nameLabel: 'Tên của bạn',
       namePlaceholder: 'Tên của bạn...',
       messageLabel: 'Lời chúc phúc',
@@ -146,8 +146,8 @@ export const translations = {
       thankYouBadge: 'Lời Cảm Ơn Chân Thành',
       title: 'Cảm Ơn Bạn Đã Là Một Phần Kỷ Niệm',
       message: 'Sự hiện diện, những lời chúc phúc và tình cảm yêu thương của quý vị chính là món quà quý giá nhất trong ngày trọng đại của chúng tôi.',
-      signature: 'Hoàng Nam & Ngọc Hiệp',
-      copyright: '© 2026 Hoàng Nam & Ngọc Hiệp. Trân trọng kính mời.',
+      signature: 'Đoàn Hiệp & Nguyễn Nam',
+      copyright: '© 2026 Đoàn Hiệp & Nguyễn Nam. Trân trọng kính mời.',
     },
   },
   en: {
@@ -292,8 +292,8 @@ export const translations = {
       thankYouBadge: 'With Sincere Gratitude',
       title: 'Thank You For Being Part Of Our Journey',
       message: 'Your loving presence, warm wishes, and generous support are the greatest gifts we could ever ask for on our special day.',
-      signature: 'Hoang Nam & Ngoc Hiep',
-      copyright: '© 2026 Hoang Nam & Ngoc Hiep. Cordially invited.',
+      signature: 'Doan Hiep & Nguyen Nam',
+      copyright: '© 2026 Doan Hiep & Nguyen Nam. Cordially invited.',
     },
   },
 } as const;
