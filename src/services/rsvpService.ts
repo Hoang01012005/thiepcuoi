@@ -1,4 +1,5 @@
 import { weddingConfig } from '../config/weddingConfig';
+import { fetchSheetGviz, getGvizCellText, parseGvizResponseText, type GvizTable } from './gvizUtils';
 
 export interface RsvpSubmission {
   id?: string;
@@ -21,20 +22,28 @@ const SYNC_CHANNEL_NAME = 'wedding_rsvps_sync_bus';
  */
 export const getSavedRsvpScriptUrl = (): string => {
   if (typeof window === 'undefined') return '';
-  const saved = localStorage.getItem(SCRIPT_URL_KEY);
-  if (
-    saved &&
-    saved.trim().startsWith('https://script.google.com/macros/s/') &&
-    saved.includes('/exec')
-  ) {
-    return saved.trim();
+  try {
+    const saved = localStorage.getItem(SCRIPT_URL_KEY);
+    if (
+      saved &&
+      saved.trim().startsWith('https://script.google.com/macros/s/') &&
+      saved.includes('/exec')
+    ) {
+      return saved.trim();
+    }
+  } catch {
+    // Ignore storage access errors in restricted browsing contexts
   }
   return weddingConfig.rsvp?.scriptUrl || '';
 };
 
 export const setSavedRsvpScriptUrl = (url: string): void => {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(SCRIPT_URL_KEY, url.trim());
+  try {
+    localStorage.setItem(SCRIPT_URL_KEY, url.trim());
+  } catch {
+    // Ignore storage access errors in restricted browsing contexts
+  }
 };
 
 export const getSavedRsvps = (): RsvpSubmission[] => {
@@ -48,73 +57,97 @@ export const getSavedRsvps = (): RsvpSubmission[] => {
   }
 };
 
+const isNonRsvpSheetTable = (table: GvizTable): boolean => {
+  const cols = table.cols || [];
+  const colLabels = cols.map((col) => (col.label || '').toLowerCase()).join(' ');
+  if (
+    colLabels.includes('lời chúc phúc') ||
+    colLabels.includes('thời gian mở link') ||
+    colLabels.includes('ghi chú')
+  ) {
+    return true;
+  }
+  if (cols.length > 0 && cols.length <= 5 && !colLabels.includes('trạng thái')) {
+    return true;
+  }
+  return false;
+};
+
+export const parseRsvpGvizTable = (table: GvizTable): RsvpSubmission[] => {
+  if (isNonRsvpSheetTable(table)) {
+    return [];
+  }
+
+  const rows = table.rows || [];
+  return rows
+    .map((r, idx): RsvpSubmission | null => {
+      const c = r.c || [];
+      const timestamp = getGvizCellText(c[0]);
+      const name = getGvizCellText(c[1]);
+      const statusText = getGvizCellText(c[2]).toLowerCase();
+      const count = Math.max(1, Number(c[3]?.v ?? c[3]?.f) || 1);
+      const phone = getGvizCellText(c[4]).replace(/^'/, '').trim();
+      const message = getGvizCellText(c[5]);
+      const sourceText = getGvizCellText(c[6]).toLowerCase();
+
+      // Bỏ qua dòng tiêu đề, dòng ghi nhận mở link (visit tracking) và dòng sổ lưu bút chúc phúc
+      if (
+        !name ||
+        name.toLowerCase().includes('họ và tên') ||
+        name.toLowerCase().includes('họ tên') ||
+        name.toLowerCase() === 'name' ||
+        statusText.includes('mở thiệp') ||
+        statusText.includes('xem thiệp') ||
+        statusText.includes('lưu bút') ||
+        statusText.includes('lời chúc') ||
+        sourceText.includes('sổ lưu bút') ||
+        (name.toLowerCase() === 'khách mời' && statusText.includes('trạng thái'))
+      ) {
+        return null;
+      }
+
+      const isNotAttending =
+        statusText.includes('không') ||
+        statusText.includes('no') ||
+        statusText.includes('tiếc') ||
+        statusText.includes('bận');
+      const status: 'yes' | 'no' = isNotAttending ? 'no' : 'yes';
+
+      return {
+        id: `gs-${idx}-${encodeURIComponent(name)}`,
+        name,
+        status,
+        count,
+        phone,
+        message,
+        submittedAt: timestamp || 'Vừa xong',
+        syncedToGoogleSheet: true,
+      };
+    })
+    .filter((item: RsvpSubmission | null): item is RsvpSubmission => item !== null);
+};
+
+export const parseRsvpGvizText = (text: string): RsvpSubmission[] => {
+  const parsed = parseGvizResponseText(text);
+  if (!parsed?.table) return [];
+  return parseRsvpGvizTable(parsed.table);
+};
+
 /**
  * Fetch live RSVP records directly from the shared Google Sheet.
  * Sử dụng cache-busting timestamp và no-store để dữ liệu luôn phản ánh mới nhất ngay lập tức.
  */
 export const fetchRsvpsFromGoogleSheet = async (): Promise<RsvpSubmission[]> => {
   const sheetId = weddingConfig.rsvp?.googleSheetId || '14XYkzVS8oaFKs019xVBBOdNbgMWOgMtOOLYS6S7qPV4';
-  const timestamp = Date.now();
-  // Ưu tiên đọc từ trang tính 'Xác Nhận Tham Gia'
-  const primaryUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent('Xác Nhận Tham Gia')}&_t=${timestamp}`;
-  const fallbackUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&_t=${timestamp}`;
 
   try {
-    let res = await fetch(primaryUrl, { cache: 'no-store' });
-    if (!res.ok) {
-      res = await fetch(fallbackUrl, { cache: 'no-store' });
+    let table = await fetchSheetGviz(sheetId, 'Xác Nhận Tham Gia');
+    if (!table) {
+      table = await fetchSheetGviz(sheetId);
     }
-    if (!res.ok) return [];
+    if (!table) return [];
 
-    const text = await res.text();
-    const cleanJson = text
-      .replace(/^\/\*O_o\*\/\s*google\.visualization\.Query\.setResponse\(/, '')
-      .replace(/\);?\s*$/, '');
-    const data = JSON.parse(cleanJson);
-    const rows = data.table?.rows || [];
-
-    return rows
-      .map((r: { c?: Array<{ v?: string | number; f?: string } | null> }, idx: number) => {
-        const c = r.c || [];
-        const timestamp = String(c[0]?.f || c[0]?.v || '').trim();
-        const name = String(c[1]?.v || '').trim();
-        const statusText = String(c[2]?.v || '').toLowerCase();
-        const count = Math.max(1, Number(c[3]?.v) || 1);
-        const phone = String(c[4]?.v || '').replace(/^'/, '').trim();
-        const message = String(c[5]?.v || '').trim();
-
-        // Bỏ qua dòng tiêu đề và dòng ghi nhận mở link (visit tracking)
-        if (
-          !name ||
-          name.toLowerCase().includes('họ và tên') ||
-          name.toLowerCase().includes('họ tên') ||
-          name.toLowerCase() === 'name' ||
-          statusText.includes('mở thiệp') ||
-          statusText.includes('xem thiệp') ||
-          (name.toLowerCase() === 'khách mời' && statusText.includes('trạng thái'))
-        ) {
-          return null;
-        }
-
-        const isNotAttending =
-          statusText.includes('không') ||
-          statusText.includes('no') ||
-          statusText.includes('tiếc') ||
-          statusText.includes('bận');
-        const status: 'yes' | 'no' = isNotAttending ? 'no' : 'yes';
-
-        return {
-          id: `gs-${idx}-${encodeURIComponent(name)}`,
-          name,
-          status,
-          count,
-          phone,
-          message,
-          submittedAt: timestamp || 'Vừa xong',
-          syncedToGoogleSheet: true,
-        };
-      })
-      .filter((item: RsvpSubmission | null): item is RsvpSubmission => item !== null);
+    return parseRsvpGvizTable(table);
   } catch (err) {
     console.warn('Could not fetch RSVP list from Google Sheet:', err);
     return [];

@@ -96,10 +96,18 @@ const INVITE_TEMPLATES: MessageTemplateConfig[] = [
   },
 ];
 
-const APPS_SCRIPT_SNIPPET = `// HỆ THỐNG PHÂN CHIA 2 TRANG TÍNH: 1 TRANG XÁC NHẬN THAM GIA, 1 TRANG KHÁCH ĐÃ MỞ THIỆP
+const APPS_SCRIPT_SNIPPET = `// HỆ THỐNG PHÂN CHIA 3 TRANG TÍNH: XÁC NHẬN THAM GIA, KHÁCH ĐÃ MỞ THIỆP & SỔ LƯU BÚT
+function safeSheetText(val) {
+  var str = val === null || val === undefined ? "" : String(val);
+  return /^[=+\\-@\\t\\r]/.test(str) ? "'" + str : str;
+}
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  lock.tryLock(10000);
+  var hasLock = lock.tryLock(10000);
+  if (!hasLock) {
+    return ContentService.createTextOutput(JSON.stringify({ result: "error", error: "Server busy" })).setMimeType(ContentService.MimeType.JSON);
+  }
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     
@@ -115,13 +123,18 @@ function doPost(e) {
     }
     
     var timestamp = data.timestamp || Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "dd/MM/yyyy HH:mm:ss");
-    var name = data.name || "Khách mời";
-    var source = data.source || "Thiệp cưới online Đoàn Hiệp & Nguyễn Nam";
+    var name = safeSheetText(data.name || "Khách mời");
+    var source = safeSheetText(data.source || "Thiệp cưới online Đoàn Hiệp & Nguyễn Nam");
+    var statusRaw = String(data.status || "");
+    var sourceRaw = String(data.source || "");
     
-    // Kiểm tra loại: Khách nhấp mở thiệp (visit) hay Khách điền form (rsvp)
+    // Phân loại: Khách nhấp mở thiệp (visit), Sổ lưu bút (wish) hay Xác nhận tham gia (rsvp)
     var isVisit = data.type === "visit" || 
-                  (data.status && data.status.indexOf("mở thiệp") !== -1) || 
-                  (source && source.indexOf("link riêng") !== -1);
+                  statusRaw.indexOf("mở thiệp") !== -1 || 
+                  sourceRaw.indexOf("link riêng") !== -1;
+    var isWish = data.type === "wish" ||
+                 statusRaw.toLowerCase().indexOf("lưu bút") !== -1 ||
+                 sourceRaw.toLowerCase().indexOf("sổ lưu bút") !== -1;
                   
     if (isVisit) {
       // ==========================================
@@ -146,13 +159,42 @@ function doPost(e) {
         timestamp,
         name,
         "Đã mở thiệp xem",
-        data.message || "Khách đã nhấp vào link thiệp riêng"
+        safeSheetText(data.message || "Khách đã nhấp vào link thiệp riêng")
       ]);
       
       var lastRowVisit = visitSheet.getLastRow();
       visitSheet.getRange(lastRowVisit, 1).setHorizontalAlignment("center");
       visitSheet.getRange(lastRowVisit, 3).setHorizontalAlignment("center");
       
+    } else if (isWish) {
+      // ==========================================
+      // TRANG 3: SỔ LƯU BÚT CHÚC PHÚC
+      // ==========================================
+      var wishSheet = ss.getSheetByName("Sổ Lưu Bút");
+      if (!wishSheet) {
+        wishSheet = ss.insertSheet("Sổ Lưu Bút");
+      }
+
+      if (wishSheet.getLastRow() === 0) {
+        wishSheet.appendRow(["Thời Gian Gửi", "Họ Và Tên", "Lời Chúc Phúc", "Nguồn Gửi"]);
+        var wRange = wishSheet.getRange(1, 1, 1, 4);
+        wRange.setBackground("#F6E7D8");
+        wRange.setFontColor("#4A3B32");
+        wRange.setFontWeight("bold");
+        wRange.setHorizontalAlignment("center");
+        wishSheet.setFrozenRows(1);
+      }
+
+      wishSheet.appendRow([
+        timestamp,
+        name,
+        safeSheetText(data.message || ""),
+        source
+      ]);
+
+      var lastRowWish = wishSheet.getLastRow();
+      wishSheet.getRange(lastRowWish, 1).setHorizontalAlignment("center");
+
     } else {
       // ==========================================
       // TRANG 1: XÁC NHẬN THAM GIA (RSVP)
@@ -160,7 +202,7 @@ function doPost(e) {
       var rsvpSheet = ss.getSheetByName("Xác Nhận Tham Gia");
       if (!rsvpSheet) {
         var firstSheet = ss.getSheets()[0];
-        if (firstSheet && firstSheet.getName() !== "Khách Đã Mở Thiệp") {
+        if (firstSheet && firstSheet.getName() !== "Khách Đã Mở Thiệp" && firstSheet.getName() !== "Sổ Lưu Bút") {
           firstSheet.setName("Xác Nhận Tham Gia");
           rsvpSheet = firstSheet;
         } else {
@@ -178,10 +220,10 @@ function doPost(e) {
         rsvpSheet.setFrozenRows(1);
       }
       
-      var status = data.status || "Chưa rõ";
+      var status = safeSheetText(statusRaw || "Chưa rõ");
       var count = data.count !== undefined ? data.count : 1;
       var phone = data.phone ? "'" + data.phone : "";
-      var message = data.message || "";
+      var message = safeSheetText(data.message || "");
       
       rsvpSheet.appendRow([timestamp, name, status, count, phone, message, source]);
       
@@ -196,14 +238,16 @@ function doPost(e) {
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ result: "error", error: error.toString() })).setMimeType(ContentService.MimeType.JSON);
   } finally {
-    try { lock.releaseLock(); } catch(err) {}
+    if (hasLock) {
+      try { lock.releaseLock(); } catch(err) {}
+    }
   }
 }
 
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     result: "success",
-    message: "Google Apps Script 2 trang (Xác Nhận & Đã Mở Thiệp) đang hoạt động tốt!"
+    message: "Google Apps Script 3 trang (Xác Nhận, Đã Mở Thiệp & Sổ Lưu Bút) đang hoạt động tốt!"
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -212,11 +256,11 @@ function testGhiDuLieuTrucTiep() {
     postData: {
       contents: JSON.stringify({
         type: "rsvp",
-        name: "Khách Mời Test 2 Trang",
+        name: "Khách Mời Test 3 Trang",
         status: "Chắc chắn tham dự",
         count: 2,
         phone: "0901234567",
-        message: "Test phân chia 2 trang thành công!",
+        message: "Test phân chia trang thành công!",
         source: "Chạy test trong Apps Script"
       })
     }
