@@ -161,7 +161,7 @@ export const translations = {
   },
   en: {
     meta: {
-      siteTitle: 'Hoang Nam & Ngoc Hiep — Wedding Invitation',
+      siteTitle: 'Doan Hiep & Nguyen Nam — Wedding Invitation',
       siteSubtitle: 'Warmly Welcome',
     },
     nav: {
@@ -273,7 +273,7 @@ export const translations = {
     wishes: {
       badge: 'Guest Book',
       title: 'Wishes & Blessings',
-      subtitle: 'Leave your warm thoughts and heartfelt blessings for Hoang Nam & Ngoc Hiep',
+      subtitle: 'Leave your warm thoughts and heartfelt blessings for Doan Hiep & Nguyen Nam',
       nameLabel: 'Your Name',
       namePlaceholder: 'Your name...',
       messageLabel: 'Your Blessing',

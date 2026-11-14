@@ -313,6 +313,12 @@ export const submitRsvp = async (
       synced = true;
       submission.syncedToGoogleSheet = true;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+
+      if (typeof window !== 'undefined' && data.message && data.message.trim()) {
+        try {
+          window.dispatchEvent(new CustomEvent('wedding_wishes_updated'));
+        } catch {}
+      }
     } catch (err: any) {
       syncError = err?.message || 'Lỗi khi gửi yêu cầu tới Google Apps Script';
       console.warn('Error syncing RSVP to Google Sheet:', err);

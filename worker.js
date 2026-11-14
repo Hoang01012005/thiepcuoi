@@ -2,7 +2,7 @@
  * Cloudflare Worker for Wedding Invitation:
  * 1. Dynamic Open Graph & Social Preview metadata (Zalo, Messenger, Telegram, Facebook)
  *    When a personalized link is pasted (e.g. ?to=Gia đình nhà bác Soái), it dynamically
- *    renders "Thiệp Mời: [Tên khách] — Hoàng Nam & Ngọc Hiệp" in the social snippet card.
+ *    renders "Thiệp Mời: [Tên khách] — Đoàn Hiệp & Nguyễn Nam" in the social snippet card.
  * 2. Enterprise-Grade Defensive Security Headers (CSP, HSTS, X-Frame-Options, Permissions-Policy).
  */
 

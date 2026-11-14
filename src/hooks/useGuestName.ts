@@ -90,9 +90,9 @@ export function useGuestName(): string | null {
   useEffect(() => {
     if (typeof document !== 'undefined') {
       if (guestName) {
-        document.title = `Thiệp Mời: ${guestName} — Hoàng Nam & Ngọc Hiệp`;
+        document.title = `Thiệp Mời: ${guestName} — Đoàn Hiệp & Nguyễn Nam`;
       } else {
-        document.title = 'Hoàng Nam & Ngọc Hiệp — Thiệp Cưới | Wedding Invitation';
+        document.title = 'Đoàn Hiệp & Nguyễn Nam — Thiệp Cưới | Wedding Invitation';
       }
     }
   }, [guestName]);
