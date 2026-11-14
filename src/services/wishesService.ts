@@ -83,6 +83,35 @@ export const isRsvpTrackingTable = (table: GvizTable): boolean => {
   return firstRowText.includes('trạng thái') || firstRowText.includes('số lượng');
 };
 
+export const isTestSampleWish = (name: string, message: string): boolean => {
+  const lowerName = name.toLowerCase().trim();
+  const lowerMsg = message.toLowerCase().trim();
+  if (
+    lowerName.includes('(test') ||
+    lowerName.includes('test kết nối') ||
+    lowerName.includes('test tự động') ||
+    lowerName === 'test connection sync' ||
+    lowerName === 'test script status' ||
+    lowerName === 'bác hùng (test kết nối)' ||
+    lowerName === 'bạn lan (test tự động mở thiệp)' ||
+    lowerName === 'bạn linh (test wish)' ||
+    lowerName === 'khách mời' ||
+    lowerName === 'aaaa'
+  ) {
+    return true;
+  }
+  if (
+    lowerMsg === 'a' ||
+    lowerMsg === 'aaa' ||
+    lowerMsg === 'dasds' ||
+    lowerMsg === 'testing sync' ||
+    lowerMsg === 'testing current deployed script'
+  ) {
+    return true;
+  }
+  return false;
+};
+
 const isHeaderName = (lowerName: string): boolean =>
   lowerName.includes('họ và tên') ||
   lowerName.includes('họ tên') ||
@@ -108,7 +137,6 @@ export const parseWishesFromGvizTable = (table: GvizTable, idPrefix = 'gs-wish')
     let rawMessage = '';
     if (isRsvpSchema) {
       const statusText = getGvizCellText(c[2]).toLowerCase();
-      const sourceText = getGvizCellText(c[6]).toLowerCase();
       if (
         statusText.includes('mở thiệp') ||
         statusText.includes('xem thiệp') ||
@@ -117,20 +145,28 @@ export const parseWishesFromGvizTable = (table: GvizTable, idPrefix = 'gs-wish')
         return;
       }
 
-      const isWishRow =
-        statusText.includes('lưu bút') ||
-        statusText.includes('lời chúc') ||
-        sourceText.includes('sổ lưu bút');
-      if (!isWishRow) {
+      // Column F (index 5) holds the guest's blessing/message in RSVP schema
+      rawMessage = getGvizCellText(c[5]);
+      const lowerMsg = rawMessage.toLowerCase();
+      if (
+        !rawMessage ||
+        lowerMsg.includes('khách đã nhấp vào link') ||
+        lowerMsg.includes('mở xem thiệp cưới') ||
+        lowerMsg === 'lời chúc / lời nhắn' ||
+        lowerMsg === 'lời chúc'
+      ) {
         return;
       }
-      rawMessage = getGvizCellText(c[5]);
     } else {
       rawMessage = getGvizCellText(c[2]);
       const lowerMessage = rawMessage.toLowerCase();
       if (lowerMessage === 'lời chúc phúc' || lowerMessage === 'lời chúc') {
         return;
       }
+    }
+
+    if (isTestSampleWish(cleanName, rawMessage)) {
+      return;
     }
 
     const cleanMessage = sanitizeWishText(rawMessage, 500);
@@ -165,7 +201,7 @@ export const getSavedWishes = (): WishItem[] => {
     if (!raw) return [];
     const parsed: WishItem[] = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((w) => w && w.name && w.message && !LEGACY_SAMPLE_IDS.has(w.id));
+    return parsed.filter((w) => w && w.name && w.message && !LEGACY_SAMPLE_IDS.has(w.id) && !isTestSampleWish(w.name, w.message));
   } catch {
     return [];
   }

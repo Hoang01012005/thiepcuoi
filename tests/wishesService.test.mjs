@@ -77,13 +77,15 @@ test('parses wishes from 7-col sheet newest-first, sanitizes HTML, and keeps dis
   assert.equal(wishesMod.isRsvpTrackingTable(parsed.table), true);
 
   const wishes = wishesMod.parseWishesFromGvizTable(parsed.table);
-  assert.equal(wishes.length, 4);
+  assert.equal(wishes.length, 5);
   assert.equal(wishes[0].name, 'Bạn');
   assert.equal(wishes[0].createdAt, '12/11/2026 13:25:00');
   assert.equal(wishes[1].createdAt, '12/11/2026 13:20:00');
   assert.equal(wishes[2].name, 'bCô Mai/b');
   assert.equal(wishes[2].message, 'scriptalert(1)/scriptHạnh phúc viên mãn nhé!');
   assert.equal(wishes[3].name, 'Bạn Minh');
+  assert.equal(wishes[4].name, 'Chị Linh đáng êu');
+  assert.equal(wishes[4].message, 'Chị gặp trực tiếp');
 });
 
 test('does not misclassify dedicated 4-col Sổ Lưu Bút sheet when wish mentions RSVP keywords', () => {
@@ -146,7 +148,7 @@ test('fetchWishesFromGoogleSheet sorts cross-sheet wishes newest-first and handl
     const res1 = await wishesMod.fetchWishesFromGoogleSheet();
     assert.equal(res1.ok, true);
     assert.equal(calls.length, 1);
-    assert.equal(res1.wishes.length, 4);
+    assert.equal(res1.wishes.length, 5);
 
     calls = [];
     globalThis.fetch = async (url) => {
@@ -160,7 +162,7 @@ test('fetchWishesFromGoogleSheet sorts cross-sheet wishes newest-first and handl
     const res2 = await wishesMod.fetchWishesFromGoogleSheet();
     assert.equal(res2.ok, true);
     assert.equal(calls.length, 2);
-    assert.equal(res2.wishes.length, 5);
+    assert.equal(res2.wishes.length, 6);
     assert.equal(res2.wishes[0].name, 'Bác Lan');
     assert.equal(res2.wishes[1].createdAt, '12/11/2026 13:25:00');
   } finally {
@@ -268,7 +270,7 @@ test('getAllUnifiedWishes does not overwrite a wish submitted while remote fetch
     const res = await wishesMod.getAllUnifiedWishes();
     assert.equal(res.remoteSynced, true);
     assert.equal(res.wishes[0].name, 'Khách In-Flight');
-    assert.equal(res.wishes.length, 5);
+    assert.equal(res.wishes.length, 6);
   } finally {
     globalThis.fetch = originalFetch;
     globalThis.window = originalWindow;
